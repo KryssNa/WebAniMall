@@ -18,13 +18,12 @@ public interface PetRepo extends JpaRepository<Pet,Integer> {
     @Query(value = "SELECT COUNT(*) FROM pet", nativeQuery = true)
     int countTotalPets();
 
-
-
     @Query(value = "SELECT * FROM pet WHERE LOWER(pet_name) LIKE ?1", nativeQuery = true)
     List<Pet> findPetByPartialName( String partialName);
 
     @Query(value = "UPDATE pet set quantity = ?1 where id = ?2", nativeQuery = true)
     String updateQuantity(double newQuantity, Integer id);
 
-
+    @Query(value = "SELECT * FROM pet WHERE id = ?1", nativeQuery = true)
+    Pet findPetById(Integer id);
 }
