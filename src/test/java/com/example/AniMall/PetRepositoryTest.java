@@ -17,57 +17,59 @@ import java.util.Optional;
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PetRepositoryTest {
-//    @Autowired
-//    private PetRepo petRepo;
-//    @Test
-//    @Order(1)
-//    @Rollback(value=false)
-//    public void savePetTest(){
-//        Pet pet= Pet.builder()
-//                .petname("Saggy")
-//                .breed("idk")
-//                .catrgory("dog")
-//                .color("Black")
-//                .description("this is a dog")
-//                .image("xyz")
-//                .build();
-//
-//        petRepo.save(pet);
-//
-//        Assertions.assertThat(pet.getId()).isGreaterThan(0);
-//    }
-//    @Test
-//    @Order(2)
-//    public void getPetTest(){
-//        Pet petCreated=petRepo.findById(1).get();
-//        Assertions.assertThat(petCreated.getId()).isEqualTo(1);
-//    }
+    @Autowired
+    private PetRepo petRepo;
+    @Test
+    @Order(1)
+    @Rollback(value=false)
+    public void savePetTest(){
+        Pet pet= Pet.builder()
+                .petname("Golu")
+                .breed("idk")
+                .category("dog")
+                .price(1000)
+                .quantity(5)
+                .color("Black")
+                .description("this is a dog")
+                .image("xyz")
+                .build();
+
+        petRepo.save(pet);
+
+        Assertions.assertThat(pet.getId()).isGreaterThan(0);
+    }
+    @Test
+    @Order(2)
+    public void getPetTest(){
+        Pet petCreated=petRepo.findById(1).get();
+        Assertions.assertThat(petCreated.getId()).isEqualTo(1);
+    }
 //    @Test
 //    @Order(3)
 //    public void getListOfPetTest(){
 //        List<Pet> Pets=petRepo.findAll();
-//        Assertions.assertThat(Pets.size()).isGreaterThan(889);
+//        Assertions.assertThat(Pets.size()).isGreaterThan(0);
 //    }
-//    @Test
-//    @Order(4)
-//    @Rollback(value=false)
-//    public void updatePetTest(){
-//        Pet pet=petRepo.findById(1).get();
-//        pet.setPetname("Fluffy");
-//        Pet petUpdated=petRepo.save(pet);
-//        Assertions.assertThat(petUpdated.getPetname()).isEqualTo("Saggy");
-//    }
-//    @Test
-//    @Order(5)
-//    @Rollback(value=false)
-//    public void deletePetTest(){
-//        Pet pet=petRepo.findById(1).get();
-//        petRepo.delete(pet);
-//        Pet pet1=null;
-//        Optional<Pet> optionalPet=petRepo.findPetByPetname("Fluffy");
-//        if(optionalPet.isPresent()){
-//            pet1=optionalPet.get();
-//        }
-//        Assertions.assertThat(pet1).isNull();
-//    }
+    @Test
+    @Order(4)
+    @Rollback(value=false)
+    public void updatePetTest(){
+        Pet pet=petRepo.findById(1).get();
+        pet.setPetname("golden");
+        Pet petUpdated=petRepo.save(pet);
+        Assertions.assertThat(petUpdated.getPetname()).isEqualTo("golden");
+    }
+    @Test
+    @Order(5)
+    @Rollback(value=false)
+    public void deletePetTest(){
+        Pet pet=petRepo.findById(1).get();
+        petRepo.delete(pet);
+        Pet pet1=null;
+        Optional<Pet> optionalPet=petRepo.findById(1);
+        if(optionalPet.isPresent()){
+            pet1=optionalPet.get();
+        }
+        Assertions.assertThat(pet1).isNull();
+    }
 }
