@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
+    <title>AdminDashboard</title>
+
+    <!-- MATERIAL ICONS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- css class -->
+    <link rel="stylesheet" th:href="@{/css/adminStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <!-- start of sidebar -->
+    <div class="container" style="width: 100% ;background-color: rgba(238,231,225,0.6)">
+        <div style="background-color: #defdff ;padding-left: 20px">
+            <aside>
+                <div class="top">
+                    <div class="logo">
+                        <img th:src="@{/images/paw.svg}">
+                        <h2><b>AniMall</b></h2>
+                    </div>
+                    <div class="close" id="close-btn">
+                        <span class="material-icons-sharp">close</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="sidebar">
+                        <a th:href="@{~/admin/list}">
+                            <span class="material-icons-sharp">
+                                person
+                            </span>
+                            <h3>Customers</h3>
+                        </a>
+
+                        <a th:href="@{~/admin/viewallbooking}">
+                            <span class="material-icons-sharp">
+                                receipt_long
+                            </span>
+                            <h3>Booking</h3>
+                        </a>
+
+                        <a th:href="@{~/admin/addpet}" class="active">
+                            <span class="material-icons-sharp">
+                                add
+                            </span>
+                            <h3>Add Pets</h3>
+                        </a>
+
+                        <a th:href="@{~/admin/viewallpet/0/4}">
+                            <span class="material-icons-sharp">
+                                pets
+                            </span>
+                            <h3>Pets</h3>
+                        </a>
+
+                        <a th:href="@{~/logout}">
+                            <span class="material-icons-sharp">logout</span>
+                            <h3>Logout</h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <main>
+            <div class="ml-4 form-container d-flex justify-content-center text-center">
+                <form th:method="post" th:action="@{/admin/savepet}" th:object="${add}" enctype="multipart/form-data">
+                    <br>
+
+                    <fieldset>
+                        <h1>Add new pet</h1>
+                        <input type="text" hidden="hidden" th:field="*{id}" th:value="${add.id}">
+                        <br>
+                        <div class="form-group">
+                            <label for="pet-name">Pet Name<span class="required">*</span></label>
+                            <input type="text" id="pet-name" title="name" autofocus="true" name="pet-name"
+                                th:field="*{petname}" th:value="${add.petname}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="breed">Breed
+                                <span class="required">*</span>
+                                <input type="text" id="breed" required th:field="*{breed}" th:value="${add.breed}">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Price<span class="required">*</span>
+                                <input type="text" required th:field="*{price}">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Quantity<span class="required">*</span>
+                                <input type="text" required th:field="*{quantity}">
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                Color<span class="required">*</span>
+                                <input type="text" required th:field="*{color}">
+                            </label>
+                        </div>
+                        <label for="category">
+                            Category<span class="required">*</span>
+                            <input id="category" type="text" required th:field="*{category}">
+                        </label>
+
+                        <div class="form-group">
+                            <label for="pet-description">Description<span class="required">*</span></label>
+                            <textarea id="pet-description" required th:field="*{description}"
+                                th:value="${add.description}" class="form-control input-lg" title="description"
+                                autofocus="false"></textarea>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="image">Image<span class="required">*</span></label>
+                            <input type="file" id="image" accept="image/*" name="image" title="image" autofocus="false"
+                                required>
+                            <!--                display image to right-->
+                            <img th:src="@{${add.image}}"
+                                style="width: 100px; height: 100px; border-radius: 50%; margin-left: 1em;">
+
+                        </div>
+
+                        <button class="btn btn-outline-dark" type="submit" style="margin-bottom: 1em;">Add Pet
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

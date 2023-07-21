@@ -1,0 +1,38 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+/*navbar*/
+
+.navbar{
+    box-shadow: 0 2px 5px 2px rgb(0,0,0,0.1);
+}
+.navbar-brand img{
+    width:30px;
+}
+.navbar-brand span{
+    letter-spacing: 2px;
+    font-family: var(--lg-font);
+}
+.nav-link:hover{
+    color:var(--green)!important;
+}
+.nav-item--active{
+    background-color: #ffffff;
+}
+.nav-item{
+    border-bottom: 0.5px solid rgba(0,0,0,0.05);
+
+}
+@media(min-width: 992px){
+    .nav-item{
+        border-bottom: none;
+    }
+
+}

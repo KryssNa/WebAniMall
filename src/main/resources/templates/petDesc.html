@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <link rel="stylesheet" th:href="@{~/css/indiPet.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<br>
+<br>
+<br>
+<br>
+<div class = "card-wrapper" >
+    <div class = "pet-imgs">
+        <div class = "img-display">
+            <div class = "img-showcase">
+                <img th:src="'data:image/png;base64,'+${petdata.imageBase64}" alt="The img is corrupt."style="
+    height: 414px;
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: 8px;
+">
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class = "card">
+        <!-- card left -->
+
+        <!-- card right -->
+        <div class = "pet-content">
+            <h2 class = "pet-title" th:text="${petdata.getPetname()}"></h2>
+
+            <div class = "pet-detail">
+                <h3>Attributes: </h3>
+                <ul>
+                    <p>Name: <span th:text="${petdata.getPetname()}"></span></p>
+                    <p>Breed: <span th:text="${petdata.getBreed()}"></span></p>
+                    <p>Category: <span th:text="${petdata.getCategory()}"></span></p>
+                    <p>Color: <span th:text="${petdata.getColor()}"></span></p>
+                    <p>Character: <span th:text="${petdata.getDescription()}"></span></p>
+                </ul>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <form th:action="@{/pet/savebooking}" th:object="${booking}" th:method="post" class="justify-content-center">
+                    <input type="text" hidden="hidden" name="user_id" th:value="${info.id}">  <br>
+                    <input type="text" hidden="hidden" name="pet_id" th:value="${petdata.id}">  <br>
+                    <button type="submit" class="btn">Book</button>
+                </form>
+                <form th:action="@{/user/savefavorite}" th:object="${favorite}" th:method="post" class="justify-content-center">
+                    <input type="text" hidden="hidden" name="user_id" th:value="${info.id}">  <br>
+                    <input type="text" hidden="hidden" name="pet_id" th:value="${petdata.id}">  <br>
+                    <button type="submit" class="btn">Favorite</button>
+                </form>
+            </div>
+
+
+            <style>
+    .card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="header-css">
+    <meta charset="UTF-8">
+<!--    fontawesome-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
+    <title>AniMall</title>
+</head>
+<body>
+
+<!--navbar start-->
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-2 fixed-top" style="background-color: rgba(164,250,253,.3)!important";>
+    <div class="container">
+        <a class="navbar-brand d-flex justify-content-between align-items-center order-lg-0" href="/user/homepage">
+            <img th:src="@{/images/paw.svg}" alt="site icon">
+            <span class="text-uppercase fw-lighter ms-2">AniMall</span>
+        </a>
+        <div class=" order-lg-2 nav-btns">
+            <button type="button" class="btn">
+                <a class="nav-link" th:href="@{~/user/viewAllMyAdoptions/}+${userdata.id}"> <i class="fa fa-search"></i> </a>
+            </button>
+            <button type="button" class="btn" >
+                <a class="nav-link" th:href="@{~/cart}" aria-placeholder="cart button"> <i class="fa fa-shopping-cart" ></i> </a>
+            </button>
+            <button type="button" class="btn">
+                        <a class="cart-button-cart" th:href="@{~/user/viewAllMyAdoptions/}+${userdata.id}"> <i class="fa-solid fa-user"></i> </a>
+                    </button>
+
+            <button type="button" class="btn">
+                <a class="nav-link" th:href="@{~/user/viewAllMyFavorites/}+${userdata.id}"> <i class="fa fa-heart"></i> </a>
+            </button>
+            <button type="button" class="btn" sec:authorize="isAuthenticated()" >
+                <a class="cart-button-heart" th:href="@{~/logout}"><i class="fa fa-arrow-right-from-bracket"></i>  </a>
+            </button>
+        </div>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse order-lg-1" id="navMenu">
+            <ul class="navbar-nav mx-auto text-center">
+                <li class="nav-item px-2 py-2">
+                    <a class="nav-link  text-uppercase text-dark" href="/user/homepage" >Home</a>
+                </li>
+                <li class="nav-item px-2 py-2">
+                    <a class="nav-link text-uppercase text-dark" href="#pets">Pets</a>
+                </li>
+                <li class="nav-item px-2 py-2" >
+                    <a class="nav-link text-uppercase text-dark" href="#faqs" >FAQs</a>
+                </li>
+                <li class="nav-item px-2 py-2 border-0" >
+                    <a class="nav-link text-uppercase text-dark" href="#contactus" >Contact us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--navbar end-->
+
+<header id="header1" class="carousel slide responsive" data-bs-ride="carousel" style="padding-top: 3rem; max-inline-size: 100%; block-size: auto;">
+    <div class="container h-100 d-flex align-items-center carousel-inner">
+        <div class="text-left carousel-item active">
+            <h2 class="text-uppercase py-2 fw-bold" style="color: #B5C5CD">For wagging tails and more</h2>
+            <a href="#pets" class="btn mt-3 text-uppercase">Learn More</a>
+            <a href="#pets" class="btn mt-3 text-uppercase">Book</a>
+        </div>
+        <div class="text-left carousel-item">
+            <h2 class="text-uppercase py-2 fw-bold" style="color: #B5C5CD">Fur-ever<br>Because it's your Family</h2>
+            <a href="#pets" class="btn mt-3 text-uppercase">Learn More</a>
+            <a href="#pets" class="btn mt-3 text-uppercase">Book</a>
+        </div>
+    </div>
+    <!-- Add the carousel controls -->
+    <a class="carousel-control-prev" href="#header1" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#header1" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
+</header>
+
+<section class="shop" id="shop">
+    <div class="container py-5" id="pets">
+        <div class="title text-center">
+            <h2 class="position-relative d-inline-block">New Pets</h2>
+        </div>
+        <!-- Content -->
+        <div class="shop-container">
+            <!-- Box 1 -->
+            <div class="box" th:each="pet:${petList}">
+                <a th:href="@{~/pet/petinfo/}+${pet.id}">
+                    <div class="box-img">
+                        <img th:src="'data:image/png;base64,'+${pet.imageBase64}" alt="">
+                    </div>
+                </a>
+                <div class="title-price">
+                    <h3 th:text="${pet.petname}"></h3>
+                </div>
+                <div class="title-price">
+                    <h3 th:text="${pet.breed}"></h3>
+                </div>
+                <div class="price-text" >
+                    <div th:text="'Rs. '+ ${pet.price}"></div>
+
+<!--                    <div class="price" th:text="Rs.${pet.breed}"></div>-->
+                    <div style="display: flex ;padding: 10px">
+                        <button type="button"  class="cart-button-heart" style="margin-right: 10px">
+                            <a class="cart-button-heart" th:href="@{~/user/viewAllMyFavorites/}+${userdata.id}">
+                                <i class="fa fa-heart"></i>
+                            </a>
+                        </button>
+                        <button type="button"  class="cart-button-cart" >
+                            <a class="cart-button-cart" th:href="@{~/cart/add/}+${pet.id}">
+                                <i class="fa fa-shopping-cart" ></i>
+                            </a>
+                        </button>
+
+                        </div>
+                <!--            add to cart icon only -->
+            </div>
+            <!-- Add more box elements as needed -->
+        </div>
+        <div style="display: flex;justify-content: flex-end;margin-top: 16px;">
+        <div class="prev-btn">
+            <a class="btn" th:href="@{/user/prev/} + ${page} + '/8'" th:if="${page > 0}">Previous</a>
+            <a class="btn disabled" th:if="${page <= 0}">Previous</a>
+        </div>
+            <div class="next-btn"style="margin-left: 16px">
+                <a class="btn " th:href="@{/user/next/} + ${page} + '/8'" th:if="${page < pageCounts-1}">Next</a>
+                <a class="btn disabled" th:if="${page >= pageCounts-1}">Next</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<hr>
+<br>
+
+
+<!--footer starts-->
+<footer class=" py-5" id="contactus" style="background-color: rgb(66, 108, 112)">
+<div class="container"style="background-color: rgb(66,108,112)">
+    <div class="row text-white g-5">
+<!--        intoduction-->
+        <div class="col-md-4 col-lg-2 ">
+            <a class="text-uppercase text-decoration-none brand text-white" href="/user/homepage">AniMall</a>
+            <p class="text-white mt-3">AniMall is the Platform to shop pets and its related products
+                It is our topmost priority to make sure that the visiters are satisfied.</p>
+        </div>
+
+<!--        pets-->
+<!--        <div class="col-md-4 col-lg-2">-->
+<!--            <h5 class="fw-light">Pets</h5>-->
+<!--            <li class="my-3" th:each="pet:${petfetch}" ><a href="#pets" th:text="${pet.petname}" ></a></li>-->
+
+<!--        </div>-->
+
+<!--        Contact us-->
+        <div class="col-md-6 col-lg-3">
+            <h5 class="fw-light mb-3">Contact Us</h5>
+            <div class="d-flex justify-content-start align-items-start my-2 text-light">
+                <span class="me-3">
+                    <i class="fa fa-map-marker"> </i>
+                </span>
+                <span class="fw-light">
+                   Addresss: Softwarica College, Dillibazar, Kathmandu
+                </span>
+            </div>
+            <div class="d-flex justify-content-start align-items-start my-2 text-light">
+                <span class="me-3">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="fw-light">
+                    AniMall@gmail.com
+                </span>
+            </div>
+            <div class="d-flex justify-content-start align-items-start my-2 text-light">
+                <span class="me-3">
+                    <i class="fa fa-phone"> </i>
+                </span>
+                <span class="fw-light">
+                    Phone: +977 98XXXXXXXX
+                </span>
+            </div>
+        </div>
+
+        <!--        Links-->
+        <div class="col-md-4 col-lg-2">
+            <h5 class="fw-light">Links</h5>
+            <ul class="list-unstyled">
+                <li class="my-3">
+                    <a href="#" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+                        </i>Home
+                    </a>
+                </li>
+                <li class="my-3">
+                    <a href="#pets" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+
+                        </i>Pets
+                    </a>
+                </li>
+
+                <li class="my-3">
+                    <a href="#faqs" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+
+                        </i>FAQs
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!--        My Account-->
+        <div class="col-md-4 col-lg-2">
+            <h5 class="fw-light">My Account</h5>
+            <ul class="list-unstyled">
+                <li class="my-3">
+                    <a href="#" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+                        </i>Register
+                    </a>
+                </li>
+                <li class="my-3">
+                    <a href="#" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+
+                        </i>Sign In
+                    </a>
+                </li>
+
+                <li class="my-3">
+                    <a href="#" class="text-white text-decoration-none">
+                        <i class="fas fa-chevron-right me-1">
+
+                        </i>My WishList
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+<!--        Follow us-->
+        <div class="col-md-6 col-lg-3">
+            <h5 class="fw-light mb-3">
+                Follow Us
+            </h5>
+            <div>
+                <ul class="list-unstyled d-flex ">
+                    <li>
+                        <a href="#" class="text-white text-decoration-none text-white fs-4 me-4">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white text-decoration-none text-white fs-4 me-4">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white text-decoration-none text-white fs-4 me-4">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white text-decoration-none text-white fs-4 me-4">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</footer>
+<!--footer ends-->
+
+<!-- footer-bottom-area start -->
+<div class="footer-bottom-area" th:fragment="footer-bottom-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="copyright">
+                    <p>Copyright © <a href="#">AniMall</a>. All Rights Reserved</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="payment-img">
+                    <img th:src="@{~/img/payment.png}" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer-bottom-area end -->
+
+<script>
+        let myPage="header";
+        let ListGroupItem=Array.from(document.getElementsByClassName("nav-link"));
+        ListGroupItem.forEach(i=>(
+        i.classList.remove("active")
+        ))
+        let activeID=document.getElementById(myPage);
+        activeID.classList.add("active");
+</script>
+<!--jquery-->
+<script th:src="@{/js/script.js}"></script>
+
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+
+<script th:src="@{/js/scriptmain.js}"></script>
+<!--bootstrap js-->
+<script th:src="@{/css/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js}"></script>
+</body>
+</html>
+

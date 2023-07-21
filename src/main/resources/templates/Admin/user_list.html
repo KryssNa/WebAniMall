@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
+    <title>AdminDashboard</title>
+
+    <!-- MATERIAL ICONS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" >
+    <!-- css class -->
+    <link rel="stylesheet" th:href="@{/css/adminStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<!-- start of sidebar -->
+<div class="container" style="width: 100% ;background-color: rgba(238,231,225,0.6)">
+    <div style="background-color: #defdff ;padding-left: 20px">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img th:src="@{/images/paw.svg}">
+                <h2><b>AniMall</b></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+        <div>
+            <div class="sidebar">
+                <a th:href="@{~/admin/list}" class="active">
+        <span class="material-icons-sharp">
+            person
+            </span>        <h3>Customers</h3>
+                </a>
+
+                <a th:href="@{~/admin/viewallbooking}">
+        <span class="material-icons-sharp">
+            receipt_long
+            </span>        <h3>Booking</h3>
+                </a>
+
+                <a th:href="@{~/admin/addpet}" >
+        <span class="material-icons-sharp">
+            add
+            </span>        <h3>Add Pets</h3>
+                </a>
+
+                <a th:href="@{~/admin/viewallpet/0/4}">
+        <span class="material-icons-sharp">
+            pets
+            </span>        <h3>Pets</h3>
+                </a>
+
+                <a th:href="@{~/logout}">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </div>
+    </aside>
+    </div>
+    <main>
+
+        <div class="container-fluid mt-5 "style="margin-top: 3rem;margin-left: 3rem;margin-right: 3rem">
+            <div class="row">
+                <h2>Customer Details</h2>
+                <br>
+                <div class="col">
+                    <table class="table table-bordered table-responsive" style="width: 80%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Delete</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user:${userList}">
+            <td style="text-align: center" th:text="${user.id}"></td>
+            <td  style="text-align: center" th:text="${user.fullname}"> </td>
+            <td  style="text-align: center" th:text="${user.email}"> </td>
+            <td  style="text-align: center" th:text="${user.gender}"> </td>
+            <td  style="text-align: center" th:text="${user.age}"> </td>
+            <td> <a class="edit" th:href="@{~/admin/deleteuser/}+${user.id}" >delete</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
