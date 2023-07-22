@@ -2,8 +2,9 @@ package com.example.AniMall.Services;
 
 import com.example.AniMall.Entity.Cart;
 import com.example.AniMall.Pojo.BookingPojo;
-import com.example.AniMall.Pojo.CartPojo;
+import com.example.AniMall.Pojo.ShippingDetailsDto;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface CartServices {
     Cart fetchOne(Integer id);
 
     String checkout(Integer id, BookingPojo pojo, List<Cart> itemsToPurchase);
+    String checkout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto, List<Cart> itemsToPurchase) throws IOException;
 
     List<Cart> fetchAllCart();
 
@@ -31,10 +33,11 @@ public interface CartServices {
 
     List<Cart> cartdetails();
 
-    String updatePet(double quantity, Integer id);
+    int updatePet(int quantity, Integer id);
 
     void updatecartstatus(Integer id,String status);
 
     List<Cart> fetchAvailable(Integer id);
 
+    void clearCart(Integer id);
 }

@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserServices {
     private final UserRepo userRepo;
     private final BookingRepo bookingRepo;
     private final FavoriteRepo favoriteRepo;
-    private final ThreadPoolTaskExecutor taskExecutor;
     @Override
     public UserPojo save(UserPojo userPojo) {
         User user;
@@ -69,8 +68,5 @@ public class UserServiceImpl implements UserServices {
         favoriteRepo.deleteById(id);
         userRepo.deleteById(id);
     }
-
-
-
 }
 

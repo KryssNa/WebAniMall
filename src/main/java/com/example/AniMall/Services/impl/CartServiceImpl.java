@@ -1,26 +1,21 @@
 package com.example.AniMall.Services.impl;
 
-import com.example.AniMall.Entity.Booking;
-import com.example.AniMall.Entity.Cart;
-import com.example.AniMall.Entity.Pet;
+import com.example.AniMall.Entity.*;
 import com.example.AniMall.Pojo.BookingPojo;
-import com.example.AniMall.Repo.BookingRepo;
-import com.example.AniMall.Repo.CartRepo;
-import com.example.AniMall.Repo.PetRepo;
-import com.example.AniMall.Repo.UserRepo;
+import com.example.AniMall.Pojo.ShippingDetailsDto;
+import com.example.AniMall.Repo.*;
 import com.example.AniMall.Services.CartServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +26,17 @@ public class CartServiceImpl implements CartServices {
     private final UserRepo userRepo;
     private final PetRepo petRepo;
     private final BookingRepo bookingRepo;
+    private final SummaryDetailsRepo summaryDetailsRepo;
+
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/pet/";
+
+//    method to save to cart
     @Override
     public String saveToCart(Integer id, Principal principal) {
         Cart cart = new Cart();
         cart.setUser(userRepo.findByEmail(principal.getName()).orElseThrow());
         cart.setPet(petRepo.findById(id).orElseThrow());
+        cart.setPrice(petRepo.findById(id).orElseThrow().getPrice());
         cart.setQuantity(1);
         cartRepo.save(cart);
 
@@ -128,37 +129,88 @@ public class CartServiceImpl implements CartServices {
     }
 
 
+//    will be implemented in future some error is coming
+    @Override
+    public void clearCart(Integer id) {
+        cartRepo.deleteById(id);
+    }
+
+
     @Override
     public Cart fetchOne(Integer id) {
         return cartRepo.findById(id).orElseThrow();
     }
 
+
+    // main checkout method
     @Override
-    public String checkout(Integer id, BookingPojo pojo, List<Cart> itemsToPurchase) {
+    public String checkout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto, List<Cart> itemsToPurchase) throws IOException {
+        ShippingDetails shippingDetails = new ShippingDetails();
+        Booking booking = new Booking();
+        User user = userRepo.findById(id).orElseThrow();
+        System.out.println("user email: "+user.getEmail());
         for (Cart value : itemsToPurchase) {
-            Booking booking = new Booking();
             booking.setId(value.getId());
+            booking.setQuantity(value.getQuantity());
+            booking.setPrice(value.getPet().getPrice());
+            value.setStatus("Ordered");
             booking.setUser(value.getUser());
             booking.setPet(value.getPet());
-            booking.setQuantity(value.getQuantity());
-
-            booking.setShippingFullName(pojo.getShippingFullName());
-            booking.setShippingAddress(pojo.getShippingAddress());
-            booking.setShippingEmail(pojo.getShippingEmail());
-            booking.setShippingPhone(pojo.getShippingPhone());
-            booking.setImageBase64(getImageBase64(value.getPet().getImage()));
-
             booking.setStatus("Ordered");
-
-            bookingRepo.save(booking);
         }
+        System.out.println("shipping details");
+        user.setId(id);
+        shippingDetails.setUser(user);
+        shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
+        shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
+        shippingDetails.setShippingEmail(itemsToPurchase.get(0).getUser().getEmail());
+        shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
+        shippingDetails.setStatus("Ordered");
+        shippingDetails.setTotalPrice(shippingDetailsDto.getTotalPrice());
+        shippingDetails.setTotalQuantity(shippingDetailsDto.getTotalQuantity());
+
+        if(shippingDetailsDto.getImage()!=null){
+            System.out.println("Image is not null");
+            StringBuilder fileNames = new StringBuilder();
+            System.out.println(UPLOAD_DIRECTORY);
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, shippingDetailsDto.getImage().getOriginalFilename());
+            fileNames.append(shippingDetailsDto.getImage().getOriginalFilename());
+            Files.write(fileNameAndPath, shippingDetailsDto.getImage().getBytes());
+
+            shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
+        }
+        bookingRepo.save(booking);
+        shippingDetails.setUser(user);
+        summaryDetailsRepo.save(shippingDetails);
+
+        System.out.println("shipping details inserted");
         return "Saved Purchase";
     }
 
     @Override
-    public String updatePet(double quantity, Integer id) {
+    public String
+    checkout(Integer id, BookingPojo pojo, List<Cart> itemsToPurchase) {
+        for (Cart value : itemsToPurchase) {
+            Booking booking = new Booking();
+            booking.setId(value.getId());
+            booking.setQuantity(value.getQuantity());
+            booking.setPrice(value.getPet().getPrice());
+            value.setStatus("Ordered");
+            booking.setUser(value.getUser());
+            booking.setPet(value.getPet());
+            booking.setStatus("Ordered");
+
+            bookingRepo.save(booking);
+        }
+//
+
+        return "Saved Purchase";
+    }
+
+    @Override
+    public int updatePet(int quantity, Integer id) {
         petRepo.updateQuantity(quantity, id);
-        return "Updated Quantity";
+        return quantity;
     }
 
     public String getImageBase64(String fileName) {

@@ -2,6 +2,7 @@ package com.example.AniMall.Services.impl;
 
 import com.example.AniMall.Entity.Favorite;
 import com.example.AniMall.Pojo.FavoritePojo;
+import com.example.AniMall.Repo.FavoriteRepo;
 import com.example.AniMall.Repo.PetRepo;
 import com.example.AniMall.Repo.UserRepo;
 import com.example.AniMall.Services.FavoriteServices;
@@ -14,7 +15,7 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class FavoriteServiceImpl implements FavoriteServices {
-    private  final com.example.AniMall.Repo.FavoriteRepo favoriteRepo;
+    private  final FavoriteRepo favoriteRepo;
     private  final UserRepo userRepo;
     private  final PetRepo petRepo;
 
@@ -73,7 +74,7 @@ public class FavoriteServiceImpl implements FavoriteServices {
 
 
     @Override
-    public com.example.AniMall.Entity.Favorite findById(Integer id) {
+    public Favorite findById(Integer id) {
         com.example.AniMall.Entity.Favorite pet=favoriteRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
         pet= com.example.AniMall.Entity.Favorite.builder()
                 .id(pet.getId())

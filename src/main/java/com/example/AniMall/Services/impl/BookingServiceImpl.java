@@ -1,7 +1,10 @@
 package com.example.AniMall.Services.impl;
 
 import com.example.AniMall.Entity.Booking;
+import com.example.AniMall.Entity.ShippingDetails;
+import com.example.AniMall.Entity.User;
 import com.example.AniMall.Pojo.BookingPojo;
+import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.PetRepo;
 import com.example.AniMall.Repo.UserRepo;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,6 +27,61 @@ public class BookingServiceImpl implements BookingServices {
     private  final BookingRepo bookingRepo;
     private  final UserRepo userRepo;
     private  final PetRepo petRepo;
+
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ShippingDetails";
+
+    @Override
+    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException {
+        ShippingDetails shippingDetails = new ShippingDetails();
+        Booking booking = new Booking();
+        User user = userRepo.findById(id).orElseThrow();
+//        for (Cart value : itemsToPurchase) {
+//            booking.setId(value.getId());
+//            booking.setQuantity(value.getQuantity());
+//            booking.setPrice(value.getPet().getPrice());
+//            value.setStatus("Ordered");
+//            booking.setUser(value.getUser());
+//            booking.setPet(value.getPet());
+//
+//
+//
+//
+////            booking.setQuantity(value.getQuantity());
+////
+////            booking.setShippingFullName(pojo.getShippingFullName());
+////            booking.setShippingAddress(pojo.getShippingAddress());
+////            booking.setShippingEmail(pojo.getShippingEmail());
+////            booking.setShippingPhone(pojo.getShippingPhone());
+////            booking.setImageBase64(getImageBase64(value.getPet().getImage()));
+//
+//            booking.setStatus("Ordered");
+//
+//            bookingRepo.save(booking);
+//        }
+
+        shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
+        shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
+        shippingDetails.setShippingEmail(shippingDetailsDto.getShippingEmail());
+        shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
+        shippingDetails.setStatus("Ordered");
+        booking.setPrice(shippingDetailsDto.getTotalPrice());
+        booking.setQuantity(shippingDetailsDto.getTotalQuantity());
+        if(shippingDetailsDto.getImage()!=null){
+            System.out.println("Image is not null");
+            StringBuilder fileNames = new StringBuilder();
+            System.out.println(UPLOAD_DIRECTORY);
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, shippingDetailsDto.getImage().getOriginalFilename());
+            fileNames.append(shippingDetailsDto.getImage().getOriginalFilename());
+            Files.write(fileNameAndPath, shippingDetailsDto.getImage().getBytes());
+
+            shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
+        }
+
+        shippingDetails.setUser(user);
+//        bookingRepo.save(shippingDetails.getUser());
+        return "Saved Purchase";
+    }
+
     @Override
     public BookingPojo save(BookingPojo bookingPojo) {
         Booking booking =new Booking();
@@ -30,6 +90,8 @@ public class BookingServiceImpl implements BookingServices {
         }
         booking.setUser(userRepo.findById(bookingPojo.getUser_id()).orElseThrow());
         booking.setPet(petRepo.findById(bookingPojo.getPet_id()).orElseThrow());
+        booking.setStatus("pending");
+        booking.setQuantity(bookingPojo.getQuantity());
         bookingRepo.save(booking);
         return new BookingPojo(booking);
     }
@@ -62,6 +124,7 @@ public class BookingServiceImpl implements BookingServices {
                         .id(pet.getId())
                         .user(pet.getUser())
                         .pet(pet.getPet())
+                        .status(pet.getStatus())
                         .build()
         );
         list = allJobsWithImage.toList();
@@ -78,6 +141,7 @@ public class BookingServiceImpl implements BookingServices {
                 .id(pet.getId())
                 .user(pet.getUser())
                 .pet(pet.getPet())
+                .status(pet.getStatus())
                 .build();
         return pet;
     }
@@ -101,6 +165,7 @@ public class BookingServiceImpl implements BookingServices {
         }
         booking.setUser(userRepo.findById(bookingPojo.getUser_id()).orElseThrow());
         booking.setPet(petRepo.findById(bookingPojo.getPet_id()).orElseThrow());
+        booking.setStatus("pending");
         bookingRepo.save(booking);
         return new BookingPojo(booking);
     }

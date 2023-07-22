@@ -2,7 +2,9 @@ package com.example.AniMall.Services;
 
 import com.example.AniMall.Entity.Booking;
 import com.example.AniMall.Pojo.BookingPojo;
+import com.example.AniMall.Pojo.ShippingDetailsDto;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface BookingServices {
@@ -13,6 +15,8 @@ public interface BookingServices {
     void deleteById(Integer id);
 
     boolean existsById(Integer id);
+
+    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException;
 
     //checkout
     BookingPojo saveCheckout(BookingPojo bookingPojo);
