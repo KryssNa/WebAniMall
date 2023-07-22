@@ -3,10 +3,7 @@ package com.example.AniMall.controller;
 import com.example.AniMall.Entity.Cart;
 import com.example.AniMall.Pojo.CartPojo;
 import com.example.AniMall.Pojo.FavoritePojo;
-import com.example.AniMall.Services.BookingServices;
-import com.example.AniMall.Services.CartServices;
-import com.example.AniMall.Services.FavoriteServices;
-import com.example.AniMall.Services.UserServices;
+import com.example.AniMall.Services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +21,6 @@ public class CartController {
     private final UserServices userService;
     private final CartServices cartService;
     private final FavoriteServices favoriteServices;
-    private final BookingServices bookingServices;
 
     @GetMapping()
     public String displayCart(Principal principal, Model model, CartPojo cartPojo){
@@ -73,6 +69,5 @@ public class CartController {
         favoriteServices.save(favoritePojo);
         return "redirect:/user/homepage";
     }
-
 
 }
