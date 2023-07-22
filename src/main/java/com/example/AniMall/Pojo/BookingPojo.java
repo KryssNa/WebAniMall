@@ -28,31 +28,17 @@ public class BookingPojo {
 
     private String status;
 
-    private String shippingEmail;
-
-    private String shippingFullName;
-
-    private String shippingPhone;
-
-    private String shippingAddress;
-
-    private double total;
 
     private int quantity;
 
-//    @jakarta.validation.constraints.NotNull(message = "Image can't be null")
-    private MultipartFile image;
+    private double price;
 
     public BookingPojo(Booking booking) {
         this.id= booking.getId();
         this.pet_id= booking.getPet().getId();
         this.user_id= booking.getUser().getId();
-        this.status= booking.getStatus();
-        this.total= booking.getTotal();
         this.quantity= booking.getQuantity();
-        this.shippingEmail= booking.getShippingEmail();
-        this.shippingFullName= booking.getShippingFullName();
-        this.shippingPhone= booking.getShippingPhone();
-        this.shippingAddress= booking.getShippingAddress();
+        this.price= booking.getPrice();
+        this.status= booking.getStatus();
     }
 }

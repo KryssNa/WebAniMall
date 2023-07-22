@@ -19,6 +19,7 @@ public class CartPojo {
     private Pet pet;
     private User user;
     private Integer quantity;
+    private double price;
     private String status;
     private Date createdDate;
 }
