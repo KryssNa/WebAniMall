@@ -9,71 +9,6 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/addToCart.css}">
   <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
   <title>AniMall</title>
-
-  <style>
-    /*navbar*/
-
-    .navbar{
-      box-shadow: 0 2px 5px 2px rgb(0,0,0,0.1);
-    }
-    .navbar-brand img{
-      width:30px;
-    }
-    .navbar-brand span{
-      letter-spacing: 2px;
-      font-family: var(--lg-font);
-    }
-    .nav-link:hover{
-      color:var(--green)!important;
-    }
-    .nav-item--active{
-      background-color: #ffffff;
-    }
-    .nav-item{
-      border-bottom: 0.5px solid rgba(0,0,0,0.05);
-
-    }
-    @media(min-width: 992px){
-      .nav-item{
-        border-bottom: none;
-      }
-
-    }
-    @media (min-width: 1025px) {
-      .h-custom {
-        height: 100vh !important;
-      }
-    }
-
-    .card-registration .select-input.form-control[readonly]:not([disabled]) {
-      font-size: 1rem;
-      line-height: 2.15;
-      padding-left: .75em;
-      padding-right: .75em;
-    }
-
-    .card-registration .select-arrow {
-      top: 13px;
-    }
-
-    .bg-grey {
-      background-color: #eae8e8;
-    }
-
-    @media (min-width: 992px) {
-      .card-registration-2 .bg-grey {
-        border-top-right-radius: 16px;
-        border-bottom-right-radius: 16px;
-      }
-    }
-
-    @media (max-width: 991px) {
-      .card-registration-2 .bg-grey {
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-      }
-    }
-  </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -105,26 +40,28 @@
                   </div>
                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                     <form th:action="@{/cart/updateQuantity/{id}(id=${cartItem.id})}" th:if="${cartItem.quantity > 0}" method="post">
-                      <button class="btn btn-link px-2" type="submit" onclick="updateQuantity(-1, [[${cartItem.id}]])">
+                      <button class="btn btn-link px-2" type="submit" >
                         <i class="fas fa-minus"></i>
                       </button>
                     </form>
                     <div class="form-outline">
-                      <input id="'quantityInput_'+${cartItem.id}" min="0" name="'quantity_'+${cartItem.id}" th:value="${cartItem.quantity}" type="number" class="form-control form-control-sm" />
+                      <input disabled id="'quantityInput_'+${cartItem.id}" min="0" name="'quantity_'+${cartItem.id}" th:value="${cartItem.quantity}" type="number" class="form-control form-control-sm" />
                       <label class="form-label" for="'quantityInput_'+${cartItem.id}">Quantity</label>
                     </div>
-                    <form th:action="@{/cart/updateQuantity/{id}(id=${cartItem.id})}" method="post">
-                      <button class="btn btn-link px-2" type="submit" onclick="updateQuantity(1, [[${cartItem.id}]])">
+                    <form th:action="@{/cart/updatedQuantity/{id}(id=${cartItem.id})}" method="post">
+                      <button class="btn btn-link px-2" type="submit" >
                         <i class="fas fa-plus"></i>
                       </button>
                     </form>
                   </div>
                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                    <h6 class="mb-0" th:text="'Rs. ' + ${cartItem.pet.getPrice()}"></h6>
+                    <h6 class="mb-0" th:text="'Rs. ' + ${cartItem.getPrice()}"></h6>
                   </div>
                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                    <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
-                      <button type="submit" class="btn btn-link text-muted"><i class="fas fa-times"></i></button>
+                    <form th:action="@{/cart/updateQuantity/{id}(id=${cartItem.id})}" method="post">
+                      <button type="submit" class="btn btn-link text-muted" >
+                        <i class="fas fa-times"></i>
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -142,26 +79,27 @@
       <!-- Summary Section -->
       <div class="col-lg-4 bg-grey" style="border-radius: 12px;height: 675px;">
         <div class="p-1" style="padding: 8px!important;">
-          <h3 class="fw-bold mt-2 pt-1">Summary</h3>
+
+          <h3 class="fw-bold mt-2 pt-1">Shipping Summary</h3>
           <div class="d-flex justify-content-between mb-4">
             <h5 class="" th:text="'Items ' + ${cartItems.size()}"></h5>
-            <h5 th:text="'Rs. ' + ${total}">Rs.132.00</h5>
+            <h5 th:text="'Rs. ' + ${total}" id="totalPriceDisplay">Rs.132.00</h5>
           </div>
 
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="">Shipping Price</h5>
-            <select class="select">
-              <option value="1">Standard-Delivery- Rs.150.00</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-              <option value="4">Four</option>
+            <select class="select" id="shippingOption" onchange="updateTotalPrice()">
+              <option value="1">Same-Day Delivery - Rs. 500.00</option>
+              <option value="2">Two-Day Delivery - Rs. 300.00</option>
+              <option value="3">Three-Day Delivery - Rs. 200.00</option>
+              <option value="4">Four-Day Delivery - Rs. 150.00</option>
             </select>
           </div>
           <hr class="my-2">
 
           <div class="d-flex justify-content-between">
             <h5 class="text-uppercase">Total price</h5>
-            <h5 th:text="'€ ' + ${total}">Rs. 137.00</h5>
+            <h5 th:text="'Rs. ' + ${total}" id="totalPrice">Rs. 137.00</h5>
           </div>
           <hr class="my-2">
 
@@ -192,12 +130,14 @@
 
             <!-- Payment upload image -->
             <div class="mb-2">
-              <label for="image" class="form-label">Payment</label>
+              <label for="image" class="form-label">Payment ScreenShot*</label>
               <input type="file" class="form-control" id="image" name="image" accept="image/*"  title="image" autofocus="false" required>
               <!-- Add this section to display image upload validation errors -->
             </div>
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Proceed to Checkout</button>
+            <div class="d-flex justify-content-center mt-3 ">
+              <button type="submit" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Proceed to Checkout</button>
+            </div>
           </form>
 
         </div>
@@ -207,21 +147,48 @@
   </div>
 </section>
 
+<script th:inline="javascript">
+    // Update the total price when the shipping option is changed
+  function updateTotalPrice() {
+    // Get the selected shipping option value
+    const shippingOption = document.getElementById('shippingOption').value;
 
+    // Get the current total price (without shipping) from Thymeleaf
+    const currentTotal = /*[[${total}]]*/;
 
-<script>
-  function updateQuantity(change, cartItemId) {
-    var quantityInput = document.getElementById('quantityInput_' + cartItemId);
-    if (quantityInput) { // Check if the element is found
-      var currentQuantity = parseInt(quantityInput.value);
-      var newQuantity = currentQuantity + change;
-      if (newQuantity >= 0) {
-        quantityInput.value = newQuantity;
-      }
+    // Calculate the shipping cost based on the selected shipping option
+    let shippingCost = 0.00;
+    switch (shippingOption) {
+      case '1':
+        shippingCost = 500.00;
+        break;
+      case '2':
+        shippingCost = 300.00;
+        break;
+      case '3':
+        shippingCost = 200.00;
+        break;
+      case '4':
+        shippingCost = 150.00;
+        break;
+      default:
+        shippingCost = 0.00;
+        break;
     }
-  }
-</script>
 
+    // Calculate the new total price with shipping
+    const newTotal = currentTotal + shippingCost;
+    // Update the displayed total price with the new value
+    document.getElementById('totalPriceDisplay').innerText = 'Rs. ' + currentTotal.toFixed(2);
+
+    // Update the totalPrice input field with the new total price
+    document.getElementById('totalPrice').innerText = 'Rs. ' + newTotal.toFixed(2);
+  }
+
+  // Call the updateTotalPrice function on page load (optional)
+  updateTotalPrice();
+  /*]]>*/
+</script>
 
 </body>
 </html>

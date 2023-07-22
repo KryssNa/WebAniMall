@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -23,21 +24,30 @@
         <div class=" col ">
             <div class="fav my-3 d-flex flex-wrap card-deck  ">
                 <div class="card" th:each="pet:${favoriteList}">
-                    <img class="card-img-top" th:if="${pet.getPet_id() != null and pet.getPet_id().imageBase64 != null}"
-                         th:src="'data:image/png;base64,' + ${pet.getPet_id().getImage()}" width="50px" height="100px" alt="Card image cap">
-                    <h3 class="text-center" th:text="${pet.getPet_id().petname}"></h3>
-                    <h3 class="text-center" th:text="${pet.getPet_id().description}"></h3>
-                    <div class="d-flex justify-content-center text-center">
-                        <a class="edit" th:href="@{~/user/deleteFav/}+${pet.id}">
-                            <button type="button" class="btn btn-primary">Remove</button>
-                        </a>
+                    <div class = "pet-imgs">
+                        <div class = "img-display">
+                            <div class = "img-showcase">
+                                <img class="card-img-top" th:if="${pet.getPet_id() != null and pet.getPet_id().imageBase64 != null}"
+                                     th:src="'data:image/png;base64,' + ${pet.getPet_id().getImage()}"
+                                     width="50px" height="100px" alt="${pet.getPet_id().name}" />
+                                <!-- If imageBase64 is null, display a placeholder image -->
+                                <img class="card-img-top" th:unless="${pet.getPet_id() != null and pet.getPet_id().imageBase64 != null}"
+                                     th:src="@{/images/GoldenRitriever.jpg}" ><!-- Replace this with the path to your placeholder image -->
+                                <!--                                style=" width="50px" height="100px" alt="Placeholder Image" />-->
+
+                                <h3 class="text-center" th:text="${pet.getPet_id().petname}"></h3>
+                                <h3 class="text-center" th:text="${pet.getPet_id().description}"></h3>
+                                <div class="d-flex justify-content-center text-center">
+                                    <a class="edit" th:href="@{~/user/deleteFav/}+${pet.id}">
+                                        <button type="button" class="btn btn-primary">Remove</button>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
