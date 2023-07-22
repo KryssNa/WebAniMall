@@ -114,7 +114,15 @@ public class UserController {
         User user = userService.findBYId(id);
         model.addAttribute("signup", new UserPojo(user));
         model.addAttribute("signups", user);
-        return "profile";
+        return "userProfile";
+    }
+
+    @GetMapping("/viewUserDetails/{id}")
+    public String getUserDetails(@PathVariable("id") Integer id, Model model, Principal principal) {
+        User user = userService.findBYId(id);
+        model.addAttribute("signup", new UserPojo(user));
+        model.addAttribute("signups", user);
+        return "userProfile";
     }
 
 
@@ -147,11 +155,11 @@ public class UserController {
     }
 
 
-    @PostMapping("/updateprofile")
-    public String updateRegister(@Valid UserPojo userPojo){
+    @PostMapping("/updateprofile/{id}")
+    public String updateRegister(@Valid UserPojo userPojo, @PathVariable("id") Integer id){
+        userPojo.setId(id);
         userService.save(userPojo);
         return "redirect:/user/homepage";}
-
 
 //    @GetMapping("/sendEmail")
 //    public String sendRegistrationEmail() {
