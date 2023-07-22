@@ -52,7 +52,7 @@
             <tbody>
             <tr th:each="pet:${bookingList}">
                 <td th:text="${pet.id}"></td>
-                <td th:text="${pet.getPet_id().petname}"></td>
+                <td th:text="${pet.getPet().petname}"></td>
                 <td> <a class="edit" th:href="@{~/user/delete/}+${pet.id}" >Delete</a></td>
             </tr>
             </tbody>
