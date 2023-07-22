@@ -168,18 +168,16 @@
           <h3 class="fw-bold mt-1 pt-1">Shipping Details</h3>
 
           <!-- Shipping Details Form -->
-          <form  th:action="@{/checkout}" th:object="${checkout}" th:method="post" >
-<!--            <input type="hidden" name="status" value="Pending" />-->
-
-            <!-- Hidden fields for pet_id, user_id, and total -->
-<!--            <input type="hidden" name="pet_id" th:value="${cartItems[0].pet.id}" />-->
-            <input type="hidden" name="total" th:value="${total}" />
+          <!-- Shipping Details Form -->
+          <form th:action="@{/checkout/confirm}" th:object="${checkout}" method="post" enctype="multipart/form-data">
+            <!-- Add the necessary hidden fields -->
+            <input type="hidden" name="totalPrice" th:value="${total}" />
+            <input type="hidden" name="totalQuantity" th:value="${cartItems.size()}" />
 
             <div class="mb-2">
-              <label for="shippingLastName" class="form-label">Your Name</label>
-             <input type="text" class="form-control" id="shippingLastName" name="shippingLastName" required />
+              <label for="shippingFullName" class="form-label">Your Name</label>
+              <input type="text" class="form-control" id="shippingFullName" name="shippingFullName" required />
             </div>
-
             <!-- Shipping Phone -->
             <div class="mb-2">
               <label for="shippingPhone" class="form-label">Phone</label>
@@ -194,10 +192,10 @@
 
             <!-- Payment upload image -->
             <div class="mb-2">
-              <label for="payment" class="form-label">Payment</label>
-              <input type="file" class="form-control" id="payment" name="payment" required />
+              <label for="image" class="form-label">Payment</label>
+              <input type="file" class="form-control" id="image" name="image" accept="image/*"  title="image" autofocus="false" required>
+              <!-- Add this section to display image upload validation errors -->
             </div>
-
             <!-- Submit Button -->
             <button type="submit" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Proceed to Checkout</button>
           </form>
@@ -211,7 +209,7 @@
 
 
 
-<script th:inline="javascript">
+<script>
   function updateQuantity(change, cartItemId) {
     var quantityInput = document.getElementById('quantityInput_' + cartItemId);
     if (quantityInput) { // Check if the element is found
