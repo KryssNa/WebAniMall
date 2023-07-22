@@ -38,7 +38,7 @@ public class AdminController {
         return "Admin/AddPet";
     }
     @PostMapping("/savepet")
-    public String createUser(@Valid PetPojo petPojo, BindingResult bindingResult, RedirectAttributes redirectAttributes
+    public String createPet(@Valid PetPojo petPojo, BindingResult bindingResult, RedirectAttributes redirectAttributes
     ) throws IOException {
 
         Map<String, String> requestError = validateRequest(bindingResult);
