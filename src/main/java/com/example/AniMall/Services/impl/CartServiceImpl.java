@@ -31,17 +31,55 @@ public class CartServiceImpl implements CartServices {
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/pet/";
 
 //    method to save to cart
-    @Override
-    public String saveToCart(Integer id, Principal principal) {
+//    @Override
+//    public String saveToCart(Integer id, Principal principal) {
+//        Cart cart = new Cart();
+//        cart.setUser(userRepo.findByEmail(principal.getName()).orElseThrow());
+//        cart.setPet(petRepo.findById(id).orElseThrow());
+//        cart.setPrice(petRepo.findById(id).orElseThrow().getPrice());
+//        cart.setQuantity(1);
+//        cartRepo.save(cart);
+//        return "Saved";
+//    }
+
+@Override
+public String saveToCart(Integer id, Principal principal) {
+    // Get the authenticated user
+    User user = userRepo.findByEmail(principal.getName()).orElseThrow();
+
+    // Find the Pet with the given id
+    Pet pet = petRepo.findById(id).orElseThrow();
+
+    // Get all the cart items for the user
+    List<Cart> userCartItems = fetchAll(user.getId());
+
+    // Check if the Cart already contains the Pet with the given id
+    boolean petExistsInCart = false;
+
+    for (Cart cartItem : userCartItems) {
+        if (cartItem.getPet().getId().equals(id)) {
+            // If the Cart already contains the Pet, update the quantity and price
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartItem.setPrice(pet.getPrice() * cartItem.getQuantity());
+            cartRepo.save(cartItem);
+            petExistsInCart = true;
+            break;
+        }
+    }
+
+    if (!petExistsInCart) {
+        // If the Cart does not contain the Pet, create a new Cart entry
         Cart cart = new Cart();
-        cart.setUser(userRepo.findByEmail(principal.getName()).orElseThrow());
-        cart.setPet(petRepo.findById(id).orElseThrow());
-        cart.setPrice(petRepo.findById(id).orElseThrow().getPrice());
+        cart.setUser(user);
+        cart.setPet(pet);
+        cart.setPrice(pet.getPrice());
         cart.setQuantity(1);
         cartRepo.save(cart);
-
-        return "Saved";
     }
+
+    return "Saved";
+}
+
 
     @Override
     public String deleteFromCart(Integer id) {
@@ -50,7 +88,7 @@ public class CartServiceImpl implements CartServices {
     }
 
     @Override
-    public String updateQuantity(Cart cart) {
+    public String updateCartDetails(Cart cart) {
         cartRepo.save(cart);
         return "Updated";
     }

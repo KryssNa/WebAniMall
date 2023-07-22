@@ -14,7 +14,7 @@ public interface CartServices {
 
     String deleteFromCart(Integer id);
 
-    String updateQuantity(Cart cart);
+    String updateCartDetails(Cart cart);
 
     List<Cart> fetchAll(Integer id);
 
