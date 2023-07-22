@@ -2,6 +2,8 @@ package com.example.AniMall.Repo;
 
 
 import com.example.AniMall.Entity.Cart;
+import com.example.AniMall.Entity.Pet;
+import com.example.AniMall.Entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,25 +19,16 @@ public interface CartRepo extends JpaRepository<Cart, Integer> {
     @Query(value = "SELECT * FROM cart WHERE user_id = ?1 AND status='Added'", nativeQuery = true)
     Optional<List<Cart>> fetchAll(Integer userId);
 
-    @Query(value = "SELECT product_id FROM cart WHERE status='Purchased' LIMIT 4", nativeQuery = true)
-    Optional<List<Integer>> fetchTrending();
-
-    @Query(value = "SELECT product_id, COUNT(product_id) FROM cart GROUP BY product_id ORDER BY COUNT(product_id) DESC LIMIT 4", nativeQuery = true)
-    Optional<List<Integer>> most();
-
-    @Query(value = "SELECT product_id, SUM(quantity) AS sum_column1 FROM cart GROUP BY product_id ORDER BY sum_column1 DESC LIMIT 4", nativeQuery = true)
-    Optional<List<Integer>> best();
-
-
     @Query(value = "SELECT user_id, COUNT(*) as count FROM Cart GROUP BY user_id", nativeQuery = true)
     List<Object[]> fetchAllCustomer();
-
-    @Query(value = "SELECT DISTINCT c.status FROM Cart c", nativeQuery = true)
-    List<String> findDistinctStatuses();
 
     @Query(nativeQuery = true, value = "SELECT * from Cart")
     List<Cart> findallCart();
 
+    @Query(value = "UPDATE cart SET quantity = ?1 WHERE id = ?2", nativeQuery = true)
+    @Modifying // Add this annotation for update queries
+    @Transactional
+    int updateQuantity(int newQuantity, Integer id);
 
     @Transactional
     @Modifying
