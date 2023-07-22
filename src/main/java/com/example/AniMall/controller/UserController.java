@@ -31,7 +31,7 @@ public class UserController {
     private final FavoriteServices favoriteServices;
 
     @GetMapping(value = {"/homepage"})
-    public String getSetting(Model model ,Principal principal, Authentication authentication) {
+    public String getHomepage(Model model ,Principal principal, Authentication authentication) {
 
         if (authentication!=null){
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

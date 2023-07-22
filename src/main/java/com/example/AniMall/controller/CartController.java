@@ -51,11 +51,30 @@ public class CartController {
         return "redirect:/user/homepage";
     }
 
+//    @PostMapping("/updateQuantity/{id}")
+//    public String updateQuantity(@Valid CartPojo cartPojo){
+//        Cart cart = cartService.fetchOne(cartPojo.getId());
+//        cart.setQuantity(cartPojo.getQuantity());
+//        cartService.updateQuantity(cart);
+//        return "redirect:/cart";
+//    }
+
     @PostMapping("/updateQuantity/{id}")
-    public String updateQuantity(@Valid CartPojo cartPojo){
-        Cart cart = cartService.fetchOne(cartPojo.getId());
-        cart.setQuantity(cartPojo.getQuantity());
-        cartService.updateQuantity(cart);
+    public String updateQuantity(@PathVariable int id){
+        Cart cart = cartService.fetchOne(id);
+        cart.setQuantity(cart.getQuantity()-1);
+        cartService.updateCartDetails(cart);
+        cart.setPrice(cart.getPet().getPrice()*cart.getQuantity());
+        cartService.updateCartDetails(cart);
+        return "redirect:/cart";
+    }
+    @PostMapping("/updatedQuantity/{id}")
+    public String updatedQuantity(@PathVariable int id){
+        Cart cart = cartService.fetchOne(id);
+        cart.setQuantity(cart.getQuantity()+1);
+        cartService.updateCartDetails(cart);
+        cart.setPrice(cart.getPet().getPrice()*cart.getQuantity());
+        cartService.updateCartDetails(cart);
         return "redirect:/cart";
     }
 
