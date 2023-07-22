@@ -24,16 +24,22 @@ public class UserServiceImpl implements UserServices {
     private final FavoriteRepo favoriteRepo;
     @Override
     public UserPojo save(UserPojo userPojo) {
+
         User user;
         if (userPojo.getId() != null) {
             user = userRepo.findById(userPojo.getId()).orElseThrow(() -> new RuntimeException("Not Found"));
         } else {
+            System.out.println("userPojo.getEmail() = " + userPojo.getId());
             user = new User();
         }
         user.setEmail(userPojo.getEmail());
         user.setFullname(userPojo.getFullname());
         user.setAge(userPojo.getAge());
         user.setGender(userPojo.getGender());
+        user.setPhone(userPojo.getPhone());
+        user.setAddress(userPojo.getAddress());
+        user.setCountry(userPojo.getCountry());
+        user.setAbout(userPojo.getAbout());
         user.setPassword(PasswordEncoderUtil.getInstance().encode(userPojo.getPassword()));
         userRepo.save(user);
         return new UserPojo(user);
@@ -56,6 +62,12 @@ public class UserServiceImpl implements UserServices {
                 .id(user.getId())
                 .fullname(user.getFullname())
                 .email(user.getEmail())
+                .age(user.getAge())
+                .gender(user.getGender())
+                .phone(user.getPhone())
+                .address(user.getAddress())
+                .country(user.getCountry())
+                .about(user.getAbout())
                 .build();
         return user;
     }
