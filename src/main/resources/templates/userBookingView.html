@@ -13,11 +13,10 @@
     <tbody>
     <tr th:each="pet:${bookingList}">
         <td th:text="${pet.id}"></td>
-        <td th:text="${pet.getPet_id().petname}"></td>
-        <td th:text="${pet.getPet_id().breed}"></td>
-        <td th:text="${pet.getUser_id().email}"></td>
+        <td th:text="${pet.getPet().petname}"></td>
+        <td th:text="${pet.getPet().breed}"></td>
+        <td th:text="${pet.getUser().email}"></td>
         <td> <a class="edit" th:href="@{~/user/delete/}+${pet.id}" >delete</a></td>
-
 
     </tr>
     </tbody>
