@@ -37,6 +37,9 @@ public class Cart {
     @Column
     private Integer quantity;
 
+    @Column
+    private double price;
+
     @Column(columnDefinition = "varchar(255) default 'Added'")
     private String status;
 

@@ -9,16 +9,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "summary_details")
-public class SummaryDetails {
+@Table(name = "shipping_details")
+public class ShippingDetails {
     @Id
     @SequenceGenerator(name = "summary_seq_gen", sequenceName = "summary_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "summary_seq_gen", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "booking_id", referencedColumnName = "id")
-    private Booking booking;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column
     private double totalPrice;

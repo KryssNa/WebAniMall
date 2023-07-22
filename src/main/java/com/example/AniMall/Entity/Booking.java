@@ -22,32 +22,15 @@ public class Booking {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @Column
+    private Integer quantity;
+
+    @Column
+    private double price;
+
     @Column(columnDefinition = "varchar(255) default 'Pending'")
     private String status;
 
-    @Column
-    private String shippingFullName;
-
-    @Column
-    private String shippingEmail;
-
-    @Column
-    private String shippingPhone;
-
-    @Column
-    private String shippingAddress;
-
-    @Column
-    private double total;
-
-    @Column
-    private int quantity;
-
-    @Column(name = "image")
-    private String image;
-
-    @Transient
-    private String imageBase64;
 
 }
 
