@@ -36,6 +36,19 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "about")
+    private String about;
+
+
     @Column(name = "gender")
     @NotEmpty
     @NotNull

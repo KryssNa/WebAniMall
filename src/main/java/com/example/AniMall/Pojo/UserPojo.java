@@ -32,12 +32,19 @@ public class UserPojo {
     @Max(value = 99, message = "Age must be at most 99")
     private Integer age;
 
-
+    private String phone;
+    private String address;
+    private String country;
+    private String about;
 
     public UserPojo(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.fullname = user.getFullname();
+        this.phone = user.getPhone();
+        this.address = user.getAddress();
+        this.country = user.getCountry();
+        this.about = user.getAbout();
         this.gender = user.getGender();
         this.age = user.getAge();
         this.password = user.getPassword();
