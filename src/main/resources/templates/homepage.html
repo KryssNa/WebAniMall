@@ -9,6 +9,34 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
     <title>AniMall</title>
+    <style>
+        /* Style for the search-box div */
+        #search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 16px;
+            height: 40px;
+            padding: 5px;
+            outline: none; /* Add this line to remove outline from the div */
+        }
+
+        /* Style for the input field inside the search-box */
+        #search-box input[type="search"] {
+            flex: 1;
+            border: none;
+            padding: 5px;
+            margin-top: 0;
+            outline: none; /* Add this line to remove outline from the input field */
+        }
+        #search-box .fa {
+            color: black;
+            margin-right: 5px;
+        }
+        #search-box .fa:hover {color: rgba(222, 253, 255, 0.46);}
+
+    </style>
 </head>
 <body>
 
@@ -55,6 +83,13 @@
                     <a class="nav-link text-uppercase text-dark" th:href="@{~/user/AboutUs}" >About us</a>
                 </li>
             </ul>
+            <form  method="get" style="width: 250px" th:href="@{~/user/searchPet}">
+            <div id="search-box">
+                <input type="search" placeholder="Enter a text" aria-label="Search" name="search" >
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            </form>
+
         </div>
     </div>
 </nav>
@@ -89,7 +124,7 @@
         <div class="title text-center">
             <h2 class="position-relative d-inline-block">New Pets</h2>
         </div>
-        <div class="justify-content-center d-flex" th:if="${petList.size() == 0}">
+        <div class="justify-content-center d-flex flex-column align-items-center" th:if="${petList.size() == 0}">
             <img th:src="@{/images/no-pet.svg}" class="img-fluid" alt="Responsive image" style="height: 500px; width: 500px;">
         </div>
 
