@@ -2,6 +2,7 @@ package com.example.AniMall.controller;
 
 import com.example.AniMall.Entity.Booking;
 import com.example.AniMall.Entity.Pet;
+import com.example.AniMall.Entity.ShippingDetails;
 import com.example.AniMall.Entity.User;
 import com.example.AniMall.Pojo.PetPojo;
 import com.example.AniMall.Services.BookingServices;
@@ -96,6 +97,13 @@ public class AdminController {
         List<Booking> bookings =bookingServices.findAll();
         model.addAttribute("alllist", bookings);
         return "Admin/ViewBookings";
+    }
+
+    @GetMapping("/viewAllShippings")
+    public String getShippingList(Model model) {
+        List<ShippingDetails> shipping =bookingServices.findAllShipping();
+        model.addAttribute("allListShipping", shipping);
+        return "Admin/Shippings";
     }
     public Map<String, String> validateRequest(BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {

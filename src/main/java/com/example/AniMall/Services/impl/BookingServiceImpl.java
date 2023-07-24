@@ -7,6 +7,7 @@ import com.example.AniMall.Pojo.BookingPojo;
 import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.PetRepo;
+import com.example.AniMall.Repo.SummaryDetailsRepo;
 import com.example.AniMall.Repo.UserRepo;
 import com.example.AniMall.Services.BookingServices;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,10 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingServices {
     private  final BookingRepo bookingRepo;
+    private  final SummaryDetailsRepo shippingRepo;
     private  final UserRepo userRepo;
     private  final PetRepo petRepo;
+    private final SummaryDetailsRepo summaryDetailsRepo;
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ShippingDetails";
 
@@ -99,14 +102,17 @@ public class BookingServiceImpl implements BookingServices {
     public List<Booking> findBookingById(Integer id) {
         return findAllinList(bookingRepo.findBookingById(id));
     }
+    public List<ShippingDetails> findShippingById(Integer id) {
+        return findShppinginList(shippingRepo.findShippingDetailsById(id));
+    }
 //    @Override
-//    public Order findOrderById(Integer id) {
-//            Order order=orderRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
-//            order=Order.builder()
-//                    .id(order.getId())
-//                    .quantity(order.getQuantity())
-//                    .user_id(order.getUser_id())
-//                    .product_id(order.getProduct_id())
+//    public ShippingDetails findOrderById(Integer id) {
+//        ShippingDetails shippingDetails=summaryDetailsRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
+//        shippingDetails=shippingDetails.builder()
+//                    .id(shippingDetails.getId())
+////                    .quantity(order.getQuantity())
+//                    .user_id(shippingDetails.getUser_id())
+//                    .product_id(.getProduct_id())
 //                    .address(order.getAddress())
 //                    .build();
 //            return order;
@@ -117,14 +123,44 @@ public class BookingServiceImpl implements BookingServices {
     public List<Booking> findAll() {
         return findAllinList(bookingRepo.findAll());
     }
+
+    @Override
+    public List<ShippingDetails> findAllShipping() {
+        return findShppinginList(shippingRepo.findAll());
+    }
     public List<Booking> findAllinList(List<Booking> list){
 
-        Stream<Booking> allJobsWithImage = list.stream().map(pet ->
+        Stream<Booking> allJobsWithImage = list.stream().map(shipping ->
                 Booking.builder()
-                        .id(pet.getId())
-                        .user(pet.getUser())
-                        .pet(pet.getPet())
-                        .status(pet.getStatus())
+                        .id(shipping.getId())
+                        .user(shipping.getUser())
+                        .pet(shipping.getPet())
+                        .shippingDetails(shipping.getShippingDetails())
+                        .quantity(shipping.getQuantity())
+                        .price(shipping.getPrice())
+                        .status(shipping.getStatus())
+                        .build()
+        );
+        list = allJobsWithImage.toList();
+        return list;
+    }
+
+    public List<ShippingDetails> findShppinginList(List<ShippingDetails> list){
+
+        Stream<ShippingDetails> allJobsWithImage = list.stream().map(shippingDetails ->
+                ShippingDetails.builder()
+                        .id(shippingDetails.getId())
+                        .user(shippingDetails.getUser())
+//                        .pet(pet.getPet())
+                        .shippingFullName(shippingDetails.getShippingFullName())
+                        .shippingAddress(shippingDetails.getShippingAddress())
+                        .shippingEmail(shippingDetails.getShippingEmail())
+                        .shippingPhone(shippingDetails.getShippingPhone())
+                        .totalPrice(shippingDetails.getTotalPrice())
+                        .totalQuantity(shippingDetails.getTotalQuantity())
+                        .image(shippingDetails.getImage())
+                        .imageBase64(getImageBase64(shippingDetails.getImage()))
+                        .status(shippingDetails.getStatus())
                         .build()
         );
         list = allJobsWithImage.toList();
@@ -132,18 +168,19 @@ public class BookingServiceImpl implements BookingServices {
     }
 
 
-
-
     @Override
     public Booking findById(Integer id) {
-        Booking pet= bookingRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
-        pet= Booking.builder()
-                .id(pet.getId())
-                .user(pet.getUser())
-                .pet(pet.getPet())
-                .status(pet.getStatus())
+        Booking booking= bookingRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
+        booking= Booking.builder()
+                .id(booking.getId())
+                .user(booking.getUser())
+                .pet(booking.getPet())
+                .shippingDetails(booking.getShippingDetails())
+                .quantity(booking.getQuantity())
+                .price(booking.getPrice())
+                .status(booking.getStatus())
                 .build();
-        return pet;
+        return booking;
     }
 
     @Override
@@ -165,6 +202,9 @@ public class BookingServiceImpl implements BookingServices {
         }
         booking.setUser(userRepo.findById(bookingPojo.getUser_id()).orElseThrow());
         booking.setPet(petRepo.findById(bookingPojo.getPet_id()).orElseThrow());
+        booking.setShippingDetails(shippingRepo.findById(bookingPojo.getShipping_id()).orElseThrow());
+        booking.setPrice(bookingPojo.getPrice());
+        booking.setQuantity(bookingPojo.getQuantity());
         booking.setStatus("pending");
         bookingRepo.save(booking);
         return new BookingPojo(booking);

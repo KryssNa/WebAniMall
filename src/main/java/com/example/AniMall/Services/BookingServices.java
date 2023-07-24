@@ -1,6 +1,7 @@
 package com.example.AniMall.Services;
 
 import com.example.AniMall.Entity.Booking;
+import com.example.AniMall.Entity.ShippingDetails;
 import com.example.AniMall.Pojo.BookingPojo;
 import com.example.AniMall.Pojo.ShippingDetailsDto;
 
@@ -10,7 +11,12 @@ import java.util.List;
 public interface BookingServices {
     BookingPojo save(BookingPojo bookingPojo);
     List<Booking> findBookingById(Integer id);
+
+    List<ShippingDetails> findShippingById(Integer id);
     List<Booking> findAll();
+
+    List<ShippingDetails> findAllShipping();
+
     Booking findById(Integer id);
     void deleteById(Integer id);
 

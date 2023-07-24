@@ -33,24 +33,22 @@ public class FavoriteServiceImpl implements FavoriteServices {
     }
 
     @Override
+    public FavoritePojo save(FavoritePojo favoritePojo, Integer user_id, Integer pet_id) {
+        Favorite favorite=new Favorite();
+        if(favoritePojo.getId()!=null){
+            favorite.setId(favorite.getId());
+        }
+        favorite.setUser_id(userRepo.findById(user_id).orElseThrow());
+        favorite.setPet_id(petRepo.findById(pet_id).orElseThrow());
+
+        favoriteRepo.save(favorite);
+        return new FavoritePojo(favorite);
+    }
+
+    @Override
     public List<Favorite> findFavoriteById(Integer id) {
         return findAllinList(favoriteRepo.findFavoriteById(id));
     }
-
-
-//    @Override
-//    public Order findOrderById(Integer id) {
-//            Order order=orderRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
-//            order=Order.builder()
-//                    .id(order.getId())
-//                    .quantity(order.getQuantity())
-//                    .user_id(order.getUser_id())
-//                    .product_id(order.getProduct_id())
-//                    .address(order.getAddress())
-//                    .build();
-//            return order;
-//    }
-
 
     @Override
     public List<Favorite> findAll() {
@@ -63,14 +61,11 @@ public class FavoriteServiceImpl implements FavoriteServices {
                         .id(pet.getId())
                         .user_id(pet.getUser_id())
                         .pet_id(pet.getPet_id())
-
                         .build()
         );
         list = allJobsWithImage.toList();
         return list;
     }
-
-
 
 
     @Override

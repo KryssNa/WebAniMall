@@ -1,9 +1,6 @@
 package com.example.AniMall.controller;
 
-import com.example.AniMall.Entity.Booking;
-import com.example.AniMall.Entity.Favorite;
-import com.example.AniMall.Entity.Pet;
-import com.example.AniMall.Entity.User;
+import com.example.AniMall.Entity.*;
 import com.example.AniMall.Pojo.FavoritePojo;
 import com.example.AniMall.Pojo.UserPojo;
 import com.example.AniMall.Services.BookingServices;
@@ -50,8 +47,7 @@ public class UserController {
         List<Pet> petList=petServices.getLimitedPets(page,petPerPage);
         model.addAttribute("page",page);
         model.addAttribute("petList", petList);
-        List<Pet> pets = petServices.getThreeRandomData();
-        model.addAttribute("petfetch", pets);
+        model.addAttribute("favourite", new FavoritePojo());
         model.addAttribute("userdata",userService.findByEmail(principal.getName()));
         model.addAttribute("pageCounts",petServices.countTotalPages(petPerPage));
         return "homepage";
@@ -138,6 +134,12 @@ public class UserController {
         favoriteServices.save(favoritePojo);
         return "redirect:/user/homepage";
     }
+    @PostMapping("/favorite/{useId}/{petId}")
+    public String getFav(FavoritePojo favoritePojo,@PathVariable("useId") Integer useId,@PathVariable("petId") Integer petId){
+        System.out.println("user id"+useId);
+        favoriteServices.save(favoritePojo,useId,petId);
+        return "redirect:/user/homepage";
+    }
 
     @GetMapping("/viewAllMyFavorites/{id}")
     public String getFavoriteinList(@PathVariable("id") Integer id, Model model, Principal principal) {
@@ -148,6 +150,17 @@ public class UserController {
         return "fav";
     }
 
+    @GetMapping("/viewMyBooking/{id}")
+    public String getBooking(@PathVariable("id") Integer id, Model model, Principal principal) {
+        List<Booking> booking =bookingServices.findBookingById(id);
+        List<ShippingDetails> shipping = bookingServices.findShippingById(id);
+        model.addAttribute("bookingList", booking);
+        model.addAttribute("shippingLsit", shipping);
+        model.addAttribute("userdata",userService.findByEmail(principal.getName()));
+
+        return "bookings";
+    }
+
     @GetMapping("/deleteFav/{id}")
     public String deleteFavorite(@PathVariable("id") Integer id) {
         favoriteServices.deleteById(id);
@@ -155,9 +168,9 @@ public class UserController {
     }
 
 
-    @PostMapping("/updateprofile/{id}")
-    public String updateRegister(@Valid UserPojo userPojo, @PathVariable("id") Integer id){
-        userPojo.setId(id);
+    @PostMapping("/updateprofile")
+    public String updateRegister(@Valid UserPojo userPojo){
+//        userPojo.setId(id);
         userService.save(userPojo);
         return "redirect:/user/homepage";}
 
@@ -171,6 +184,12 @@ public class UserController {
 //    public List<Pet> getPetsByCategory(@PathVariable String category){
 //        return petServices.getPetsByCategory(category);
 //    }
+
+
+    @GetMapping("/AboutUs")
+    public String getAboutUsPage(Model model) {
+        return "aboutUs";
+    }
 
 
 

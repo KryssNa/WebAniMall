@@ -183,21 +183,10 @@ public String saveToCart(Integer id, Principal principal) {
     // main checkout method
     @Override
     public String checkout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto, List<Cart> itemsToPurchase) throws IOException {
-        ShippingDetails shippingDetails = new ShippingDetails();
-        Booking booking = new Booking();
         User user = userRepo.findById(id).orElseThrow();
-        System.out.println("user email: "+user.getEmail());
-        for (Cart value : itemsToPurchase) {
-            booking.setId(value.getId());
-            booking.setQuantity(value.getQuantity());
-            booking.setPrice(value.getPet().getPrice());
-            value.setStatus("Ordered");
-            booking.setUser(value.getUser());
-            booking.setPet(value.getPet());
-            booking.setStatus("Ordered");
-        }
-        System.out.println("shipping details");
-        user.setId(id);
+        System.out.println("user email: " + user.getEmail());
+
+        ShippingDetails shippingDetails = new ShippingDetails();
         shippingDetails.setUser(user);
         shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
         shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
@@ -207,7 +196,7 @@ public String saveToCart(Integer id, Principal principal) {
         shippingDetails.setTotalPrice(shippingDetailsDto.getTotalPrice());
         shippingDetails.setTotalQuantity(shippingDetailsDto.getTotalQuantity());
 
-        if(shippingDetailsDto.getImage()!=null){
+        if (shippingDetailsDto.getImage() != null) {
             System.out.println("Image is not null");
             StringBuilder fileNames = new StringBuilder();
             System.out.println(UPLOAD_DIRECTORY);
@@ -217,11 +206,29 @@ public String saveToCart(Integer id, Principal principal) {
 
             shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
         }
-        bookingRepo.save(booking);
-        shippingDetails.setUser(user);
-        summaryDetailsRepo.save(shippingDetails);
 
-        System.out.println("shipping details inserted");
+        // Save the shipping details first
+        ShippingDetails savedShippingDetails = summaryDetailsRepo.save(shippingDetails);
+        System.out.println("Shipping details inserted");
+
+        // Save the bookings related to the shipping details
+        for (Cart value : itemsToPurchase) {
+            Booking booking = new Booking();
+            booking.setId(value.getId());
+            booking.setQuantity(value.getQuantity());
+            booking.setPrice(value.getPet().getPrice());
+            value.setStatus("Ordered");
+            booking.setUser(value.getUser());
+            booking.setPet(value.getPet());
+            booking.setStatus("Ordered");
+
+            // Set the shipping details for each booking
+            booking.setShippingDetails(savedShippingDetails);
+
+            // Save each booking
+            bookingRepo.save(booking);
+        }
+
         return "Saved Purchase";
     }
 
