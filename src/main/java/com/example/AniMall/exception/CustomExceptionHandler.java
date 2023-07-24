@@ -23,7 +23,7 @@ public class CustomExceptionHandler {
             modelAndView.setViewName("error/500");
         } else {
             // For other status codes, set a generic error page
-            modelAndView.setViewName("error/generic");
+            modelAndView.setViewName("error/error");
         }
 
         return modelAndView;
