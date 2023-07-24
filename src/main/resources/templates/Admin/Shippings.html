@@ -71,7 +71,10 @@
 
       <h2>Shipping Application</h2>
       <br>
-      <table id="myTable" class="table table-striped table-hover table-sub-heading-color table-responsive table-striped-columns fa-sort mt-5">
+      <div class="justify-content-center d-flex align-items-center" th:if="${allListShipping.size() == 0}">
+        <img th:src="@{/images/no-pet.svg}" class="img-fluid" alt="Responsive image">
+      </div>
+      <table id="myTable" class="table table-striped table-hover table-sub-heading-color table-responsive table-striped-columns fa-sort mt-5"th:if="${allListShipping.size()>0}">
         <thead>
         <tr>
           <th>Id</th>
