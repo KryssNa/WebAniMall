@@ -11,12 +11,12 @@
 
 </head>
 
-<body style="display: flex; flex-direction: row;">
+<body style="display: flex; flex-direction: row; ">
 
 
 <div th:replace="fragments/header :: header"></div>
-<div class="container mt-4">
-    <form th:action="@{/user/updateprofile/}+${signup.id}" th:object="${signup}" th:method="post">
+<div class="container mt-4" >
+    <form th:action="@{/user/updateprofile}" th:object="${signup}" th:method="post">
         <input type="text" class="form-control is-valid" hidden="hidden" name="id" th:value="${signup.id}">
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -93,7 +93,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
                                     <div class="form-group">
                                         <label for="password">Current Password</label>
-                                        <input type="password" class="form-control" id="password" title="password"  name="password" placeholder="Enter current password" required>
+                                        <input type="password" class="form-control" id="password" title="password"  name="password" placeholder="Enter current password">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
