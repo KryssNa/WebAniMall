@@ -26,6 +26,10 @@ public class BookingPojo {
     @Positive(message = "User ID must be a positive number.")
     private int user_id;
 
+    @NotNull(message = "Shipping ID cannot be null.")
+    @Positive(message = "Shipping ID must be a positive number.")
+    private int shipping_id;
+
     private String status;
 
 
@@ -37,6 +41,7 @@ public class BookingPojo {
         this.id= booking.getId();
         this.pet_id= booking.getPet().getId();
         this.user_id= booking.getUser().getId();
+        this.shipping_id= booking.getShippingDetails().getId();
         this.quantity= booking.getQuantity();
         this.price= booking.getPrice();
         this.status= booking.getStatus();

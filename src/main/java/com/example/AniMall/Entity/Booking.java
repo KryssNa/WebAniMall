@@ -22,6 +22,10 @@ public class Booking {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "shipping_id", referencedColumnName = "id")
+    private ShippingDetails shippingDetails;
+
     @Column
     private Integer quantity;
 
