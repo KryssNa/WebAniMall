@@ -9,6 +9,45 @@
             flex-wrap: wrap;
             flex-direction: row;
         }
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Styles for the container div */
+        .container {
+            text-align: center;
+        }
+
+        /* Styles for the image */
+        .img-fluid {
+            width: 600px;
+            height: 600px;
+        }
+
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
+            /* Small devices (phones) */
+            .img-fluid {
+                max-width: 80%; /* Adjust the width as needed */
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 991px) {
+            /* Medium devices (tablets) */
+            .img-fluid {
+                max-width: 60%; /* Adjust the width as needed */
+            }
+        }
+
+        /* Add more media queries for other screen sizes if necessary */
+
     </style>
 </head>
 <body>
@@ -21,8 +60,11 @@
 <div class="container" >
     <div class="row">
         <h2 class="text-center">Your Favorites</h2>
+        <div class="justify-content-center d-flex align-items-center" th:if="${favoriteList.size() == 0}">
+            <img th:src="@{/images/no-data.svg}" class="img-fluid" alt="Responsive image">
+        </div>
         <div class=" col ">
-            <div class="fav my-3 d-flex flex-wrap card-deck  ">
+            <div class="fav my-3 d-flex flex-wrap card-deck" th:if="${favoriteList.size()>0}">
                 <div class="card" th:each="pet:${favoriteList}">
                     <div class = "pet-imgs">
                         <div class = "img-display">
