@@ -529,6 +529,38 @@ color:var(--color-primary);
 
 }
 
+     /* Apply custom styles to the table */
+ #myTable {
+     width: 100%;
+     border-collapse: collapse;
+ }
+
+#myTable th {
+    background-color: rgba(231, 255, 222, 0.22);
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ccc;
+}
+
+#myTable td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Add alternating background color to table rows */
+#myTable tr:nth-child(even) {
+    background-color: rgba(222, 253, 255, 0.32);
+}
+
+/* Add hover effect on table rows */
+#myTable tr:hover {
+    background-color: rgba(0, 128, 0, 0.28);
+    cursor: pointer;
+}
+
+
 /*table sorting*/
 
 table.dataTable thead .sorting:after,
