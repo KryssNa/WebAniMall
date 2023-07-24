@@ -584,3 +584,29 @@ main .recent-adopted a{
 .cart-button-cart:hover {
     color: green;
 }
+
+/*card fluid*/
+
+
+/* Styles for the image */
+.img-fluid {
+    height: 615px;
+    width: 615px;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+    /* Small devices (phones) */
+    .img-fluid {
+        height: 300px;
+        width: 300px; /* Adjust the width as needed */
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    /* Medium devices (tablets) */
+    .img-fluid {
+        height: 400px;
+        width: 400px;
+    }
+}
