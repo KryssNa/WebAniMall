@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -191,7 +192,20 @@ public class UserController {
         return "aboutUs";
     }
 
+    @GetMapping("/searchPet")
+    public String searchPet(@RequestParam("search") String searchText, Model model) {
+        // You can use a service or repository to fetch the search results based on the searchText
+        List<Pet> searchResults = petServices.findPetByPartialName(searchText);
 
+        // Pass the search results to the view
+        model.addAttribute("limitedPets", searchResults);
+        System.out.println("pet at index 0"+searchResults.get(0));
+        // Add any other necessary attributes
+        if(!searchResults.isEmpty())
+            return "redirect:/pet/petInfo/"+searchResults.get(0);
+        else
+            return "homepage";
+    }
 
 }
 

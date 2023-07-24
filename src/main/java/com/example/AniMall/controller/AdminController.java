@@ -8,16 +8,15 @@ import com.example.AniMall.Pojo.PetPojo;
 import com.example.AniMall.Services.BookingServices;
 import com.example.AniMall.Services.PetServices;
 import com.example.AniMall.Services.UserServices;
+import com.example.AniMall.exception.AppException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -52,12 +51,6 @@ public class AdminController {
         return "redirect:/admin/viewallpet/0/5";
     }
 
-//    @GetMapping("/viewallpet")
-//    public String getPetinList(Model model) {
-//        List<Pet> petList=petServices.findAll();
-//        model.addAttribute("alllist", petList);
-//        return "Admin/allPetList";
-//    }
     @GetMapping("/viewallpet/{page}/{petPerPage}")
     public String getPetinList(Model model,@PathVariable int page,@PathVariable int petPerPage) {
         List<Pet> petList=petServices.getLimitedPets(page,petPerPage);
@@ -94,9 +87,14 @@ public class AdminController {
 
     @GetMapping("/viewallbooking")
     public String getBookingList(Model model) {
-        List<Booking> bookings =bookingServices.findAll();
-        model.addAttribute("alllist", bookings);
-        return "Admin/ViewBookings";
+        try {
+            List<Booking> bookings = bookingServices.findAll();
+            model.addAttribute("alllist", bookings);
+            return "Admin/ViewBookings";
+        } catch (Exception ex) {
+            // Handle the exception and throw an appropriate AppException with the corresponding status code
+            throw new AppException("Error retrieving booking list", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/viewAllShippings")
@@ -131,4 +129,18 @@ public class AdminController {
         userServices.deleteById(id);
         return "redirect:/admin/list";
     }
+
+    @GetMapping("/searchPet")
+    public String searchPet(@RequestParam("search") String searchText, Model model) {
+        // Implement your search logic here
+        // You can use a service or repository to fetch the search results based on the searchText
+        List<Pet> searchResults = petServices.findPetByPartialName(searchText);
+
+        // Pass the search results to the view
+        model.addAttribute("limitedPets", searchResults);
+        // Add any other necessary attributes
+
+        return "Admin/allPetList"; // Replace "admin-page" with the name of your view
+    }
 }
+
