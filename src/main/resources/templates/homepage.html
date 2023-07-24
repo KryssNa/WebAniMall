@@ -89,10 +89,14 @@
         <div class="title text-center">
             <h2 class="position-relative d-inline-block">New Pets</h2>
         </div>
+        <div class="justify-content-center d-flex" th:if="${petList.size() == 0}">
+            <img th:src="@{/images/no-pet.svg}" class="img-fluid" alt="Responsive image" style="height: 500px; width: 500px;">
+        </div>
+
         <!-- Content -->
-        <div class="shop-container">
+        <div class="shop-container" >
             <!-- Box 1 -->
-            <div class="box" th:each="pet:${petList}">
+            <div class="box" th:each="pet:${petList}" >
                 <a th:href="@{~/pet/petinfo/}+${pet.id}">
                     <div class="box-img">
                         <img th:src="'data:image/png;base64,'+${pet.imageBase64}" alt="">
@@ -127,126 +131,128 @@
         </div>
         <div style="display: flex;justify-content: flex-end;margin-top: 16px;">
         <div class="prev-btn">
-            <a class="btn" th:href="@{/user/prev/} + ${page} + '/8'" th:if="${page > 0}">Previous</a>
-            <a class="btn disabled" th:if="${page <= 0}">Previous</a>
+            <a class="btn" th:href="@{/user/prev/} + ${page} + '/8'" th:if="${page > 0} and ${petList.size()>0}" >Previous</a>
+            <a class="btn disabled" th:if="${page <= 0} and ${petList.size()>0}">Previous</a>
         </div>
             <div class="next-btn"style="margin-left: 16px">
-                <a class="btn " th:href="@{/user/next/} + ${page} + '/8'" th:if="${page < pageCounts-1}">Next</a>
-                <a class="btn disabled" th:if="${page >= pageCounts-1}">Next</a>
+                <a class="btn " th:href="@{/user/next/} + ${page} + '/8'" th:if="${page < pageCounts-1} and ${petList.size()>0}">Next</a>
+                <a class="btn disabled" th:if="${page >= pageCounts-1} and ${petList.size()>0}">Next</a>
             </div>
         </div>
     </div>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div >
+                    <div class="accordion" id="faqs">
+                        <div class="title text-center mb-3">
+                            <h2 class="position-relative d-inline-block">FAQs</h2>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    What types of pets do you offer for sale?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>We offer a variety of pets for sale, including dogs and cats.</strong> Our pets come from reputable breeders and rescue organizations to ensure they are healthy and well-cared for before being placed for adoption.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                        aria-expanded="true" aria-controls="collapseTwo">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    Can I book a pet for purchase in advance?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>Yes, you can book a pet in advance for purchase.</strong> We offer a reservation system that allows you to secure a pet before it becomes available for adoption. Contact us for more details on the booking process.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingThree">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    Do you provide shipping services for pets?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>At the moment, we do not offer shipping services for pets.</strong> Our focus is on providing a personal and secure adoption process for our pets. You will need to visit our store to adopt a pet in person.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingFour">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                        aria-expanded="true" aria-controls="collapseFour">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    How do I train my new pet?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>Training your new pet is important to ensure a happy and well-behaved companion.</strong> We recommend positive reinforcement training methods. You can also enroll in training classes or seek advice from our staff on effective training techniques for dogs and cats.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingFive">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                        aria-expanded="true" aria-controls="collapseFive">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    What vaccinations do my new pet need?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>Proper vaccinations are crucial for the health of your new pet.</strong> Our pets are up-to-date on core vaccinations. We will provide you with vaccination records and guidance on when to schedule follow-up shots for your pet's well-being.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mb-2" id="headingSix">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix"
+                                        aria-expanded="true" aria-controls="collapseSix">
+                                    <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
+                                    Do you offer pet grooming services?
+                                </button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                                 data-bs-parent="#faqs">
+                                <div class="accordion-body">
+                                    <strong>Yes, we offer professional pet grooming services.</strong> Our trained groomers will provide grooming services for dogs and cats, including baths, haircuts, nail trimming, and more, to keep your pet looking and feeling their best.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div >
-            <div class="accordion" id="faqs">
-                <div class="title text-center mb-3">
-                    <h2 class="position-relative d-inline-block">FAQs</h2>
-                </div>
 
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            What types of pets do you offer for sale?
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>We offer a variety of pets for sale, including dogs and cats.</strong> Our pets come from reputable breeders and rescue organizations to ensure they are healthy and well-cared for before being placed for adoption.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingTwo">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                aria-expanded="true" aria-controls="collapseTwo">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            Can I book a pet for purchase in advance?
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>Yes, you can book a pet in advance for purchase.</strong> We offer a reservation system that allows you to secure a pet before it becomes available for adoption. Contact us for more details on the booking process.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingThree">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            Do you provide shipping services for pets?
-                        </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>At the moment, we do not offer shipping services for pets.</strong> Our focus is on providing a personal and secure adoption process for our pets. You will need to visit our store to adopt a pet in person.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingFour">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                aria-expanded="true" aria-controls="collapseFour">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            How do I train my new pet?
-                        </button>
-                    </h2>
-                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>Training your new pet is important to ensure a happy and well-behaved companion.</strong> We recommend positive reinforcement training methods. You can also enroll in training classes or seek advice from our staff on effective training techniques for dogs and cats.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingFive">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                aria-expanded="true" aria-controls="collapseFive">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            What vaccinations do my new pet need?
-                        </button>
-                    </h2>
-                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>Proper vaccinations are crucial for the health of your new pet.</strong> Our pets are up-to-date on core vaccinations. We will provide you with vaccination records and guidance on when to schedule follow-up shots for your pet's well-being.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header mb-2" id="headingSix">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix"
-                                aria-expanded="true" aria-controls="collapseSix">
-                            <div class="circle-icon"> <i class="fa fa-paw"></i> </div>
-                            Do you offer pet grooming services?
-                        </button>
-                    </h2>
-                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
-                         data-bs-parent="#faqs">
-                        <div class="accordion-body">
-                            <strong>Yes, we offer professional pet grooming services.</strong> Our trained groomers will provide grooming services for dogs and cats, including baths, haircuts, nail trimming, and more, to keep your pet looking and feeling their best.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <hr>
 <br>
 

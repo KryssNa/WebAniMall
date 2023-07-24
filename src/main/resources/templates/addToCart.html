@@ -26,7 +26,13 @@
                 <h6 class="mb-0 text-muted" th:text="${cartItems.size()}"></h6>
               </div>
               <hr class="my-4">
+              <div th:if="${cartItems.size() == 0}">
+                <img th:src="@{/images/no-data.svg}"class="img-fluid" alt="Responsive image" style="    height: 475px;
+    width: 500px;
+    margin-top: -70px;
+    margin-left: 120px;">
 
+                </div>
               <!-- Loop through cart items and display details -->
               <div th:each="cartItem : ${cartItems}" th:if="${cartItem.pet != null}">
                 <!-- Cart item details -->
@@ -58,7 +64,7 @@
                     <h6 class="mb-0" th:text="'Rs. ' + ${cartItem.getPrice()}"></h6>
                   </div>
                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                    <form th:action="@{/cart/updateQuantity/{id}(id=${cartItem.id})}" method="post">
+                    <form th:action="@{/cart/remove/{id}(id=${cartItem.id})}" method="post">
                       <button type="submit" class="btn btn-link text-muted" >
                         <i class="fas fa-times"></i>
                       </button>
