@@ -82,7 +82,7 @@ public class AdminController {
     @GetMapping("/deletepet/{id}")
     public String deleteMembers(@PathVariable("id") Integer id) {
         petServices.deleteById(id);
-        return "redirect:/admin/viewallpet";
+        return "redirect:/admin/viewallpet/0/4";
     }
 
     @GetMapping("/viewallbooking")

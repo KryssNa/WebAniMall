@@ -2,7 +2,9 @@ package com.example.AniMall.Services.impl;
 
 import com.example.AniMall.Entity.Pet;
 import com.example.AniMall.Pojo.PetPojo;
+import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.CartRepo;
+import com.example.AniMall.Repo.FavoriteRepo;
 import com.example.AniMall.Repo.PetRepo;
 import com.example.AniMall.Services.PetServices;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.stream.Stream;
 public class PetServiceImpl implements PetServices {
     private  final PetRepo petRepo;
     private final CartRepo cartRepo;
+    private final BookingRepo bookingRepo;
+    private final FavoriteRepo favoriteRepo;
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/pet";
     @Override
     public PetPojo save(PetPojo petPojo) throws IOException {
@@ -58,6 +62,9 @@ public class PetServiceImpl implements PetServices {
     }
     @Override
     public void deleteById(Integer id) {
+        cartRepo.deleteCartByPetId(id);
+        bookingRepo.deleteBookingByPetId(id);
+        favoriteRepo.deleteFavoritesByPetId(id);
         petRepo.deleteById(id);
     }
 

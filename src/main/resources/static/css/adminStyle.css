@@ -718,4 +718,15 @@ table.dataTable thead .sorting_desc_disabled:before {
     }
 }
 
-/* Add more media queries for other screen sizes if necessary */
+/*delete btn*/
+/*.btn-delete {*/
+/*    color: #fff;*/
+/*    background-color: #dc3545;*/
+/*    border-color: #dc3545;*/
+/*}*/
+
+#btn-delete:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+}

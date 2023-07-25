@@ -9,11 +9,12 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
     <title>AdminDashboard</title>
 
-    <!-- MATERIAL ICONS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- css class -->
-    <link rel="stylesheet" th:href="@{/css/adminStyle.css}">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/adminStyle.css}">-->
+    <link rel="stylesheet" th:href="@{/css/addPet.css}">
+    <link rel="stylesheet" th:href="@{/css/pet.css}">
+
 </head>
 
 <body>
@@ -75,67 +76,73 @@
         </div>
         <main>
             <div class="form-container d-flex justify-content-center">
-                <form th:method="post" th:action="@{/admin/savepet}" th:object="${add}" enctype="multipart/form-data">
+                <form th:method="post" th:action="@{/admin/savepet}" th:object="${add}" enctype="multipart/form-data" style="width:75% ">
                     <fieldset>
-                        <h1 class="text-center mb-4">Add New Pet</h1>
+                        <h1 class="text-center mb-2">Add New Pet</h1>
 
                         <input type="text" hidden="hidden" th:field="*{id}" th:value="${add.id}">
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="pet-name">Pet Name<span class="required">*</span></label>
+                                <label for="pet-name">Pet Name<span class="required"></span></label>
                                 <input type="text" id="pet-name" class="form-control" required th:field="*{petname}" th:value="${add.petname}">
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="breed">Breed<span class="required">*</span></label>
+                                <label for="breed">Breed<span class="required"></span></label>
                                 <input type="text" id="breed" class="form-control" required th:field="*{breed}" th:value="${add.breed}">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="price">Price<span class="required">*</span></label>
+                                <label for="price">Price<span class="required"></span></label>
                                 <input type="text" id="price" class="form-control" required th:field="*{price}">
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="quantity">Quantity<span class="required">*</span></label>
+                                <label for="quantity">Quantity<span class="required"></span></label>
                                 <input type="text" id="quantity" class="form-control" required th:field="*{quantity}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="color">Color<span class="required">*</span></label>
+                            <label for="color">Color<span class="required"></span></label>
                             <input type="text" id="color" class="form-control" required th:field="*{color}">
                         </div>
 
                         <div class="form-group">
-                            <label for="category">Category<span class="required">*</span></label>
+                            <label for="category">Category<span class="required"></span></label>
                             <input type="text" id="category" class="form-control" required th:field="*{category}">
                         </div>
 
                         <div class="form-group">
-                            <label for="pet-description">Description<span class="required">*</span></label>
-                            <textarea id="pet-description" class="form-control" required th:field="*{description}" th:value="${add.description}"
-                                      rows="4"></textarea>
+                            <label for="pet-description">Description<span class="required"></span></label>
+                            <textarea id="pet-description" class="form-control" required th:field="*{description}" th:value="${add.description}" rows="4"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="image">Image<span class="required">*</span></label>
-                            <input type="file" id="image" accept="image/*" name="image" required>
-                        </div>
+                        <div class="row">
+                            <div class="form-group" style="flex: 0;margin-right: 16px">
+                                <label for="file" class="required w-100" style="cursor: pointer;width: 125px;margin-bottom: 8px">Upload Image</label>
+                                <input type="file" name="image" id="file" accept="image/*" required onchange="loadFile(event)" style="display: none;">
+                                <button class="btn btn-outline-dark w-100" type="submit" style="width: 125px">Add Pet</button>
 
-                        <div class="d-md-flex justify-content-md-between align-items-center">
-                            <button class="btn btn-outline-dark" type="submit">Add Pet</button>
-                            <img th:src="@{${add.image}}" class="img-thumbnail img-fluid" alt="Uploaded Image">
-                        </div>
+                            </div>
+                         <div class="image-preview">
+                            <img id="output" width="200px" />
+                        </div></div>
                     </fieldset>
                 </form>
             </div>
         </main>
 
     </div>
+    <script>
+        var loadFile = function(event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
 </body>
 
 </html>

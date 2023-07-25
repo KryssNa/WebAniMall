@@ -8,88 +8,11 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
     <title>AdminDashboard</title>
 
-    <!-- MATERIAL ICONS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" >
-    <!-- css class -->
-<!--    <link rel="stylesheet" th:href="@{/css/styles.css}">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/adminStyles.css}">
     <link rel="stylesheet" th:href="@{/css/addPet.css}">
 
-    <style>
-        /* Table styles */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th, .table td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-weight: bold;
-        }
-
-        /* Add alternating background color to table rows */
-        .table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        /* Add hover effect on table rows */
-        .table tbody tr:hover {
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-
-        /* Add custom styles for table caption */
-        .table-caption {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .table th, .table td {
-                padding: 8px;
-            }
-
-            .table-caption {
-                font-size: 20px;
-            }
-
-            .table tbody tr {
-                display: block;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-            }
-
-            .table tbody td {
-                display: block;
-                text-align: left;
-            }
-
-            .table tbody td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: inline-block;
-                width: 120px;
-                margin-right: 5px;
-            }
-
-            .table tbody img {
-                display: block;
-                margin: 0 auto;
-            }
-
-        }
-
-
-    </style>
 </head>
 <body>
 <!-- start of sidebar -->
@@ -184,7 +107,12 @@
                     <td class="align-items-center" th:text="${pet.description}"></td>
                     <td><img class="align-items-center" th:src="'data:image/png;base64,' + ${pet.imageBase64}" width="100" height="100"/></td>
                     <td><a class="edit align-items-center" th:href="@{~/admin/editpet/{petId}(petId=${pet.id})}">Edit</a></td>
-                    <td><a class="delete align-items-center" th:href="@{~/admin/deletepet/{petId}(petId=${pet.id})}">Delete</a></td>
+                     <td>
+                        <a class="btn btn-delete rounded-3" th:href="@{~/admin/deletepet/{petId}(petId=${pet.id})}">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
+
                 </tr>
                 </tbody>
             </table>
