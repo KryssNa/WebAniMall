@@ -10,9 +10,7 @@ import com.example.AniMall.exception.AppException;
 import com.example.AniMall.Repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
 
@@ -29,6 +27,7 @@ public class UserServiceImpl implements UserServices {
         User user;
         if (userPojo.getId() != null) {
             user = userRepo.findById(userPojo.getId()).orElseThrow(() -> new RuntimeException("Not Found"));
+            userPojo.setPassword(user.getPassword());
         } else {
             System.out.println("userPojo.getEmail() = " + userPojo.getId());
             user = new User();
@@ -41,15 +40,6 @@ public class UserServiceImpl implements UserServices {
         user.setAddress(userPojo.getAddress());
         user.setCountry(userPojo.getCountry());
         user.setAbout(userPojo.getAbout());
-//        // Only update the password if it is provided in the form
-//        if (!StringUtils.isEmpty(userPojo.getPassword())) {
-//            user.setPassword(PasswordEncoderUtil.getInstance().encode(userPojo.getPassword()));
-//        }
-
-        // Only update the password if it is provided in the form and not empty
-        if (userPojo.getPassword() != null && !userPojo.getPassword().isEmpty()) {
-            user.setPassword(PasswordEncoderUtil.getInstance().encode(userPojo.getPassword()));
-        }
         userRepo.save(user);
         return new UserPojo(user);
     }
@@ -89,5 +79,22 @@ public class UserServiceImpl implements UserServices {
         favoriteRepo.deleteById(id);
         userRepo.deleteById(id);
     }
+
+    @Override
+    public boolean checkIfValidOldPassword(User user, String oldPassword) {
+        return PasswordEncoderUtil.getInstance().matches(oldPassword, user.getPassword());
+    }
+
+    @Override
+    public void changeUserPassword(User user, String newPassword) {
+        userRepo.updatePassword(PasswordEncoderUtil.getInstance().encode(newPassword),user.getEmail());
+        System.out.println("newPassword = " + newPassword);
+    }
+
+    @Override
+    public void update(User user) {
+        userRepo.save(user);
+    }
+
 }
 

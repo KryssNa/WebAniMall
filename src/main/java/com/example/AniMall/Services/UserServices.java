@@ -11,4 +11,10 @@ public interface UserServices {
     User findBYId(Integer id);
     List<User> fetchAll();
     void deleteById(Integer id);
+
+    boolean checkIfValidOldPassword(User user, String oldPassword);
+
+    void changeUserPassword(User user, String newPassword);
+
+    void update(User user);
 }

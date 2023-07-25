@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -169,11 +168,51 @@ public class UserController {
     }
 
 
-    @PostMapping("/updateprofile")
-    public String updateRegister(@Valid UserPojo userPojo){
-//        userPojo.setId(id);
-        userService.save(userPojo);
-        return "redirect:/user/homepage";}
+    @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute("userPojo") UserPojo userPojo, Model model) {
+        User user = userService.findByEmail(userPojo.getEmail());
+
+        if (user != null) {
+            // Update the non-password fields
+            user.setFullname(userPojo.getFullname());
+            user.setAge(userPojo.getAge());
+            user.setGender(userPojo.getGender());
+            user.setPhone(userPojo.getPhone());
+            user.setAddress(userPojo.getAddress());
+            user.setCountry(userPojo.getCountry());
+            user.setAbout(userPojo.getAbout());
+
+            // Only update the password if a new password is provided
+            if (userPojo.getPassword() != null && !userPojo.getPassword().isEmpty()) {
+                userService.changeUserPassword(user, userPojo.getPassword());
+            }
+            // Save the updated user using the appropriate method in UserServices
+            userService.update(user);
+
+            model.addAttribute("successMsg", "User details updated successfully");
+        } else {
+            model.addAttribute("errorMsg", "User not found");
+        }
+        return "redirect:/user/homepage";
+    }
+    @PostMapping("/updatePassword")
+    public String updatePassword(@RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Principal principal, Model model) {
+        User user = userService.findByEmail(principal.getName());
+        if (userService.checkIfValidOldPassword(user, oldPassword)) {
+            if (newPassword.equals(confirmPassword)) {
+                userService.changeUserPassword(user, newPassword);
+                model.addAttribute("successMsg", "Password changed successfully");
+            } else {
+                model.addAttribute("errorMsg", "New password and confirm password do not match");
+            }
+        } else {
+            model.addAttribute("errorMsg", "Old password is not correct");
+        }
+        return "redirect:/user/homepage";
+    }
 
 //    @GetMapping("/sendEmail")
 //    public String sendRegistrationEmail() {
@@ -194,18 +233,15 @@ public class UserController {
 
     @GetMapping("/searchPet")
     public String searchPet(@RequestParam("search") String searchText, Model model) {
-        // You can use a service or repository to fetch the search results based on the searchText
         List<Pet> searchResults = petServices.findPetByPartialName(searchText);
 
         // Pass the search results to the view
-        model.addAttribute("limitedPets", searchResults);
+        model.addAttribute("petsResult", searchResults);
         System.out.println("pet at index 0"+searchResults.get(0));
         // Add any other necessary attributes
         if(!searchResults.isEmpty())
             return "redirect:/pet/petInfo/"+searchResults.get(0);
         else
-            return "homepage";
+            return "searchResults";
     }
-
 }
-
