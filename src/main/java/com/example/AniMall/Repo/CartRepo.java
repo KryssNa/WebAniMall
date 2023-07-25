@@ -39,5 +39,10 @@ public interface CartRepo extends JpaRepository<Cart, Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM Cart WHERE status = :status")
     List<Cart> findCartByStatus(@Param("status") String status);
 
+//    delete form cart using pet id
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM Cart WHERE pet_id = ?1")
+    void deleteCartByPetId(Integer pet_id);
 }
 
