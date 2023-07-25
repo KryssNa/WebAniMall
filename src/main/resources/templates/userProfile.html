@@ -15,34 +15,36 @@
 
 
 <div th:replace="fragments/header :: header"></div>
-<div class="container mt-4" >
-    <form th:action="@{/user/updateprofile}" th:object="${signup}" th:method="post">
-        <input type="text" class="form-control is-valid" hidden="hidden" name="id" th:value="${signup.id}">
-        <div class="row gutters">
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="account-settings">
-                            <div class="user-profile">
-                                <div class="user-avatar">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Kryss Admin">
-                                </div>
-                                <h5 class="user-name">Kryss Na</h5>
-                                <h6 class="user-email">yuki@Maxwell.com</h6>
+
+<div class="container mt-4">
+    <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Kryss Admin">
                             </div>
-                            <div class="about mt-3">
-                                <h5>About</h5>
-                                <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
-                            </div>
+                            <h5 class="user-name" th:text="${signup.fullname}"></h5>
+                            <h6 class="user-email" th:text="${signup.email}"></h6>
+                        </div>
+                        <div class="about mt-3">
+                            <h5>About</h5>
+                            <p>I'm Kryss Na.<br> Full Stack Developer . <br>I enjoy creating user-friendly, delightful and human experiences.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="card h-200">
-                    <div class="card-body">
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card h-200">
+                <div class="card-body">
+                    <div class="row gutters mt-1">
+                        <form th:action="@{~/user/updateUser}" th:object="${signup}" th:method="post">
+                            <input type="text" class="form-control is-valid" hidden="hidden" name="id" th:value="${signup.id}">
+                            <input type="email" class="form-control" id="email" hidden="hidden" title="email"  name="email" th:field="*{email}" placeholder="Enter email ID" th:value="${signups.email}" required>
 
-                        <div class="row gutters mt-1">
                             <div class="col gutters p-2">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
                                     <h6 class="mb-2 text-primary">Personal Details</h6>
@@ -50,84 +52,129 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 ml-2 w-100 mt-2">
                                     <div class="form-group">
                                         <label for="fullname">Full Name</label>
-                                        <input type="text" class="form-control" id="fullname" title="name"  name="fullname" th:field="*{fullname}" placeholder="Enter full name" th:value="${signup.fullname}" required>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" title="email"  name="email" th:field="*{email}" placeholder="Enter email ID" th:value="${signup.email}" required>
+                                        <input type="text" class="form-control" id="fullname" title="name"  name="fullname" th:field="*{fullname}" placeholder="Enter full name" th:value="${signups.fullname}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2">
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
-                                        <input type="text" class="form-control" id="phone" title="phone"  name="phone" th:field="*{phone}" placeholder="Enter phone number" th:value="${signup.phone}" required>
+                                        <input type="text" class="form-control" id="phone" title="phone"  name="phone" th:field="*{phone}" placeholder="Enter phone number" th:value="${signups.phone}" required>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2">
                                     <div class="form-group">
                                         <label for="age">Age</label>
-                                        <input type="name" class="form-control" id="age" title="age"  name="age" th:field="*{age}" placeholder="Enter Age" th:value="${signup.age}" >
+                                        <input type="name" class="form-control" id="age" title="age"  name="age" th:field="*{age}" placeholder="Enter Age" th:value="${signups.age}" >
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2">
                                     <div class="form-group">
                                         <label for="gender">gender</label>
-                                        <input type="name" class="form-control" id="gender" title="gender"  name="gender" th:field="*{gender}" placeholder="Enter gender" th:value="${signup.gender}">
+                                        <input type="name" class="form-control" id="gender" title="gender"  name="gender" th:field="*{gender}" placeholder="Enter gender" th:value="${signups.gender}">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2">
                                     <div class="form-group">
                                         <label for="country">Country</label>
-                                        <input type="text" class="form-control" id="country" title="country"  name="country" th:field="*{country}" placeholder="Enter Country Name" th:value="${signup.country}" required>
+                                        <input type="text" class="form-control" id="country" title="country"  name="country" th:field="*{country}" placeholder="Enter Country Name" th:value="${signups.country}" required>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col gutters mt-1 p-2 ml-3">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ml-3">
-                                    <h6 class="mb-2 text-primary">Update Password</h6>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
-                                    <div class="form-group">
-                                        <label for="password">Current Password</label>
-                                        <input type="password" class="form-control" id="password" title="password"  name="password" placeholder="Enter current password">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
-                                    <div class="form-group">
-                                        <label for="newPassword">New Password</label>
-                                        <input type="password"  class="form-control" id="newPassword" placeholder="Enter new password">
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center mt-3 p-2 ml-3">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="text-right">
-                                            <button type="button" id="cancels" name="submit" class="btn btn-secondary">Cancel</button>
-                                            <button type="button" id="updatePassword" name="submit" class="btn btn-primary">Update Password</button>
+                                    <div class="row gutters d-flex justify-content-center">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="text-right justify-content-center mt-2">
+                                                <button type="button" id="cancel" name="submit" class="btn btn-secondary">Cancel</button>
+                                                <button type="submit" id="Update" name="submit" class="btn btn-primary">Update</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row gutters d-flex justify-content-center">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="text-right justify-content-center">
-                                    <button type="button" id="cancel" name="submit" class="btn btn-secondary">Cancel</button>
-                                    <button type="submit" id="Update" name="submit" class="btn btn-primary">Update</button>
-                                </div>
-                            </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-200">
+                <div class="card-body">
+                    <form th:method="post" th:action="@{~/user/updatePassword}" >
+                        <div class="col gutters mt-1 p-2 ml-3">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ml-3">
+                                <h6 class="mb-2 text-primary">Update Password</h6>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
+                                <div class="form-group">
+                                    <label for="password">Current Password</label>
+                                    <input type="password" class="form-control" id="password" title="password" name="oldPassword" placeholder="Enter current password" required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new password" oninput="validatePasswords() "required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 w-100 mt-2 ml-3">
+                                <div class="form-group">
+                                    <label for="confirmNewPassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmNewPassword" name="confirmPassword" placeholder="Confirm password" oninput="validatePasswords()" required>
+                                </div>
+                            </div>
+                            <!-- ... -->
+                            <div id="passwordMismatch" class="text-danger ml-3">
+                                <!-- This element will display the validation message -->
+                                <!-- Add Thymeleaf expression to show the error message from the controller -->
+                                <p th:text="${errorMsg}"></p>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3 p-2 ml-3">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="d-flex row-cols-1 text-right">
+                                        <button type="submit" id="updatePassword" name="submit" class="btn btn-primary">Update Password</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add the following div to display the success message -->
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-200">
+                <div class="card-body">
+                    <!-- Use Thymeleaf expression to show the success message from the controller -->
+                    <div th:if="${successMsg}" class="alert alert-success" role="alert">
+                        <p th:text="${successMsg}"></p>
+                    </div>
+                    <!-- Your other content for the second card goes here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
+<script>
+    function validatePasswords() {
+        var currentPassword = document.getElementById("password").value;
+        var newPassword = document.getElementById("newPassword").value;
+        var passwordMismatchElement = document.getElementById("passwordMismatch");
+        var confirmNewPassword = document.getElementById("confirmNewPassword").value;
+
+        if (currentPassword === newPassword) {
+            passwordMismatchElement.textContent = "Current and new passwords should not be the same.";
+            document.getElementById("updatePassword").disabled = true;
+
+        } else if (newPassword !== confirmNewPassword) {
+            passwordMismatchElement.textContent = " Password doesn't match.";
+            document.getElementById("updatePassword").disabled = true;
+        } else {
+            passwordMismatchElement.textContent = ""; // Clear the validation message if passwords match
+            document.getElementById("updatePassword").disabled = false;
+        }
+    }
+</script>
 </body>
 </html>
