@@ -23,3 +23,23 @@
     margin-right: 5px;
 }
 #search-box .fa:hover {color: rgba(222, 253, 255, 0.46);}
+
+
+/* Add CSS to hide the container initially */
+.user-icon-buttons {
+    display: none;
+}
+
+/* Add CSS to show the container when user hovers over the user icon */
+.user-icon-container.hoverable:hover .user-icon-buttons  {
+    display: block;
+
+}
+
+
+/* Show the elements when .user-icon-container is hovered */
+.user-icon-container.hoverable:hover #hidecart,
+.user-icon-container.hoverable:hover #hideheart,
+.user-icon-container.hoverable:hover #hideuser {
+    display: none;
+}

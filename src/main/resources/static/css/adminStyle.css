@@ -730,3 +730,15 @@ table.dataTable thead .sorting_desc_disabled:before {
     background-color: #c82333;
     border-color: #bd2130;
 }
+
+/*status button*/
+/* Define the CSS classes for the status button */
+.status-button {
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+}
