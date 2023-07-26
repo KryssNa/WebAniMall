@@ -1,8 +1,6 @@
 package com.example.AniMall.Services.impl;
 
-import com.example.AniMall.Entity.Booking;
-import com.example.AniMall.Entity.ShippingDetails;
-import com.example.AniMall.Entity.User;
+import com.example.AniMall.Entity.*;
 import com.example.AniMall.Pojo.BookingPojo;
 import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.BookingRepo;
@@ -20,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -128,21 +127,43 @@ public class BookingServiceImpl implements BookingServices {
     public List<ShippingDetails> findAllShipping() {
         return findShppinginList(shippingRepo.findAll());
     }
-    public List<Booking> findAllinList(List<Booking> list){
+//    public List<Booking> findAllinList(List<Booking> list){
+//
+//        Stream<Booking> allJobsWithImage = list.stream().map(shipping ->
+//                Booking.builder()
+//                        .id(shipping.getId())
+//                        .user(shipping.getUser())
+//                        .pet(shipping.getPet())
+//                        .shippingDetails(shipping.getShippingDetails())
+//                        .quantity(shipping.getQuantity())
+//                        .price(shipping.getPrice())
+//                        .status(shipping.getStatus())
+//                        .build()
+//        );
+//        list = allJobsWithImage.toList();
+//        return list;
+//    }
 
-        Stream<Booking> allJobsWithImage = list.stream().map(shipping ->
-                Booking.builder()
-                        .id(shipping.getId())
-                        .user(shipping.getUser())
-                        .pet(shipping.getPet())
-                        .shippingDetails(shipping.getShippingDetails())
-                        .quantity(shipping.getQuantity())
-                        .price(shipping.getPrice())
-                        .status(shipping.getStatus())
-                        .build()
-        );
-        list = allJobsWithImage.toList();
-        return list;
+    public List<Booking> findAllinList(List<Booking> list){
+        Stream<Booking> allBookingsWithImage = list.stream().map(booking -> {
+            Pet pet = Pet.builder()
+                    .id(booking.getPet().getId())
+                    .imageBase64(getImageBase64(booking.getPet().getImage()))
+                    .petname(booking.getPet().getPetname())
+                    .build();
+
+            return Booking.builder()
+                    .id(booking.getId())
+                    .user(booking.getUser())
+                    .pet(pet)
+                    .shippingDetails(booking.getShippingDetails())
+                    .quantity(booking.getQuantity())
+                    .price(booking.getPrice())
+                    .status(booking.getStatus())
+                    .build();
+        });
+
+        return allBookingsWithImage.collect(Collectors.toList());
     }
 
     public List<ShippingDetails> findShppinginList(List<ShippingDetails> list){

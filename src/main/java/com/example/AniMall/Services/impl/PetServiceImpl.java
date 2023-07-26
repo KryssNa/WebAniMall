@@ -116,13 +116,6 @@ public class PetServiceImpl implements PetServices {
     public List<Pet> findPetByPartialName(String partialName) {
         return findAllinList(petRepo.findPetByPartialName(partialName));
     }
-//
-//    @Override
-//    public Pet findbyName(String name) {
-//       return petRepo.findPetByname(name);
-//    }
-
-
 
     public List<Pet> findAllinList(List<Pet> list){
 

@@ -212,14 +212,14 @@ public class UserController {
     @GetMapping("/searchPet")
     public String searchPet(@RequestParam("search") String searchText, Model model) {
         List<Pet> searchResults = petServices.findPetByPartialName(searchText);
-
+        System.out.println("searchResults"+searchResults.size());
         // Pass the search results to the view
         model.addAttribute("petsResult", searchResults);
         System.out.println("pet at index 0"+searchResults.get(0));
         // Add any other necessary attributes
         if(!searchResults.isEmpty())
-            return "redirect:/pet/petInfo/"+searchResults.get(0);
-        else
             return "searchResults";
+        else
+            return "redirect:/user/homepage";
     }
 }
