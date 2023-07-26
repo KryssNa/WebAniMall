@@ -46,10 +46,10 @@ public class UserController {
 
         List<Pet> petList=petServices.getLimitedPets(page,petPerPage);
         model.addAttribute("page",page);
-        model.addAttribute("petList", petList);
         model.addAttribute("favourite", new FavoritePojo());
         model.addAttribute("userdata",userService.findByEmail(principal.getName()));
         model.addAttribute("pageCounts",petServices.countTotalPages(petPerPage));
+        model.addAttribute("petList", petList);
         return "homepage";
 
     }
@@ -75,22 +75,6 @@ public class UserController {
     public String saveUser(@Valid UserPojo userPojo) {
         userService.save(userPojo);
         return "redirect:/signup";
-    }
-
-    @GetMapping("/user/shop")
-    public String getShopPage(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
-        int pageSize = 1; // Number of items per page
-        List<Pet> pets = petServices.findAll(); // Fetch all pets from the database
-        int totalItems = pets.size();
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-        int startIndex = (page - 1) * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, totalItems);
-        List<Pet> paginatedPets = pets.subList(startIndex, endIndex);
-
-        model.addAttribute("add", paginatedPets);
-        model.addAttribute("totalPages", totalPages);
-
-        return "shop-page";
     }
 
     @GetMapping("findAniMall")
@@ -134,10 +118,10 @@ public class UserController {
         favoriteServices.save(favoritePojo);
         return "redirect:/user/homepage";
     }
-    @PostMapping("/favorite/{useId}/{petId}")
-    public String getFav(FavoritePojo favoritePojo,@PathVariable("useId") Integer useId,@PathVariable("petId") Integer petId){
-        System.out.println("user id"+useId);
-        favoriteServices.save(favoritePojo,useId,petId);
+    @PostMapping("/favorite/{userId}/{petId}")
+    public String getFav(FavoritePojo favoritePojo,@PathVariable("userId") Integer userId,@PathVariable("petId") Integer petId){
+        System.out.println("user id"+userId);
+        favoriteServices.save(favoritePojo,userId,petId);
         return "redirect:/user/homepage";
     }
 

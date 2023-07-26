@@ -132,15 +132,10 @@ public class AdminController {
 
     @GetMapping("/searchPet")
     public String searchPet(@RequestParam("search") String searchText, Model model) {
-        // Implement your search logic here
-        // You can use a service or repository to fetch the search results based on the searchText
         List<Pet> searchResults = petServices.findPetByPartialName(searchText);
-
-        // Pass the search results to the view
         model.addAttribute("limitedPets", searchResults);
-        // Add any other necessary attributes
 
-        return "Admin/allPetList"; // Replace "admin-page" with the name of your view
+        return "Admin/allPetList";
     }
 }
 

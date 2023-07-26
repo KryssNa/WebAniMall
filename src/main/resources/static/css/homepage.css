@@ -1,0 +1,25 @@
+
+#search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    height: 40px;
+    padding: 5px;
+    outline: none; /* Add this line to remove outline from the div */
+}
+
+/* Style for the input field inside the search-box */
+#search-box input[type="search"] {
+    flex: 1;
+    border: none;
+    padding: 5px;
+    margin-top: 0;
+    outline: none; /* Add this line to remove outline from the input field */
+}
+#search-box .fa {
+    color: black;
+    margin-right: 5px;
+}
+#search-box .fa:hover {color: rgba(222, 253, 255, 0.46);}

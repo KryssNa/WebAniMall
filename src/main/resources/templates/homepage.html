@@ -8,36 +8,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
     <title>AniMall</title>
-    <style>
-        /* Style for the search-box div */
-        #search-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ccc;
-            border-radius: 16px;
-            height: 40px;
-            padding: 5px;
-            outline: none; /* Add this line to remove outline from the div */
-        }
-
-        /* Style for the input field inside the search-box */
-        #search-box input[type="search"] {
-            flex: 1;
-            border: none;
-            padding: 5px;
-            margin-top: 0;
-            outline: none; /* Add this line to remove outline from the input field */
-        }
-        #search-box .fa {
-            color: black;
-            margin-right: 5px;
-        }
-        #search-box .fa:hover {color: rgba(222, 253, 255, 0.46);}
-
-    </style>
 </head>
 <body>
 
@@ -57,13 +30,13 @@
             </button>
             <button type="button" class="btn">
                         <a class="cart-button-cart" th:href="@{~/user/viewUserDetails/}+${userdata.id}"> <i class="fa-solid fa-user"></i> </a>
-                    </button>
-            <button type="button" class="btn" sec:authorize="isAuthenticated()" >
-                <a class="cart-button-heart" th:href="@{~/logout}"><i class="fa fa-arrow-right-from-bracket"></i>  </a>
             </button>
 
             <button type="button" class="btn">
                 <a class="nav-link" th:href="@{~/user/viewAllMyFavorites/}+${userdata.id}"> <i class="fa fa-heart"></i> </a>
+            </button>
+            <button type="button" class="btn" sec:authorize="isAuthenticated()" >
+                <a class="cart-button-heart" th:href="@{~/logout}"><i class="fa fa-arrow-right-from-bracket"></i>  </a>
             </button>
         </div>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -149,11 +122,12 @@
 
 <!--                    <div class="price" th:text="Rs.${pet.breed}"></div>-->
                     <div style="display: flex ;padding: 10px">
-                        <button type="button"  class="cart-button-heart" style="margin-right: 10px">
-                            <a class="cart-button-heart" th:href="@{~/user/favorite/}+${userdata.id}+'/' + ${pet.id}">
-                                <i class="fa fa-heart"></i>
-                            </a>
-                        </button>
+                        <form th:action="@{/user/savefavorite}" th:object="${favourite}" th:method="post" style="display: flex;padding: 0px" >
+                            <input type="text" hidden="hidden" name="user_id" th:value="${userdata.id}">  <br>
+                            <input type="text" hidden="hidden" name="pet_id" th:value="${pet.id}">  <br>
+                        <button type="submit"  class="cart-button-heart fa fa-heart" style="margin-right: 10px">
+
+                        </button></form>
                         <button type="button"  class="cart-button-cart" >
                             <a class="cart-button-cart" th:href="@{~/cart/add/}+${pet.id}">
                                 <i class="fa fa-shopping-cart" ></i>
