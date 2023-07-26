@@ -26,4 +26,6 @@ public interface BookingServices {
 
     //checkout
     BookingPojo saveCheckout(BookingPojo bookingPojo);
+
+    void updateStatus(Integer id, String status);
 }

@@ -104,11 +104,13 @@
             <td th:text="${bookings.quantity}"></td>
             <td th:text="${bookings.price}"></td>
             <td th:text="${bookings.getShippingDetails().getId()}" ></td>
+           <form class="p-0" th:method="post"  th:action="@{~/admin/updateStatus/}+${bookings.id}+'/'+${bookings.status}">
             <td>
-                <button class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Ordered' ? '#17a2b8' : '#28a745')) + ';'}">
+                <button type="submit" class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Ordered' ? '#17a2b8' : '#28a745')) + ';'}">
                     <span class="status-text" th:text="${bookings.status}"></span>
                 </button>
             </td>
+           </form>
 
             <td>
                 <a class="btn btn-delete rounded-3" th:href="@{~/admin/viewAllShippings}">

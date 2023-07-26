@@ -207,6 +207,11 @@ public class BookingServiceImpl implements BookingServices {
         return new BookingPojo(booking);
     }
 
+    @Override
+    public void updateStatus(Integer id, String status) {
+        bookingRepo.updateStatus(id,status);
+    }
+
     public String getImageBase64(String fileName) {
         if (fileName!=null) {
             String filePath = System.getProperty("user.dir")+"/pet/";

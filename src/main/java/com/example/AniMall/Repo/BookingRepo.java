@@ -22,4 +22,8 @@ public interface BookingRepo extends JpaRepository<Booking,Integer> {
     @Query(nativeQuery = true, value = "DELETE FROM bookings WHERE pet_id = ?1")
     void deleteBookingByPetId(Integer pet_id);
 
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE bookings SET status = ?2 WHERE id = ?1")
+    void updateStatus(Integer id, String status);
 }

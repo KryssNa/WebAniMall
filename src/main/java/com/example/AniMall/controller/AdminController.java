@@ -137,5 +137,21 @@ public class AdminController {
 
         return "Admin/allPetList";
     }
+
+    @PostMapping("/updateStatus/{id}/{status}")
+    public String updateStatus(@PathVariable Integer id, @PathVariable String status) {
+        String changeStatus ="";
+        if (status.equals("Pending")){
+            changeStatus = "Ordered";}
+        else if(status.equals("Ordered")){
+            changeStatus = "Shipped";
+        }else if(status.equals("Shipped")){
+            changeStatus = "Delivered";
+        } else if(status.equals("Delivered")){
+            changeStatus = "Pending";
+        }
+        bookingServices.updateStatus(id, changeStatus);
+        return "redirect:/admin/viewallbooking";
+    }
 }
 
