@@ -103,15 +103,9 @@
                   <td th:text="${bookings.getShippingDetails().getShippingAddress()}"></td>
                   <td th:text="${bookings.getStatus()}"></td>
                   <td>
-                    <form
-                            action="@{~/user/delete/}${bookings.id}"
-                            method="post"
-                            onsubmit="return confirm('Are you sure you want to delete this booking?');"
-                    >
-                      <button type="submit" class="btn btn-danger rounded-3">
+                      <a type="submit" class="btn btn-danger rounded-3" th:href="@{~/user/delete/}+${bookings.id}">
                         <i class="fas fa-trash"></i> Delete
-                      </button>
-                    </form>
+                      </a>
                   </td>
 
                 </tr>

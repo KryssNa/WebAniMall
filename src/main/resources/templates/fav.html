@@ -72,7 +72,7 @@
                         <div class = "img-display">
                             <div class = "img-showcase">
                                 <img class="card-img-top" th:if="${pet.getPet_id() != null and pet.getPet_id().imageBase64 != null}"
-                                     th:src="'data:image/png;base64,' + ${pet.getPet_id().getImage()}"
+                                     th:src="'data:image/png;base64,' + ${pet.getPet_id().getImageBase64()}"
                                      width="50px" height="100px" alt="${pet.getPet_id().name}" />
                                 <!-- If imageBase64 is null, display a placeholder image -->
                                 <img class="card-img-top" th:unless="${pet.getPet_id() != null and pet.getPet_id().imageBase64 != null}"
@@ -80,7 +80,7 @@
                                 <!--                                style=" width="50px" height="100px" alt="Placeholder Image" />-->
 
                                 <h3 class="text-center" th:text="${pet.getPet_id().petname}"></h3>
-                                <h3 class="text-center" th:text="${pet.getPet_id().description}"></h3>
+                                <h3 class="text-center text-muted" th:text="${pet.getPet_id().description}"></h3>
                                 <div class="d-flex justify-content-center text-center">
                                     <a class="edit" th:href="@{~/user/deleteFav/}+${pet.id}">
                                         <button type="button" class="btn btn-primary">Remove</button>

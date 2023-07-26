@@ -23,26 +23,22 @@ public class CartController {
     private final FavoriteServices favoriteServices;
 
     @GetMapping()
-    public String displayCart(Principal principal, Model model, CartPojo cartPojo){
+    public String displayCart(Principal principal, Model model, @ModelAttribute("cartPojo") CartPojo cartPojo) {
         Integer id = userService.findByEmail(principal.getName()).getId();
-        List<Cart> list = cartService.fetchAll(id);
-
+        List<Cart> cartItems = cartService.fetchAll(id);
 
         double total = 0.0;
-        for(Cart totalCalc:list){
-//            if (totalCalc.getPet().getQuantity()>0){
-                total += totalCalc.getQuantity()*totalCalc.getPet().getPrice();
-//        }
+        for (Cart cart : cartItems) {
+            total += cart.getQuantity() * cart.getPet().getPrice();
         }
 
         model.addAttribute("total", total);
-        model.addAttribute("cart", cartPojo);
-        model.addAttribute("cartItems", list);
+        model.addAttribute("cartItems", cartItems);
         model.addAttribute("favorite", new FavoritePojo());
-        model.addAttribute("userdata",userService.findBYId(id));
-        model.addAttribute("info",userService.findByEmail(principal.getName()));
+        model.addAttribute("userdata", userService.findBYId(id));
+        model.addAttribute("info", userService.findByEmail(principal.getName()));
 
-        return "/addToCart";
+        return "addToCart";
     }
 
     @GetMapping("/add/{id}")

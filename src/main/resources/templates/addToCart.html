@@ -27,22 +27,20 @@
               </div>
               <hr class="my-4">
               <div th:if="${cartItems.size() == 0}">
-                <img th:src="@{/images/no-data.svg}"class="img-fluid" alt="Responsive image" style="    height: 475px;
-    width: 500px;
-    margin-top: -70px;
-    margin-left: 120px;">
-
+                <img th:src="@{/images/no-data.svg}"class="img-fluid" alt="Responsive image" style="    height: 475px;width: 500px; margin-top: -70px; margin-left: 120px;">
                 </div>
               <!-- Loop through cart items and display details -->
               <div th:each="cartItem : ${cartItems}" th:if="${cartItem.pet != null}">
                 <!-- Cart item details -->
                 <div class="row mb-4 d-flex justify-content-between align-items-center">
                   <div class="col-md-2 col-lg-2 col-xl-2">
-                    <img th:src="'data:image/png;base64,' + ${cartItem.pet.imageBase64}" class="img-fluid rounded-3" th:alt="${cartItem.pet.getPetname()}" width="100" height="100" />
+                    <img th:src="'data:image/png;base64,' + ${cartItem.pet.imageBase64}" class="img-fluid rounded-3"
+                         th:alt="${cartItem.pet.petname}" width="100" height="100" />
                   </div>
+
                   <div class="col-md-3 col-lg-3 col-xl-3">
-                    <h6 class="text-muted">Shirt</h6>
                     <h6 class="text-black mb-0" th:text="${cartItem.pet.getPetname()}"></h6>
+                    <h6 class="text-muted" th:text="${cartItem.pet.getBreed()}"></h6>
                   </div>
                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                     <form th:action="@{/cart/updateQuantity/{id}(id=${cartItem.id})}" th:if="${cartItem.quantity > 0}" method="post">

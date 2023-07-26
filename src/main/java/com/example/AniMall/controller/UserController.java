@@ -118,12 +118,6 @@ public class UserController {
         favoriteServices.save(favoritePojo);
         return "redirect:/user/homepage";
     }
-    @PostMapping("/favorite/{userId}/{petId}")
-    public String getFav(FavoritePojo favoritePojo,@PathVariable("userId") Integer userId,@PathVariable("petId") Integer petId){
-        System.out.println("user id"+userId);
-        favoriteServices.save(favoritePojo,userId,petId);
-        return "redirect:/user/homepage";
-    }
 
     @GetMapping("/viewAllMyFavorites/{id}")
     public String getFavoriteinList(@PathVariable("id") Integer id, Model model, Principal principal) {

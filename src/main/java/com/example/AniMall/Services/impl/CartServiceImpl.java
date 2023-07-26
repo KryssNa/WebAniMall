@@ -30,30 +30,12 @@ public class CartServiceImpl implements CartServices {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/pet/";
 
-//    method to save to cart
-//    @Override
-//    public String saveToCart(Integer id, Principal principal) {
-//        Cart cart = new Cart();
-//        cart.setUser(userRepo.findByEmail(principal.getName()).orElseThrow());
-//        cart.setPet(petRepo.findById(id).orElseThrow());
-//        cart.setPrice(petRepo.findById(id).orElseThrow().getPrice());
-//        cart.setQuantity(1);
-//        cartRepo.save(cart);
-//        return "Saved";
-//    }
-
 @Override
 public String saveToCart(Integer id, Principal principal) {
-    // Get the authenticated user
     User user = userRepo.findByEmail(principal.getName()).orElseThrow();
 
-    // Find the Pet with the given id
     Pet pet = petRepo.findById(id).orElseThrow();
-
-    // Get all the cart items for the user
     List<Cart> userCartItems = fetchAll(user.getId());
-
-    // Check if the Cart already contains the Pet with the given id
     boolean petExistsInCart = false;
 
     for (Cart cartItem : userCartItems) {
@@ -101,7 +83,7 @@ public String saveToCart(Integer id, Principal principal) {
             cart.setPet(Pet.builder()
                     .id(cart.getPet().getId())
                     .category(cart.getPet().getCategory())
-                    .image(cart.getPet().getImage())
+                    .imageBase64(getImageBase64(cart.getPet().getImage()))
                     .color(cart.getPet().getColor())
                     .description(cart.getPet().getDescription())
                     .price((cart.getPet().getPrice()))

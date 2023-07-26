@@ -11,6 +11,28 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/homepage.css}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
     <title>AniMall</title>
+    <style>
+        /* Add CSS to hide the container initially */
+        .user-icon-buttons {
+            display: none;
+        }
+
+        /* Add CSS to show the container when user hovers over the user icon */
+        .user-icon-container.hoverable:hover .user-icon-buttons  {
+            display: block;
+
+        }
+
+
+        /* Show the elements when .user-icon-container is hovered */
+        .user-icon-container.hoverable:hover #hidecart,
+        .user-icon-container.hoverable:hover #hideheart,
+        .user-icon-container.hoverable:hover #hideuser {
+            display: none;
+        }
+
+
+    </style>
 </head>
 <body>
 
@@ -21,24 +43,51 @@
             <img th:src="@{/images/paw.svg}" alt="site icon">
             <span class="text-uppercase fw-lighter ms-2">AniMall</span>
         </a>
-        <div class=" order-lg-2 nav-btns">
-            <button type="button" class="btn">
-                <a class="nav-link" th:href="@{~/user/viewMyBooking/}+${userdata.id}"> <i class="fa fa-check-square"></i> </a>
-            </button>
-            <button type="button" class="btn" >
-                <a class="nav-link" th:href="@{~/cart}" aria-placeholder="cart button"> <i class="fa fa-shopping-cart" ></i> </a>
-            </button>
-            <button type="button" class="btn">
-                        <a class="cart-button-cart" th:href="@{~/user/viewUserDetails/}+${userdata.id}"> <i class="fa-solid fa-user"></i> </a>
-            </button>
-
-            <button type="button" class="btn">
-                <a class="nav-link" th:href="@{~/user/viewAllMyFavorites/}+${userdata.id}"> <i class="fa fa-heart"></i> </a>
-            </button>
-            <button type="button" class="btn" sec:authorize="isAuthenticated()" >
-                <a class="cart-button-heart" th:href="@{~/logout}"><i class="fa fa-arrow-right-from-bracket"></i>  </a>
-            </button>
+        <!-- Add a container div for the hoverable user icon -->
+        <div class="order-lg-2 nav-btns">
+            <div class="user-icon-container" th:classappend="${#authentication.name != null} ? 'hoverable'">
+                <button type="button" class="btn" id="hideuser" >
+                    <a class="cart-button-cart" th:href="@{~/user/viewUserDetails/}+${userdata.id}">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                </button>
+                <button type="button" class="btn" id="hidecart">
+                    <a class="nav-link" th:href="@{~/cart}" aria-placeholder="cart button"> <i class="fa fa-shopping-cart" ></i> </a>
+                </button>
+                <button type="button" class="btn" id="hideheart" sec:authorize="isAuthenticated()">
+                    <a class="cart-button-heart" th:href="@{~/logout}"><i class="fa fa-arrow-right-from-bracket"></i>  </a>
+                </button>
+                <div class="user-icon-buttons">
+                    <button type="button" class="btn" title="View Bookings">
+                        <a class="nav-link" th:href="@{~/user/viewMyBooking/}+${userdata.id}">
+                            <i class="fa fa-list-alt"></i>
+                        </a>
+                    </button>
+                    <!-- Add the other buttons here -->
+                    <button type="button" class="btn">
+                        <a class="nav-link" th:href="@{~/cart}" aria-placeholder="cart button">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                    </button>
+                    <button type="button" class="btn">
+                        <a class="cart-button-cart" th:href="@{~/user/viewUserDetails/}+${userdata.id}">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                    </button>
+                    <button type="button" class="btn">
+                        <a class="nav-link" th:href="@{~/user/viewAllMyFavorites/}+${userdata.id}">
+                            <i class="fa fa-heart"></i>
+                        </a>
+                    </button>
+                    <button type="button" class="btn" title="Log out" sec:authorize="isAuthenticated()">
+                        <a class="cart-button-heart" th:href="@{~/logout}">
+                            <i class="fa fa-arrow-right-from-bracket"></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
         </div>
+
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
