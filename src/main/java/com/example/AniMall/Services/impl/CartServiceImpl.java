@@ -26,7 +26,7 @@ public class CartServiceImpl implements CartServices {
     private final UserRepo userRepo;
     private final PetRepo petRepo;
     private final BookingRepo bookingRepo;
-    private final SummaryDetailsRepo summaryDetailsRepo;
+    private final ShippingRepo shippingRepo;
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/pet/";
 
@@ -171,7 +171,7 @@ public String saveToCart(Integer id, Principal principal) {
         }
 
         // Save the shipping details first
-        ShippingDetails savedShippingDetails = summaryDetailsRepo.save(shippingDetails);
+        ShippingDetails savedShippingDetails = shippingRepo.save(shippingDetails);
         System.out.println("Shipping details inserted");
 
         // Save the bookings related to the shipping details

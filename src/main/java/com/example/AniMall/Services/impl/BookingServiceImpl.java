@@ -5,7 +5,7 @@ import com.example.AniMall.Pojo.BookingPojo;
 import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.PetRepo;
-import com.example.AniMall.Repo.SummaryDetailsRepo;
+import com.example.AniMall.Repo.ShippingRepo;
 import com.example.AniMall.Repo.UserRepo;
 import com.example.AniMall.Services.BookingServices;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +25,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingServices {
     private  final BookingRepo bookingRepo;
-    private  final SummaryDetailsRepo shippingRepo;
+    private  final ShippingRepo shippingRepo;
     private  final UserRepo userRepo;
     private  final PetRepo petRepo;
-    private final SummaryDetailsRepo summaryDetailsRepo;
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ShippingDetails";
 
@@ -82,7 +81,7 @@ public class BookingServiceImpl implements BookingServices {
     }
 //    @Override
 //    public ShippingDetails findOrderById(Integer id) {
-//        ShippingDetails shippingDetails=summaryDetailsRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
+//        ShippingDetails shippingDetails=shippingRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
 //        shippingDetails=shippingDetails.builder()
 //                    .id(shippingDetails.getId())
 ////                    .quantity(order.getQuantity())

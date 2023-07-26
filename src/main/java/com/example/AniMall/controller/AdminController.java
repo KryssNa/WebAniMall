@@ -7,6 +7,7 @@ import com.example.AniMall.Entity.User;
 import com.example.AniMall.Pojo.PetPojo;
 import com.example.AniMall.Services.BookingServices;
 import com.example.AniMall.Services.PetServices;
+import com.example.AniMall.Services.ShippingServices;
 import com.example.AniMall.Services.UserServices;
 import com.example.AniMall.exception.AppException;
 import jakarta.validation.Valid;
@@ -31,6 +32,7 @@ public class AdminController {
     private  final PetServices petServices;
     private final UserServices userServices;
     private  final BookingServices bookingServices;
+    private final ShippingServices shippingServices;
 
     @GetMapping("/addpet")
     public String getAddPetForm(Model model) {
@@ -152,6 +154,21 @@ public class AdminController {
         }
         bookingServices.updateStatus(id, changeStatus);
         return "redirect:/admin/viewallbooking";
+    }
+    @PostMapping("/updateShippingStatus/{id}/{status}")
+    public String updateShippingStatus(@PathVariable Integer id, @PathVariable String status) {
+        String changeStatus ="";
+        if (status.equals("Pending")){
+            changeStatus = "Shipped";
+        }else if(status.equals("Shipped")){
+            changeStatus = "Delivered";
+        } else if(status.equals("Delivered")){
+            changeStatus = "Pending";
+        }else {
+            changeStatus = "Pending";
+        }
+        shippingServices.updateShippingStatus(id, changeStatus);
+        return "redirect:/admin/viewAllShippings";
     }
 }
 

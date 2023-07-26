@@ -3,7 +3,7 @@ package com.example.AniMall.controller;
 import com.example.AniMall.Entity.Cart;
 import com.example.AniMall.Pojo.BookingPojo;
 import com.example.AniMall.Pojo.ShippingDetailsDto;
-import com.example.AniMall.Repo.SummaryDetailsRepo;
+import com.example.AniMall.Repo.ShippingRepo;
 import com.example.AniMall.Services.BookingServices;
 import com.example.AniMall.Services.CartServices;
 import com.example.AniMall.Services.UserServices;
@@ -26,7 +26,7 @@ public class CheckoutController {
     private final UserServices userService;
     private final CartServices cartService;
     private final BookingServices bookingServices;
-    final SummaryDetailsRepo summaryDetailsRepo ;
+    final ShippingRepo shippingRepo;
 
     @PostMapping("/checkout")
     public String checkkout(Principal principal, Model model){
