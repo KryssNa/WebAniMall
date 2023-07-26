@@ -67,7 +67,7 @@
     </aside>
   </div>
   <main>
-    <div style=" margin-left:2rem; margin-top: 3rem ;margin-right: 4rem">
+    <div style=" margin-left:2rem; margin-top: 1rem ;margin-right: 4rem">
 
       <h2>Shipping Application</h2>
       <br>
@@ -81,24 +81,30 @@
           <th>Payment Voucher</th>
           <th>Shipping Address</th>
           <th>Shipping Email</th>
-          <th>Shipping FullName</th>
           <th>Shipping Phone</th>
+          <th>Shipping FullName</th>
+          <th>Shipped By User</th>
           <th>Total Quantity</th>
           <th>Total Price</th>
           <th>Status</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bookings:${allListShipping}">
-          <td th:text="${bookings.id}"></td>
-          <td><img class="align-items-center" th:src="'data:image/png;base64,' + ${bookings.imageBase64}" width="100" height="100"/></td>
-          <td th:text="${bookings.getShippingAddress()}"></td>
-          <td th:text="${bookings.getShippingEmail()}"></td>
-          <td th:text="${bookings.getShippingPhone()}"></td>
-          <td th:text="${bookings.getShippingFullName()}"></td>
-          <td th:text="${bookings.getTotalQuantity()}"></td>
-          <td th:text="${bookings.getTotalPrice()}"></td>
-          <td th:text="${bookings.getStatus()}"></td>
+        <tr th:each="shippings:${allListShipping}">
+          <td th:text="${shippings.id}"></td>
+          <td><img class="align-items-center" th:src="'data:image/png;base64,' + ${shippings.imageBase64}" width="100" height="100"/></td>
+          <td th:text="${shippings.getShippingAddress()}"></td>
+          <td th:text="${shippings.getShippingEmail()}"></td>
+          <td th:text="${shippings.getShippingPhone()}"></td>
+          <td th:text="${shippings.getShippingFullName()}"></td>
+            <td th:text="${shippings.getUser().getFullname()}"></td>
+          <td th:text="${shippings.getTotalQuantity()}"></td>
+          <td th:text="${shippings.getTotalPrice()}"></td>
+          <td>
+            <button class="btn status-button" th:style="${'background: ' + (shippings.status eq 'Pending' ? '#ffc107' : (shippings.status eq 'Ordered' ? '#17a2b8' : '#28a745')) + ';'}">
+              <span class="status-text" th:text="${shippings.status}"></span>
+            </button>
+          </td>
         </tr>
 
         <style>
@@ -148,7 +154,11 @@
 
 <script>
   $(document).ready(function () {
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+      responsive: true, // Enable responsive features
+      lengthMenu: [2,3,4,5, 8,10,15,20], // Customize the entries per page options
+      pageLength: 4, // Set the default number of entries per page
+    });
   });
 </script>
 </body>

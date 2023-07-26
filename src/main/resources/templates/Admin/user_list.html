@@ -139,10 +139,13 @@
 
 <!-- Include DataTables JS -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 <script>
     $(document).ready(function () {
-        $('#myTable').DataTable();
+        $('#myTable').DataTable({
+            responsive: true,
+            lengthMenu: [ 5,8, 10,15,20],
+            pageLength: 8,
+        });
     });
 </script>
 </body>
