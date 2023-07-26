@@ -1,0 +1,45 @@
+
+.main-content {
+    padding: 20px;
+}
+
+#myTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#myTable th {
+    background-color: rgba(231, 255, 222, 0.22);
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+}
+
+#myTable td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#myTable tr:nth-child(even) {
+    background-color: rgba(222, 253, 255, 0.32);
+}
+
+/* Add hover effect on table rows */
+#myTable tr:hover {
+    background-color: rgba(0, 128, 0, 0.28);
+    cursor: pointer;
+}
+
+/* Center the table on the page */
+.table-container {
+    display: flex;
+    justify-content: center;
+}
+
+#myTable tbody tr {
+    background-color: transparent;
+}
