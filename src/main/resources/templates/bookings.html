@@ -12,53 +12,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
 
-  <style>
-    /* Set the main content container to have some padding */
-    .main-content {
-      padding: 20px;
-    }
+  <link rel="stylesheet" th:href="@{/css/bookings.css}">
 
-    #myTable {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    #myTable th {
-      background-color: rgba(231, 255, 222, 0.22);
-      color: #333;
-      font-weight: bold;
-      padding: 10px;
-      text-align: left;
-      border-bottom: 2px solid #ccc;
-    }
-
-    #myTable td {
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }
-
-    /* Add alternating background color to table rows */
-    #myTable tr:nth-child(even) {
-      background-color: rgba(222, 253, 255, 0.32);
-    }
-
-    /* Add hover effect on table rows */
-    #myTable tr:hover {
-      background-color: rgba(0, 128, 0, 0.28);
-      cursor: pointer;
-    }
-
-    /* Center the table on the page */
-    .table-container {
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Change background color of all bookings */
-    #myTable tbody tr {
-      background-color: transparent; /* Change this to the desired background color */
-    }
-  </style>
 </head>
 
 <body>
@@ -66,7 +21,7 @@
 
 <div class="container mt-5">
   <div class="row justify-content-center ">
-    <div class="col-lg-10 mt-5">
+    <div class="col-lg-10 mt-4">
       <div class="card">
         <div class="card-header bg-white text-black justify-content-lg-center">
           <h2 class="mb-0">All Bookings</h2>
@@ -92,10 +47,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="bookings:${bookingList}">
+                <tr th:each="bookings:${bookingList}" >
                   <td th:text="${bookings.getId()}"></td>
                   <td>
-                    <img th:src="${bookings.getPet().getImageBase64()}" alt="Pet Image" style="max-height: 100px;">
+                    <img th:src="'data:image/png;base64,' + ${bookings.getPet().getImageBase64()}" alt="Pet Image" style="max-height: 100px;">
                   </td>
                   <td th:text="${bookings.getPet().petname}"></td>
                   <td th:text="${bookings.getPrice()}"></td>
@@ -127,11 +82,12 @@
 
 <!-- Include DataTables JS -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 <script>
   $(document).ready(function () {
     $('#myTable').DataTable({
       responsive: true, // Enable responsive features
+      lengthMenu: [1,2,3,4, 5, 10,15,20], // Customize the entries per page options
+      pageLength: 3, // Set the default number of entries per page
     });
   });
 </script>

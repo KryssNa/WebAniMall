@@ -3,6 +3,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/header :: header-css}">
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
+    <title>AniMall||Favorites</title>
     <style>
         .fav {
             display: flex;
@@ -49,10 +52,8 @@
         /* Add more media queries for other screen sizes if necessary */
 
     </style>
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
-    <title>Favorites</title>
 </head>
-<body>
+<body >
 <div th:replace="~{fragments/header :: header}"></div>
 <br>
 <br>
@@ -92,6 +93,8 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+</div>
 </body>
 </html>

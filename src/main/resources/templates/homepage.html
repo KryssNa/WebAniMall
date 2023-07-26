@@ -12,24 +12,6 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
     <title>AniMall</title>
     <style>
-        /* Add CSS to hide the container initially */
-        .user-icon-buttons {
-            display: none;
-        }
-
-        /* Add CSS to show the container when user hovers over the user icon */
-        .user-icon-container.hoverable:hover .user-icon-buttons  {
-            display: block;
-
-        }
-
-
-        /* Show the elements when .user-icon-container is hovered */
-        .user-icon-container.hoverable:hover #hidecart,
-        .user-icon-container.hoverable:hover #hideheart,
-        .user-icon-container.hoverable:hover #hideuser {
-            display: none;
-        }
 
 
     </style>
@@ -106,7 +88,7 @@
                     <a class="nav-link text-uppercase text-dark" th:href="@{~/user/AboutUs}" >About us</a>
                 </li>
             </ul>
-            <form  method="get" style="width: 250px" th:href="@{~/user/searchPet}">
+            <form  method="get" style="width: 250px" th:action="@{~/user/searchPet}">
             <div id="search-box">
                 <input type="search" placeholder="Enter a text" aria-label="Search" name="search" >
                 <button type="submit"><i class="fa fa-search"></i></button>
@@ -132,11 +114,11 @@
         </div>
     </div>
     <!-- Add the carousel controls -->
-    <a class="carousel-control-prev" href="#header1" role="button" data-bs-slide="prev">
+    <a class="carousel-control-prev mt-5" href="#header1" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#header1" role="button" data-bs-slide="next">
+    <a class="carousel-control-next mt-5" href="#header1" role="button" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </a>
@@ -168,8 +150,6 @@
                 </div>
                 <div class="price-text" >
                     <div th:text="'Rs. '+ ${pet.price}"></div>
-
-<!--                    <div class="price" th:text="Rs.${pet.breed}"></div>-->
                     <div style="display: flex ;padding: 10px">
                         <form th:action="@{/user/savefavorite}" th:object="${favourite}" th:method="post" style="display: flex;padding: 0px" >
                             <input type="text" hidden="hidden" name="user_id" th:value="${userdata.id}">  <br>
@@ -184,9 +164,7 @@
                         </button>
 
                         </div>
-                <!--            add to cart icon only -->
             </div>
-            <!-- Add more box elements as needed -->
         </div>
         <div style="display: flex;justify-content: flex-end;margin-top: 16px;">
         <div class="prev-btn">
@@ -466,7 +444,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="payment-img">
-                    <img th:src="@{~/img/payment.png}" alt="" />
+                    <img th:src="@{~/images/payment.png}" alt="" />
                 </div>
             </div>
         </div>
