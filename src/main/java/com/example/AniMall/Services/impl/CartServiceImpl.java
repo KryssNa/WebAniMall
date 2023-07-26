@@ -105,25 +105,6 @@ public String saveToCart(Integer id, Principal principal) {
         return null;
     }
 
-    @Override
-    public List<Object[]> fetchstatusCount() {
-        return null;
-    }
-
-    @Override
-    public List<String> distinctstatus() {
-        return null;
-    }
-
-    @Override
-    public List<Cart> cartdetails() {
-        return null;
-    }
-
-    @Override
-    public void updatecartstatus(Integer id, String status) {
-
-    }
 
     @Override
     public List<Cart> fetchAvailable(Integer id) {
@@ -174,7 +155,7 @@ public String saveToCart(Integer id, Principal principal) {
         shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
         shippingDetails.setShippingEmail(itemsToPurchase.get(0).getUser().getEmail());
         shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
-        shippingDetails.setStatus("Ordered");
+        shippingDetails.setStatus("Pending");
         shippingDetails.setTotalPrice(shippingDetailsDto.getTotalPrice());
         shippingDetails.setTotalQuantity(shippingDetailsDto.getTotalQuantity());
 
@@ -202,7 +183,7 @@ public String saveToCart(Integer id, Principal principal) {
             value.setStatus("Ordered");
             booking.setUser(value.getUser());
             booking.setPet(value.getPet());
-            booking.setStatus("Ordered");
+            booking.setStatus("Pending");
 
             // Set the shipping details for each booking
             booking.setShippingDetails(savedShippingDetails);
@@ -210,26 +191,6 @@ public String saveToCart(Integer id, Principal principal) {
             // Save each booking
             bookingRepo.save(booking);
         }
-
-        return "Saved Purchase";
-    }
-
-    @Override
-    public String
-    checkout(Integer id, BookingPojo pojo, List<Cart> itemsToPurchase) {
-        for (Cart value : itemsToPurchase) {
-            Booking booking = new Booking();
-            booking.setId(value.getId());
-            booking.setQuantity(value.getQuantity());
-            booking.setPrice(value.getPet().getPrice());
-            value.setStatus("Ordered");
-            booking.setUser(value.getUser());
-            booking.setPet(value.getPet());
-            booking.setStatus("Ordered");
-
-            bookingRepo.save(booking);
-        }
-//
 
         return "Saved Purchase";
     }

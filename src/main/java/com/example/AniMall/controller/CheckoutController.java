@@ -27,7 +27,6 @@ public class CheckoutController {
     private final CartServices cartService;
     private final BookingServices bookingServices;
     final SummaryDetailsRepo summaryDetailsRepo ;
-//    private final SummaryDetailsServices summaryDetailsServices;
 
     @PostMapping("/checkout")
     public String checkkout(Principal principal, Model model){
@@ -55,30 +54,21 @@ public class CheckoutController {
             System.out.println("error"+bindingResult.getAllErrors());
             return "redirect:/cart";
         }
-
-        // Get the currently logged-in user's ID
         Integer id = userService.findByEmail(principal.getName()).getId();
 
-        // Fetch the cart items for the user
         List<Cart> list = cartService.fetchAvailable(id);
 
-        // Update the available quantity of pets after checkout
         for (Cart cartItem : list) {
             cartService.updatePet(cartItem.getPet().getQuantity() - cartItem.getQuantity(), cartItem.getPet().getId());
         }
 
         System.out.println("checkout process");
-        // Perform the checkout process using the cartService
         cartService.checkout(id, pojo, shippingDetailsDto, list);
 
         System.out.println("summary details");
-        // Perform the checkout process using the cartService
-//        bookingServices.summaryCheckout(id,pojo, shippingDetailsDto);
-
         // Clear the user's cart after successful checkout
 //        cartService.clearCart(id);
 
-        // Redirect the user to the homepage after successful checkout
         return "redirect:/user/homepage";
     }
 }

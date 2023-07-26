@@ -37,30 +37,6 @@ public class BookingServiceImpl implements BookingServices {
         ShippingDetails shippingDetails = new ShippingDetails();
         Booking booking = new Booking();
         User user = userRepo.findById(id).orElseThrow();
-//        for (Cart value : itemsToPurchase) {
-//            booking.setId(value.getId());
-//            booking.setQuantity(value.getQuantity());
-//            booking.setPrice(value.getPet().getPrice());
-//            value.setStatus("Ordered");
-//            booking.setUser(value.getUser());
-//            booking.setPet(value.getPet());
-//
-//
-//
-//
-////            booking.setQuantity(value.getQuantity());
-////
-////            booking.setShippingFullName(pojo.getShippingFullName());
-////            booking.setShippingAddress(pojo.getShippingAddress());
-////            booking.setShippingEmail(pojo.getShippingEmail());
-////            booking.setShippingPhone(pojo.getShippingPhone());
-////            booking.setImageBase64(getImageBase64(value.getPet().getImage()));
-//
-//            booking.setStatus("Ordered");
-//
-//            bookingRepo.save(booking);
-//        }
-
         shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
         shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
         shippingDetails.setShippingEmail(shippingDetailsDto.getShippingEmail());

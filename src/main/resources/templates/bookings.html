@@ -56,7 +56,11 @@
                   <td th:text="${bookings.getPrice()}"></td>
                   <td th:text="${bookings.getQuantity()}"></td>
                   <td th:text="${bookings.getShippingDetails().getShippingAddress()}"></td>
-                  <td th:text="${bookings.getStatus()}"></td>
+                  <td>
+                  <button class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Ordered' ? '#17a2b8' : '#28a745')) + ';'}">
+                    <span class="status-text" th:text="${bookings.status}"></span>
+                  </button>
+                </td>
                   <td>
                       <a type="submit" class="btn btn-danger rounded-3" th:href="@{~/user/delete/}+${bookings.id}">
                         <i class="fas fa-trash"></i> Delete

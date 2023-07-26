@@ -92,7 +92,11 @@
                     <td  style="text-align: center" th:text="${user.email}"> </td>
                     <td  style="text-align: center" th:text="${user.gender}"> </td>
                     <td  style="text-align: center" th:text="${user.age}"> </td>
-                    <td> <a class="edit" th:href="@{~/admin/deleteuser/}+${user.id}" >delete</a></td>
+                    <td>
+                        <a class="btn btn-delete rounded-3" th:href="@{~/admin/deleteuser/}+${user.id}">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
                 </tr>
 
                 <style>

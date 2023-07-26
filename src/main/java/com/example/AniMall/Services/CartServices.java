@@ -20,22 +20,13 @@ public interface CartServices {
 
     Cart fetchOne(Integer id);
 
-    String checkout(Integer id, BookingPojo pojo, List<Cart> itemsToPurchase);
     String checkout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto, List<Cart> itemsToPurchase) throws IOException;
 
     List<Cart> fetchAllCart();
 
     List<Cart> fetchAllCartByStatus(String status);
-
-    List<Object[]> fetchstatusCount();
-
-    List<String> distinctstatus();
-
-    List<Cart> cartdetails();
-
     int updatePet(int quantity, Integer id);
 
-    void updatecartstatus(Integer id,String status);
 
     List<Cart> fetchAvailable(Integer id);
 
