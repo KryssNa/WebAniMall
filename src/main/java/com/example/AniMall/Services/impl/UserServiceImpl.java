@@ -29,9 +29,10 @@ public class UserServiceImpl implements UserServices {
             user = userRepo.findById(userPojo.getId()).orElseThrow(() -> new RuntimeException("Not Found"));
             userPojo.setPassword(user.getPassword());
         } else {
-            System.out.println("userPojo.getEmail() = " + userPojo.getId());
             user = new User();
+            user.setPassword(PasswordEncoderUtil.getInstance().encode(userPojo.getPassword()));
         }
+
         user.setEmail(userPojo.getEmail());
         user.setFullname(userPojo.getFullname());
         user.setAge(userPojo.getAge());

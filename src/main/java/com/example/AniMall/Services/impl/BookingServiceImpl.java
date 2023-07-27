@@ -2,7 +2,6 @@ package com.example.AniMall.Services.impl;
 
 import com.example.AniMall.Entity.*;
 import com.example.AniMall.Pojo.BookingPojo;
-import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.PetRepo;
 import com.example.AniMall.Repo.ShippingRepo;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,33 +28,32 @@ public class BookingServiceImpl implements BookingServices {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ShippingDetails";
 
-    @Override
-    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException {
-        ShippingDetails shippingDetails = new ShippingDetails();
-        Booking booking = new Booking();
-        User user = userRepo.findById(id).orElseThrow();
-        shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
-        shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
-        shippingDetails.setShippingEmail(shippingDetailsDto.getShippingEmail());
-        shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
-        shippingDetails.setStatus("Ordered");
-        booking.setPrice(shippingDetailsDto.getTotalPrice());
-        booking.setQuantity(shippingDetailsDto.getTotalQuantity());
-        if(shippingDetailsDto.getImage()!=null){
-            System.out.println("Image is not null");
-            StringBuilder fileNames = new StringBuilder();
-            System.out.println(UPLOAD_DIRECTORY);
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, shippingDetailsDto.getImage().getOriginalFilename());
-            fileNames.append(shippingDetailsDto.getImage().getOriginalFilename());
-            Files.write(fileNameAndPath, shippingDetailsDto.getImage().getBytes());
-
-            shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
-        }
-
-        shippingDetails.setUser(user);
-//        bookingRepo.save(shippingDetails.getUser());
-        return "Saved Purchase";
-    }
+//    @Override
+//    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException {
+//        ShippingDetails shippingDetails = new ShippingDetails();
+//        Booking booking = new Booking();
+//        User user = userRepo.findById(id).orElseThrow();
+//        shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
+//        shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
+//        shippingDetails.setShippingEmail(shippingDetailsDto.getShippingEmail());
+//        shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
+//        shippingDetails.setStatus("Ordered");
+//        booking.setPrice(shippingDetailsDto.getTotalPrice());
+//        booking.setQuantity(shippingDetailsDto.getTotalQuantity());
+//        if(shippingDetailsDto.getImage()!=null){
+//            StringBuilder fileNames = new StringBuilder();
+//            System.out.println(UPLOAD_DIRECTORY);
+//            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, shippingDetailsDto.getImage().getOriginalFilename());
+//            fileNames.append(shippingDetailsDto.getImage().getOriginalFilename());
+//            Files.write(fileNameAndPath, shippingDetailsDto.getImage().getBytes());
+//
+//            shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
+//        }
+//
+//        shippingDetails.setUser(user);
+////        bookingRepo.save(shippingDetails.getUser());
+//        return "Saved Purchase";
+//    }
 
     @Override
     public BookingPojo save(BookingPojo bookingPojo) {
@@ -73,26 +69,23 @@ public class BookingServiceImpl implements BookingServices {
         return new BookingPojo(booking);
     }
     @Override
+    public List<Booking> findBookingByUserId(Integer id) {
+        return findAllinList(bookingRepo.findBookingByUserId(id));
+    }
+
+    @Override
     public List<Booking> findBookingById(Integer id) {
         return findAllinList(bookingRepo.findBookingById(id));
     }
-    public List<ShippingDetails> findShippingById(Integer id) {
-        return findShppinginList(shippingRepo.findShippingDetailsById(id));
+
+    public List<ShippingDetails> findShippingByUserId(Integer id) {
+        return findShppinginList(shippingRepo.findShippingDetailsByUserId(id));
     }
-//    @Override
-//    public ShippingDetails findOrderById(Integer id) {
-//        ShippingDetails shippingDetails=shippingRepo.findById(id).orElseThrow(()-> new RuntimeException("not found"));
-//        shippingDetails=shippingDetails.builder()
-//                    .id(shippingDetails.getId())
-////                    .quantity(order.getQuantity())
-//                    .user_id(shippingDetails.getUser_id())
-//                    .product_id(.getProduct_id())
-//                    .address(order.getAddress())
-//                    .build();
-//            return order;
-//    }
 
-
+    @Override
+    public List<ShippingDetails> findShippingId(Integer id) {
+        return findShppinginList(shippingRepo.findShippingById(id));
+    }
     @Override
     public List<Booking> findAll() {
         return findAllinList(bookingRepo.findAll());
@@ -102,22 +95,6 @@ public class BookingServiceImpl implements BookingServices {
     public List<ShippingDetails> findAllShipping() {
         return findShppinginList(shippingRepo.findAll());
     }
-//    public List<Booking> findAllinList(List<Booking> list){
-//
-//        Stream<Booking> allJobsWithImage = list.stream().map(shipping ->
-//                Booking.builder()
-//                        .id(shipping.getId())
-//                        .user(shipping.getUser())
-//                        .pet(shipping.getPet())
-//                        .shippingDetails(shipping.getShippingDetails())
-//                        .quantity(shipping.getQuantity())
-//                        .price(shipping.getPrice())
-//                        .status(shipping.getStatus())
-//                        .build()
-//        );
-//        list = allJobsWithImage.toList();
-//        return list;
-//    }
 
     public List<Booking> findAllinList(List<Booking> list){
         Stream<Booking> allBookingsWithImage = list.stream().map(booking -> {
