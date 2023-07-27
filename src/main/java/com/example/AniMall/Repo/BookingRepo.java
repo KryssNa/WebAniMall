@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface BookingRepo extends JpaRepository<Booking,Integer> {
     @Query(value = "SELECT * FROM bookings where user_id=?1", nativeQuery = true)
+    List<Booking> findBookingByUserId(Integer id);
+
+    @Query(value = "SELECT * FROM bookings where id=?1", nativeQuery = true)
     List<Booking> findBookingById(Integer id);
 
     @Query(value = "DELETE from bookings where user_id=?1", nativeQuery = true)

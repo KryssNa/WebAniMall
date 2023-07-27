@@ -11,7 +11,7 @@ import java.util.List;
 public interface ShippingRepo extends JpaRepository<ShippingDetails, Integer> {
 
     @Query(value = "SELECT * FROM shipping_details where user_id=?1", nativeQuery = true)
-    List<ShippingDetails> findShippingDetailsById(Integer id);
+    List<ShippingDetails> findShippingDetailsByUserId(Integer id);
 
     @Query(value = "DELETE from shipping_details where user_id=?1", nativeQuery = true)
     Integer deleteByUser(Integer id);
@@ -20,4 +20,7 @@ public interface ShippingRepo extends JpaRepository<ShippingDetails, Integer> {
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE shipping_details SET status = ?2 WHERE id = ?1")
     void updateShippingStatus(Integer id, String changeStatus);
+
+    @Query(value = "SELECT * FROM shipping_details where id=?1", nativeQuery = true)
+    List<ShippingDetails> findShippingById(Integer id);
 }
