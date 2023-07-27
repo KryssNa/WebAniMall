@@ -147,9 +147,6 @@ public class AdminController {
     public String updateStatus(@PathVariable Integer id, @PathVariable String status) {
         List<Booking> bookings=bookingServices.findBookingById(id);
         String email="";
-
-        System.out.println("size:"+bookings.size());
-        System.out.println("id:"+id);
         if(bookings.size()>0){
             email=bookings.get(0).getUser().getEmail();
         }
