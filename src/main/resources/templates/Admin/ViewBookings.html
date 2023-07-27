@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" >
     <title>Admin || ViewBookings</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"  >
     <!-- css class -->
     <link rel="stylesheet" th:href="@{/css/adminStyle.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -34,6 +35,11 @@
             </div>
             <div>
                 <div class="sidebar">
+                    <a th:href="@{~/admin/dashboard}" >
+        <span class="fa fa-dashboard">
+            person
+            </span>        <h3>Dashboard</h3>
+                    </a>
                     <a th:href="@{~/admin/list}" >
         <span class="material-icons-sharp">
             person
@@ -46,8 +52,7 @@
             </span>        <h3>Booking</h3>
                     </a>
                     <a th:href="@{~/admin/viewAllShippings}">
-        <span class="material-icons-sharp">
-            receipt_long
+        <span class="fa fa-shipping-fast green-color">
             </span>        <h3>Shipping</h3>
                     </a>
 
@@ -106,7 +111,7 @@
             <td th:text="${bookings.getShippingDetails().getId()}" ></td>
            <form class="p-0" th:method="post"  th:action="@{~/admin/updateStatus/}+${bookings.id}+'/'+${bookings.status}">
             <td>
-                <button type="submit" class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Ordered' ? '#17a2b8' : '#28a745')) + ';'}">
+                <button type="submit" class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Confirmed' ? '#17a2b8' : '#28a745')) + ';'}">
                     <span class="status-text" th:text="${bookings.status}"></span>
                 </button>
             </td>

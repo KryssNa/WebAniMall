@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" >
   <title>Admin || AllshippingList</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" >
   <!-- css class -->
@@ -29,6 +30,11 @@
       </div>
       <div>
         <div class="sidebar">
+          <a th:href="@{~/admin/dashboard}" >
+        <span class="fa fa-dashboard">
+            person
+            </span>        <h3>Dashboard</h3>
+          </a>
           <a th:href="@{~/admin/list}" >
         <span class="material-icons-sharp">
             person
@@ -41,8 +47,7 @@
             </span>        <h3>Booking</h3>
           </a>
           <a th:href="@{~/admin/viewAllShippings}" class="active">
-        <span class="material-icons-sharp">
-            receipt_long
+        <span class="fa fa-shipping-fast green-color">
             </span>        <h3>Shipping</h3>
           </a>
 

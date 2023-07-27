@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
     <title>Admin || AllPets</title>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" >
     <link rel="stylesheet" th:href="@{/css/adminStyles.css}">
     <link rel="stylesheet" th:href="@{/css/addPet.css}">
 
@@ -30,6 +30,11 @@
             </div>
             <div>
                 <div class="sidebar">
+                    <a th:href="@{~/admin/dashboard}" >
+        <span class="fa fa-dashboard">
+            person
+            </span>        <h3>Dashboard</h3>
+                    </a>
                     <a th:href="@{~/admin/list}" >
         <span class="material-icons-sharp">
             person
@@ -42,8 +47,8 @@
             </span>        <h3>Booking</h3>
                     </a>
                     <a th:href="@{~/admin/viewAllShippings}">
-        <span class="material-icons-sharp">
-            receipt_long
+        <span class="fas fa-shipping-fast green-color">
+
             </span>        <h3>Shipping</h3>
                     </a>
 
