@@ -585,3 +585,50 @@ b{
     .cart-button-cart:hover {
         color: green;
     }
+
+
+/* Add custom styles here */
+body {
+    background: linear-gradient(to right, #74ebd5, #9face6);
+}
+
+.dashboard-box {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.dashboard-box h4 {
+    margin-bottom: 15px;
+}
+.dashboard-box p {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.dashboard-box .icon {
+    font-size: 48px;
+    margin-right: 10px;
+}
+.dashboard-box.total-users {
+    background-color: rgba(23, 162, 184, 0.7);
+}
+.dashboard-box.total-pets {
+    background-color: rgba(40, 167, 69, 0.7);
+}
+.dashboard-box.total-sell {
+    background-color: rgba(255, 193, 7, 0.7);
+}
+.dashboard-box.total-products {
+    background-color: rgba(220, 53, 69, 0.7);
+}
+.dashboard-box.total-profit {
+    background-color: rgba(102, 16, 242, 0.7);
+}
+.dashboard-box small {
+    font-size: 16px;
+    color: #333;
+}
+.sidebar-image {
+    max-width: 100%;
+    border-radius: 10px;
+}
