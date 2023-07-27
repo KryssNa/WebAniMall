@@ -6,6 +6,7 @@ import com.example.AniMall.Pojo.ShippingDetailsDto;
 import com.example.AniMall.Repo.ShippingRepo;
 import com.example.AniMall.Services.BookingServices;
 import com.example.AniMall.Services.CartServices;
+import com.example.AniMall.Services.EmailService;
 import com.example.AniMall.Services.UserServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,7 @@ import java.util.List;
 public class CheckoutController {
     private final UserServices userService;
     private final CartServices cartService;
-    private final BookingServices bookingServices;
-    final ShippingRepo shippingRepo;
+    private final EmailService emailService;
 
     @PostMapping("/checkout")
     public String checkkout(Principal principal, Model model){
@@ -50,7 +50,6 @@ public class CheckoutController {
     @PostMapping("/checkout/confirm")
     public String checkoutProcess(Principal principal, @Valid BookingPojo pojo, @Valid ShippingDetailsDto shippingDetailsDto, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
-            // If there are validation errors, redirect back to the checkout page to display the errors
             System.out.println("error"+bindingResult.getAllErrors());
             return "redirect:/cart";
         }
@@ -62,14 +61,21 @@ public class CheckoutController {
             cartService.updatePet(cartItem.getPet().getQuantity() - cartItem.getQuantity(), cartItem.getPet().getId());
         }
 
-        System.out.println("checkout process");
         cartService.checkout(id, pojo, shippingDetailsDto, list);
 
-        System.out.println("summary details");
-        // Clear the user's cart after successful checkout
-//        cartService.clearCart(id);
+        sendEmail(principal);
 
         return "redirect:/user/homepage";
+    }
+
+    // sending confirmation email
+    void sendEmail(Principal principal) {
+        String to = principal.getName();
+        System.out.println("email: "+to);
+        String subject = "Order Confirmation";
+        String text = "Your order has been Received. \n \n We will contact you soon. \nThank you for shopping with us. \n\n Regards, \n AniMall";
+
+        emailService.sendEmail(to, subject, text);
     }
 }
 

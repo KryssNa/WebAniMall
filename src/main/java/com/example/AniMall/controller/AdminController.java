@@ -5,10 +5,7 @@ import com.example.AniMall.Entity.Pet;
 import com.example.AniMall.Entity.ShippingDetails;
 import com.example.AniMall.Entity.User;
 import com.example.AniMall.Pojo.PetPojo;
-import com.example.AniMall.Services.BookingServices;
-import com.example.AniMall.Services.PetServices;
-import com.example.AniMall.Services.ShippingServices;
-import com.example.AniMall.Services.UserServices;
+import com.example.AniMall.Services.*;
 import com.example.AniMall.exception.AppException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +30,12 @@ public class AdminController {
     private final UserServices userServices;
     private  final BookingServices bookingServices;
     private final ShippingServices shippingServices;
+    private final EmailService emailService;
+
+    @GetMapping("/dashboard")
+    public String getAdminHome() {
+        return "Admin/Dashboard";
+    }
 
     @GetMapping("/addpet")
     public String getAddPetForm(Model model) {
@@ -142,11 +145,20 @@ public class AdminController {
 
     @PostMapping("/updateStatus/{id}/{status}")
     public String updateStatus(@PathVariable Integer id, @PathVariable String status) {
+        List<Booking> bookings=bookingServices.findBookingById(id);
+        String email="";
+
+        System.out.println("size:"+bookings.size());
+        System.out.println("id:"+id);
+        if(bookings.size()>0){
+            email=bookings.get(0).getUser().getEmail();
+        }
         String changeStatus ="";
         if (status.equals("Pending")){
-            changeStatus = "Ordered";}
-        else if(status.equals("Ordered")){
+            changeStatus = "Confirmed";}
+        else if(status.equals("Confirmed")){
             changeStatus = "Shipped";
+            if (email!=""){sendEmail(email,bookingConfirm);}
         }else if(status.equals("Shipped")){
             changeStatus = "Delivered";
         } else if(status.equals("Delivered")){
@@ -157,11 +169,18 @@ public class AdminController {
     }
     @PostMapping("/updateShippingStatus/{id}/{status}")
     public String updateShippingStatus(@PathVariable Integer id, @PathVariable String status) {
+        List<ShippingDetails> shippingDetails=bookingServices.findShippingId(id);
+        String shipEmail="";
+        if(shippingDetails.size()>0){
+            shipEmail=shippingDetails.get(0).getShippingEmail();
+        }
         String changeStatus ="";
         if (status.equals("Pending")){
             changeStatus = "Shipped";
         }else if(status.equals("Shipped")){
             changeStatus = "Delivered";
+            if (shipEmail!=""){sendEmail(shipEmail,delivered);}
+
         } else if(status.equals("Delivered")){
             changeStatus = "Pending";
         }else {
@@ -169,6 +188,16 @@ public class AdminController {
         }
         shippingServices.updateShippingStatus(id, changeStatus);
         return "redirect:/admin/viewAllShippings";
+    }
+    String bookingConfirm = "Your Booking is Confirmed. \n And is processed for Shipping  \nThank you for shopping with us. \n\n Regards, \n AniMall";
+    String delivered = "Your Order has been delivered successfully.  \nThank you for shopping with us. \n\n Regards, \n AniMall";
+
+    // email for booking confirmation
+    void sendEmail(String email,String text) {
+        String to = email;
+        String subject = "Booking Confirmation";
+
+        emailService.sendEmail(to, subject, text);
     }
 }
 

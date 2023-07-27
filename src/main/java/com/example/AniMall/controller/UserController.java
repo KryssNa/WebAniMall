@@ -87,7 +87,7 @@ public class UserController {
 
     @GetMapping("/viewAllMyBookings/{id}")
     public String getBookinginList(@PathVariable("id") Integer id, Model model, Principal principal) {
-        List<Booking> booking =bookingServices.findBookingById(id);
+        List<Booking> booking =bookingServices.findBookingByUserId(id);
         model.addAttribute("bookingList", booking);
         model.addAttribute("userdata",userService.findByEmail(principal.getName()));
 
@@ -130,8 +130,8 @@ public class UserController {
 
     @GetMapping("/viewMyBooking/{id}")
     public String getBooking(@PathVariable("id") Integer id, Model model, Principal principal) {
-        List<Booking> booking =bookingServices.findBookingById(id);
-        List<ShippingDetails> shipping = bookingServices.findShippingById(id);
+        List<Booking> booking =bookingServices.findBookingByUserId(id);
+        List<ShippingDetails> shipping = bookingServices.findShippingByUserId(id);
         model.addAttribute("bookingList", booking);
         model.addAttribute("shippingLsit", shipping);
         model.addAttribute("userdata",userService.findByEmail(principal.getName()));
