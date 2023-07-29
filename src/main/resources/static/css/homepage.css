@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 128, 0, 0.28);
     border-radius: 16px;
     height: 40px;
     padding: 5px;
@@ -24,6 +24,11 @@
 }
 #search-box .fa:hover {color: rgba(222, 253, 255, 0.46);}
 
+@media screen and (max-width: 600px) {
+    #search-box {
+        display: none;
+    }
+}
 
 /* Add CSS to hide the container initially */
 .user-icon-buttons {

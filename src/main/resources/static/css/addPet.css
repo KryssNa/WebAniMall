@@ -63,6 +63,12 @@ body{
     /* 14for left-side bar, auto for main and 23 rem for right section */
 
 }
+@media (max-width: 730px) {
+    .container{
+        display: inline;
+    }
+
+}
 a{
     color:var(--color-dark);
 }

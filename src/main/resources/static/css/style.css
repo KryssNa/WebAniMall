@@ -39,7 +39,7 @@ body{
     font-family: var(--lg-font);
 }
 .nav-link:hover{
-    color: #defdff !important;
+    color: #0e6921 !important;
 }
 .nav-item--active{
     background-color: #ffffff;
@@ -49,16 +49,33 @@ body{
 
 }
 /*header*/
-#header1{
-    background:url(../images/GoldenRitriever.jpg) top/cover no-repeat;
+#header1 {
+    /* Set initial background image */
+    background-image: url(../images/GoldenRitriever.jpg);
+    /* Background positions for each image */
+    background-position: top center, center center, bottom center;
+    /* Background repetition for each image */
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    /* Font size and padding */
     font-size: 2rem;
     padding-top: 3rem;
+    /* Animation properties */
+    animation: changeBackground 15s infinite;
 }
 
-/*.responsive {*/
-/*    width: 100%;*/
-/*    height: auto;*/
-/*}*/
+/* Define the animation */
+@keyframes changeBackground {
+    0%, 100% { background-image: url(../images/pet-group.jpg); }
+    33% { background-image: url(../images/group2.jpg); }
+    66% { background-image: url(../images/group3.jpg); }
+}
+
+
+
+.responsive {
+    width: 100%;
+    height: auto;
+}
 
 .carousel-inner h1{
     font-size: 55px;
@@ -190,14 +207,62 @@ footer a:hover{
     .nav-item{
         border-bottom: none;
     }
-
-}
-@media only screen and (max-width: 768px) {
     #header1 {
         background-size: contain;
         height: auto;
-        min-height: 20vh;
+        min-height: 60vh;
     }
+    #search-box{
+        display: none;
+    }
+
+}
+@media only screen and(max-width:500px){
+    #header1 {
+        background-size: contain;
+        height: auto;
+        min-height: 45vh;
+    }
+
+    #header1 h2 {
+        display: none;
+    }
+    #header1 .btn {
+        display: none;
+    }
+    .img-showcase{
+        width: 2rem;
+        margin: 0 auto; /* Center image horizontally */
+    }
+    .img-showcase img{
+        width: 20rem;
+        align-items: center;
+        height: 20rem;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .card-wrapper{
+        display: flex;
+        flex-direction: row;
+    }
+    .pet-content{
+        margin-left: 5%;
+    }
+}
+@media  (max-width: 768px) {
+    #header1 {
+        background-size: contain;
+        height: auto;
+        min-height: 60vh;
+    }
+    .navbar{
+        padding: 10px;
+    }
+
+    .accordion{
+        margin-bottom: 2rem;
+    }
+
     #header1 h2 {
         display: none;
     }
@@ -226,9 +291,9 @@ footer a:hover{
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {
     #header1 {
-        background-size: contain;
+        background-size: cover;
         height: auto;
-        min-height: 30vh;
+        min-height: 65vh;
     }
     #header1 h2 {
         display: none;
@@ -239,10 +304,40 @@ footer a:hover{
     .img-showcase{
         width: 5rem;
     }
+    #search-box{
+        display: none;
+    }
+    .accordion{
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 2rem;
+
+    }
 }
 
 
 @media only screen and (min-width: 1025px) {
+    #header1 {
+        background-size: cover;
+        min-height: 85vh;
+    }
+    #header1 h2 {
+        margin-top: 12rem;
+        font-size: 2.2rem; /* Adjust font size for larger screens */
+    }
+    #header1 .btn {
+        font-size: 1rem; /* Adjust font size for larger screens */
+      /* Adjust padding for larger screens */
+    }
+    .accordion{
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 2rem;
+
+    }
+}
+
+@media (min-width: 1250px) {
     #header1 {
         background-size: cover;
         min-height: 100vh;
@@ -253,8 +348,9 @@ footer a:hover{
     }
     #header1 .btn {
         font-size: 1rem; /* Adjust font size for larger screens */
-      /* Adjust padding for larger screens */
+        padding: 0.5rem 1.5rem; /* Adjust padding for larger screens */
     }
+
 }
 
 .alert {
@@ -384,8 +480,6 @@ main .recent-adopted a{
     color:var(--color-primary);
 }
 .accordion{
-    margin-left: 5rem;
-    margin-right: 5rem;
     margin-bottom: 2rem;
 
 }
@@ -518,23 +612,6 @@ main .recent-adopted a{
 .product-tag {
     margin-top: 27px;
 }
-
-/*.product-tag {*/
-/*    margin-top: 27px;*/
-/*}*/
-/*.footer-bottom-area {*/
-
-/*    text-align: center;*/
-
-/*}*/
-
-/*.payment-img {*/
-
-/*    float: none;*/
-
-/*    margin-top: 20px;*/
-
-/*}*/
 
 /*Faqs*/
 .circle-icon {
