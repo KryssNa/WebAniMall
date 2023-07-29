@@ -32,10 +32,6 @@ public class AdminController {
     private final ShippingServices shippingServices;
     private final EmailService emailService;
 
-    @GetMapping("/dashboard")
-    public String getAdminHome() {
-        return "Admin/Dashboard";
-    }
 
     @GetMapping("/addpet")
     public String getAddPetForm(Model model) {

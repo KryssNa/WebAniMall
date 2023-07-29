@@ -28,10 +28,13 @@ public class SpringSecurityConfig {
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws  Exception{
-        httpSecurity.csrf().disable()
+        httpSecurity
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/user/**")
+                .requestMatchers("/user/**,/login,/logout")
                 .permitAll()
+                .requestMatchers("/admin/**")
+                .hasAuthority("Admin")
                 .anyRequest()
                 .authenticated()
                 .and()

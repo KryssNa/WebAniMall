@@ -43,6 +43,9 @@ public class UserController {
 
     @GetMapping(value = {"/dashboard/{page}/{petPerPage}"})
     public String getSetting(Model model,Principal principal,@PathVariable int page ,@PathVariable int petPerPage) {
+        if (principal==null){
+            return "redirect:/login";
+        }
 
         List<Pet> petList=petServices.getLimitedPets(page,petPerPage);
         model.addAttribute("page",page);
