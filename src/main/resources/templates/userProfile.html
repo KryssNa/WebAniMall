@@ -11,15 +11,15 @@
 
 </head>
 
-<body style="display: flex; flex-direction: row; ">
+<body >
 
 
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container mt-4">
+<div class="container mt-4"style="display: flex; align-items: center; justify-content: space-around; flex-direction: row; ">
     <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-100">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mt-2">
+            <div >
                 <div class="card-body">
                     <div class="account-settings">
                         <div class="user-profile">
@@ -94,8 +94,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div class="card h-200">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-flex justify-content-center align-items-center">
+            <div class="card h-200 "style="width: max-content;">
                 <div class="card-body">
                     <form th:method="post" th:action="@{~/user/updatePassword}" >
                         <div class="col gutters mt-1 p-2 ml-3">
@@ -139,22 +139,10 @@
             </div>
         </div>
 
-        <!-- Add the following div to display the success message -->
-        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div class="card h-200">
-                <div class="card-body">
-                    <!-- Use Thymeleaf expression to show the success message from the controller -->
-                    <div th:if="${successMsg}" class="alert alert-success" role="alert">
-                        <p th:text="${successMsg}"></p>
-                    </div>
-                    <!-- Your other content for the second card goes here -->
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </div>
-
 
 <script>
     function validatePasswords() {

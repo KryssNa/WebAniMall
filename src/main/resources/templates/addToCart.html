@@ -15,7 +15,7 @@
 
 
 <section class="h-100 h-custom" style="background-color: rgba(210,201,255,0.47);">
-  <div class="container py-5 h-100" style="padding-top: 80px!important">
+  <div class="container py-5 h-100" style="padding-top: 80px!important; padding-bottom: 0px!important;">
     <div class="row d-flex justify-content-center align-items-start h-100">
       <div class="col-lg-8">
         <div class="card card-registration card-registration-2" style="border-radius: 15px;">
@@ -27,7 +27,7 @@
               </div>
               <hr class="my-4">
               <div th:if="${cartItems.size() == 0}">
-                <img th:src="@{/images/no-data.svg}"class="img-fluid" alt="Responsive image" style="    height: 475px;width: 500px; margin-top: -70px; margin-left: 120px;">
+                <img th:src="@{/images/no-data.svg}"class="img-fluid" alt="Responsive image" style="    height: 475px;width: 500px; margin-top: -70px; margin-left: 24px;">
                 </div>
               <!-- Loop through cart items and display details -->
               <div th:each="cartItem : ${cartItems}" th:if="${cartItem.pet != null}">
@@ -150,6 +150,27 @@
     </div>
   </div>
 </section>
+
+<!-- footer-bottom-area start -->
+<footer>
+<div class="footer-bottom-area" th:fragment="footer-bottom-area" style="background-color: #244949">
+  <div class="container" >
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="copyright">
+          <p style="color: white">Copyright © <a href="#" style="color: red">AniMall</a>. All Rights Reserved</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="payment-img">
+          <img th:src="@{~/images/payment.png}" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</footer>
+<!-- footer-bottom-area end -->
 
 <script th:inline="javascript">
     // Update the total price when the shipping option is changed

@@ -98,31 +98,22 @@
 <header id="header1" class="carousel slide responsive" data-bs-ride="carousel" style="padding-top: 3rem; max-inline-size: 100%; block-size: auto;">
     <div class="container h-100 d-flex align-items-center carousel-inner">
         <div class="text-left carousel-item active">
-            <h2 class="text-uppercase py-2 fw-bold" style="color: #B5C5CD">One More Friend <br> Thousand more fun</h2>
-            <a href="#pets" class="btn mt-3 text-uppercase">Learn More</a>
-            <a href="#pets" class="btn mt-3 text-uppercase">Book</a>
+            <h2 class=" py-2 fw-bold" style="color: #B5C5CD">One More Friend <br> Thousand more fun</h2>
+            <a href="#pets" class="btn mt-3 text-uppercase" style="background-color: transparent">Learn More</a>
+            <a href="#pets" class="btn mt-3 text-uppercase" style="background-color: transparent">Book</a>
         </div>
         <div class="text-left carousel-item">
-            <h2 class="text-uppercase py-2 fw-bold" style="color: #B5C5CD">Fur-ever<br>Because it's your Family</h2>
-            <a href="#pets" class="btn mt-3 text-uppercase">Learn More</a>
-            <a href="#pets" class="btn mt-3 text-uppercase">Book</a>
+            <h2 class=" py-2 fw-bold" style="color: #B5C5CD">Fur-ever<br>Because it's your Family</h2>
+            <a href="#pets" class="btn mt-3 text-uppercase"style="background-color: transparent">Learn More</a>
+            <a href="#pets" class="btn mt-3 text-uppercase"style="background-color: transparent">Book</a>
         </div>
     </div>
-    <!-- Add the carousel controls -->
-    <a class="carousel-control-prev mt-5" href="#header1" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next mt-5" href="#header1" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </a>
 </header>
 
 <section class="shop" id="shop">
     <div class="container py-5" id="pets">
         <div class="title text-center">
-            <h2 class="position-relative d-inline-block">New Pets</h2>
+            <h2 class="position-relative d-inline-block">All Available Pets</h2>
         </div>
         <div class="justify-content-center d-flex flex-column align-items-center" th:if="${petList.size() == 0}">
             <img th:src="@{/images/no-pet.svg}" class="img-fluid" alt="Responsive image" style="height: 500px; width: 500px;">
@@ -300,12 +291,6 @@
                 It is our topmost priority to make sure that the visiters are satisfied.</p>
         </div>
 
-<!--        pets-->
-<!--        <div class="col-md-4 col-lg-2">-->
-<!--            <h5 class="fw-light">Pets</h5>-->
-<!--            <li class="my-3" th:each="pet:${petfetch}" ><a href="#pets" th:text="${pet.petname}" ></a></li>-->
-
-<!--        </div>-->
 
 <!--        Contact us-->
         <div class="col-md-6 col-lg-3">

@@ -24,12 +24,11 @@
                         </div>
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
-
-                                                                    <div class="header">
-                                                                        <h3>Get Started</h3>
-                                                                    </div>
-                                                                    <img src="images/paw.svg" class="card-img-top mx-auto d-block mb-0 mt-0" alt="Pet Store" style="width: 20%;
-                                <!--margin-top: 10px">-->
+                                <div class="header">
+                                    <h3>AniMall</h3>
+                                </div>
+                                <img th:src="@{~/images/newIcon.ico}"  class="card-img-top mx-auto d-block mb-0 mt-0" alt="Pet Store" style="width: 15%;
+                                ">
                                 <div class="card-body mt-0">
                                     <form class="form-signin" autocomplete="off" th:action="@{/user/saveuser}" th:object="${create}" method="post">
                                         <fieldset>

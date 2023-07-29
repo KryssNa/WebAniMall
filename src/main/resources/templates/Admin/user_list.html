@@ -29,20 +29,13 @@
             </div>
             <div>
                 <div class="sidebar">
-                    <a th:href="@{~/admin/dashboard}" >
-        <span class="fa fa-dashboard">
-            person
-            </span>        <h3>Dashboard</h3>
-                    </a>
                     <a th:href="@{~/admin/list}" class="active">
-        <span class="material-icons-sharp">
-            person
+        <span class="fa fa-users">
             </span>        <h3>Customers</h3>
                     </a>
 
                     <a th:href="@{~/admin/viewallbooking}">
-        <span class="material-icons-sharp">
-            receipt_long
+        <span class="fa-solid fa-receipt">
             </span>        <h3>Booking</h3>
                     </a>
                     <a th:href="@{~/admin/viewAllShippings}">
@@ -51,14 +44,12 @@
                     </a>
 
                     <a th:href="@{~/admin/addpet}" >
-        <span class="material-icons-sharp">
-            add
+        <span class="fa fa-plus-square">
             </span>        <h3>Add Pets</h3>
                     </a>
 
                     <a th:href="@{~/admin/viewallpet/0/4}">
-        <span class="material-icons-sharp">
-            pets
+        <span class="fa fa-list-alt">
             </span>        <h3>Pets</h3>
                     </a>
 
@@ -78,6 +69,7 @@
                 <img th:src="@{/images/no-pet.svg}" class="img-fluid" alt="Responsive image">
             </div>
             <br>
+            <div class="table-responsive">
             <table id="myTable" class="table table-striped table-hover table-sub-heading-color table-responsive table-striped-columns fa-sort mt-5" th:if="${userList.size()>0}">
                 <thead>
                 <tr>
@@ -136,7 +128,8 @@
 
                 </tbody>
             </table>
-        </div>
+            </div>
+            </div>
     </main>
 </div>
 

@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
   <title>AniMall | About Us</title>
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Font Awesome CSS -->
   <link rel="stylesheet" type="text/css"  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     .social-link {
@@ -46,7 +44,7 @@
         <p class="lead text-muted">We are dedicated to providing loving homes for pets and ensuring their well-being.</p>
       </div>
       <div class="col-lg-6 d-none d-lg-block">
-        <img src="https://bootstrapious.com/i/snippets/sn-about/illus.png" alt="About Us" class="img-fluid">
+        <img th:src="@{~/images/a1.jpg}" alt="About Us" class="img-fluid">
       </div>
     </div>
   </div>
@@ -62,12 +60,12 @@
         <a href="#" class="btn btn-light px-5 rounded-pill shadow-sm">Learn More</a>
       </div>
       <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2">
-        <img src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt="Mission" class="img-fluid mb-4 mb-lg-0">
+        <img th:src="@{~/images/a2.jpg}" alt="Mission" class="img-fluid mb-4 mb-lg-0">
       </div>
     </div>
     <div class="row align-items-center">
       <div class="col-lg-5 px-5 mx-auto">
-        <img src="https://bootstrapious.com/i/snippets/sn-about/img-2.jpg" alt="Adoptions" class="img-fluid mb-4 mb-lg-0">
+        <img th:src="@{~/images/a3.jpg}" alt="Adoptions" class="img-fluid mb-4 mb-lg-0">
       </div>
       <div class="col-lg-6">
         <i class="fa fa-heart fa-2x mb-3 text-primary"></i>
@@ -158,11 +156,25 @@
 </div>
 
 
-<footer class="bg-light pb-5">
-  <div class="container text-center">
-    <p class="font-italic text-muted mb-0">&copy; 2023 Pet Store All rights reserved.</p>
+<!-- footer-bottom-area start -->
+<div class="footer-bottom-area" th:fragment="footer-bottom-area" style="background-color: #244949">
+  <div class="container" >
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="copyright">
+          <p>Copyright © <a href="#">AniMall</a>. All Rights Reserved</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="payment-img">
+          <img th:src="@{~/images/payment.png}" alt="" />
+        </div>
+      </div>
+    </div>
   </div>
-</footer>
+</div>
+<!-- footer-bottom-area end -->
+
 
 </body>
 <!-- jQuery and Bootstrap JS -->
