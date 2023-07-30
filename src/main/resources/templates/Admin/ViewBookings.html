@@ -69,7 +69,7 @@
     </div>
     <main>
 
-<div style=" margin-left:2rem; margin-top: 3rem ;margin-right: 4rem" >
+<div class="table-responsive" style=" margin-left:2rem; margin-top: 3rem ;margin-right: 4rem; " >
 
     <h2>Booking Application</h2>
     <br>
@@ -109,7 +109,7 @@
            </form>
 
             <td>
-                <a class="btn btn-delete rounded-3" th:href="@{~/admin/viewAllShippings}">
+                <a class="btn btn-delete rounded-3 " th:href="@{~/admin/viewAllShippings}" style="padding: inherit;color: grey; text-decoration: none;" onmouseover="this.style.color='red';" onmouseout="this.style.color='grey';">
                     <i class="fas fa-trash"></i> View
                 </a>
             </td>
@@ -142,6 +142,21 @@
             tbody tr:nth-child(odd) {
                 background-color: #fff;
             }
+            .table-striped-columns tbody tr:nth-child(odd) td,
+            .table-striped-columns tbody tr:nth-child(odd) th {
+                background-color: #f2f2f2;
+            }
+            .table-striped-columns tbody tr:nth-child(even) td,
+            .table-striped-columns tbody tr:nth-child(even) th {
+                background-color: #fff;
+            }
+            @media screen and (max-width: 600px) {
+                table {
+                    border-radius: 0px;
+
+                }
+            }
+
             </style>
 
 

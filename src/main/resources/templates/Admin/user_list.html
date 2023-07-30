@@ -90,7 +90,7 @@
                     <td  style="text-align: center" th:text="${user.gender}"> </td>
                     <td  style="text-align: center" th:text="${user.age}"> </td>
                     <td>
-                        <a class="btn btn-delete rounded-3" th:href="@{~/admin/deleteuser/}+${user.id}">
+                        <a class="btn btn-delete rounded-3" th:href="@{~/admin/deleteuser/}+${user.id}" onmouseover="this.style.backgroundColor='red'" onmouseout="this.style.backgroundColor='white'">
                             <i class="fas fa-trash"></i> Delete
                         </a>
                     </td>
