@@ -96,17 +96,6 @@ public String saveToCart(Integer id, Principal principal) {
     }
 
     @Override
-    public List<Cart> fetchAllCart() {
-        return null;
-    }
-
-    @Override
-    public List<Cart> fetchAllCartByStatus(String status) {
-        return null;
-    }
-
-
-    @Override
     public List<Cart> fetchAvailable(Integer id) {
         List<Cart> allItems = cartRepo.fetchAll(id).orElseThrow();
         for (Cart cart : allItems){
@@ -128,14 +117,6 @@ public String saveToCart(Integer id, Principal principal) {
         }
         return allItems;
     }
-
-
-//    will be implemented in future some error is coming
-    @Override
-    public void clearCart(Integer id) {
-        cartRepo.deleteById(id);
-    }
-
 
     @Override
     public Cart fetchOne(Integer id) {

@@ -13,5 +13,4 @@ public interface FavoriteServices {
     Favorite findById(Integer id);
     void deleteById(Integer id);
 
-    boolean existsById(Integer id);
 }

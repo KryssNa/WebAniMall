@@ -23,12 +23,5 @@ public interface BookingServices {
     Booking findById(Integer id);
     void deleteById(Integer id);
 
-    boolean existsById(Integer id);
-
-//    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException;
-
-    //checkout
-    BookingPojo saveCheckout(BookingPojo bookingPojo);
-
     void updateStatus(Integer id, String status);
 }

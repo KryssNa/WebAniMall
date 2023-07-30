@@ -93,11 +93,6 @@ public class FavoriteServiceImpl implements FavoriteServices {
         favoriteRepo.deleteById(id);
     }
 
-    @Override
-    public boolean existsById(Integer id) {
-        return false;
-    }
-
 
     public String getImageBase64(String fileName) {
         if (fileName!=null) {

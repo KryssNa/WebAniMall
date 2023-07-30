@@ -11,7 +11,6 @@ import java.io.IOException;
 public interface PetServices {
     PetPojo save(PetPojo petPojo) throws IOException;
     List<Pet> findAll();
-    List<Pet> getThreeRandomData();
     Pet findById(Integer id);
 
     List<Pet> getLimitedPets(int page,int petsPerPage);

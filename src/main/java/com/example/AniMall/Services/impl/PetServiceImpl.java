@@ -74,10 +74,6 @@ public class PetServiceImpl implements PetServices {
         return findAllinList(petRepo.findAll());
     }
 
-    @Override
-    public List<Pet> getThreeRandomData() {
-        return findAllinList(petRepo.getThreeRandomData());
-    }
 
     @Override
     public Pet findById(Integer id) {

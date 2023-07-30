@@ -22,13 +22,9 @@ public interface CartServices {
 
     String checkout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto, List<Cart> itemsToPurchase) throws IOException;
 
-    List<Cart> fetchAllCart();
-
-    List<Cart> fetchAllCartByStatus(String status);
     int updatePet(int quantity, Integer id);
 
 
     List<Cart> fetchAvailable(Integer id);
 
-    void clearCart(Integer id);
 }

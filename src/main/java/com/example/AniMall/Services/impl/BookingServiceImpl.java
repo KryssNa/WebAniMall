@@ -28,33 +28,6 @@ public class BookingServiceImpl implements BookingServices {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ShippingDetails";
 
-//    @Override
-//    public String summaryCheckout(Integer id, BookingPojo pojo, ShippingDetailsDto shippingDetailsDto) throws IOException {
-//        ShippingDetails shippingDetails = new ShippingDetails();
-//        Booking booking = new Booking();
-//        User user = userRepo.findById(id).orElseThrow();
-//        shippingDetails.setShippingFullName(shippingDetailsDto.getShippingFullName());
-//        shippingDetails.setShippingAddress(shippingDetailsDto.getShippingAddress());
-//        shippingDetails.setShippingEmail(shippingDetailsDto.getShippingEmail());
-//        shippingDetails.setShippingPhone(shippingDetailsDto.getShippingPhone());
-//        shippingDetails.setStatus("Ordered");
-//        booking.setPrice(shippingDetailsDto.getTotalPrice());
-//        booking.setQuantity(shippingDetailsDto.getTotalQuantity());
-//        if(shippingDetailsDto.getImage()!=null){
-//            StringBuilder fileNames = new StringBuilder();
-//            System.out.println(UPLOAD_DIRECTORY);
-//            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, shippingDetailsDto.getImage().getOriginalFilename());
-//            fileNames.append(shippingDetailsDto.getImage().getOriginalFilename());
-//            Files.write(fileNameAndPath, shippingDetailsDto.getImage().getBytes());
-//
-//            shippingDetails.setImage(shippingDetailsDto.getImage().getOriginalFilename());
-//        }
-//
-//        shippingDetails.setUser(user);
-////        bookingRepo.save(shippingDetails.getUser());
-//        return "Saved Purchase";
-//    }
-
     @Override
     public BookingPojo save(BookingPojo bookingPojo) {
         Booking booking =new Booking();
@@ -124,7 +97,6 @@ public class BookingServiceImpl implements BookingServices {
                 ShippingDetails.builder()
                         .id(shippingDetails.getId())
                         .user(shippingDetails.getUser())
-//                        .pet(pet.getPet())
                         .shippingFullName(shippingDetails.getShippingFullName())
                         .shippingAddress(shippingDetails.getShippingAddress())
                         .shippingEmail(shippingDetails.getShippingEmail())
@@ -159,28 +131,6 @@ public class BookingServiceImpl implements BookingServices {
     @Override
     public void deleteById(Integer id) {
         bookingRepo.deleteById(id);
-    }
-
-    @Override
-    public boolean existsById(Integer id) {
-        return false;
-    }
-
-    //checkout
-    @Override
-    public BookingPojo saveCheckout(BookingPojo bookingPojo) {
-        Booking booking =new Booking();
-        if(bookingPojo.getId()!=null){
-            booking.setId(booking.getId());
-        }
-        booking.setUser(userRepo.findById(bookingPojo.getUser_id()).orElseThrow());
-        booking.setPet(petRepo.findById(bookingPojo.getPet_id()).orElseThrow());
-        booking.setShippingDetails(shippingRepo.findById(bookingPojo.getShipping_id()).orElseThrow());
-        booking.setPrice(bookingPojo.getPrice());
-        booking.setQuantity(bookingPojo.getQuantity());
-        booking.setStatus("pending");
-        bookingRepo.save(booking);
-        return new BookingPojo(booking);
     }
 
     @Override
