@@ -523,9 +523,9 @@ b{
         }
 
         /* Add styles to push the main content when the sidebar is shown */
-        main {
-            margin-left: 50px; /* Adjust the value as needed */
-        }
+        /*main {*/
+        /*    margin-left: 50px; !* Adjust the value as needed *!*/
+        /*}*/
 
         .container {
             width: 70%;
