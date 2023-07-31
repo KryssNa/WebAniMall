@@ -8,27 +8,61 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/paw.svg}">
     <title>AniMall || Registration</title>
+    <style>
+        .background-image {
+            position: relative;
+        }
+        .background-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("/images/group2.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+        }
+        @media (max-width: 768px) {
+            .container{
+                padding-top: 4px!important;
+            }
+        }
+        @media (max-width: 1224px) {
+            .container{
+                padding-top: 4px!important;
+            }
+        }
+    </style>
 </head>
 <body>
-<section class="vh-100" style="background-color: #9A616D;height: 100vh">
+<section class="vh-100 background-image" style="background-color: #defdff;height: 100vh">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-10">
                 <div class="card" style="border-radius: 1rem 1rem 1rem 1rem ;">
                     <div class="row g-0">
                         <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp" alt="register form" class="img-fluid" style="border-radius: 1rem 1rem 1rem 1rem;margin-left: 2rem; margin-top: 2rem" />
-                            <div class="card-footer text-center"style="margin-left:4rem; padding: 1.75rem 2.25rem;">
-                                <p>Already have an account? <a th:href="@{~/login}">Login</a></p>
+                            <img th:src="@{~/images/register.jpg}" alt="register form" class="img-fluid" style="border-radius: 1rem 1rem 1rem 1rem;margin-left: 2rem; margin-top: 8rem" />
+                            <div class="card-footer text-center"style="margin-left:4rem; padding: 1.75rem 2.25rem; background-color: white">
+                                <p class="fa-underline">Already have an account? <a th:href="@{~/login}">Login</a></p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
                             <div class="card-body p-4 p-lg-5 text-black">
-                                <div class="header">
-                                    <h3>AniMall</h3>
+                                <div class="row d-flex justify-content-evenly align-items-center">
+
+                                    <div class="d-flex align-items-center mb-3 pb-1 mr-3">
+                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        <img th:src="@{~/images/logoo.jpg}" style="height: 50px" width="80px"height="60px">
+                                    </div>
+
+                                    <div >
+                                        <h5 class="fw-normal mb-3 pb-1" style="letter-spacing: 1px;font-weight: bold;">Registration form!!</h5>
+                                    </div>
                                 </div>
-                                <img th:src="@{~/images/newIcon.ico}"  class="card-img-top mx-auto d-block mb-0 mt-0" alt="Pet Store" style="width: 15%;
-                                ">
+
                                 <div class="card-body mt-0">
                                     <form class="form-signin" autocomplete="off" th:action="@{/user/saveuser}" th:object="${create}" method="post">
                                         <fieldset>

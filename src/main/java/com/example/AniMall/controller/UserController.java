@@ -27,7 +27,7 @@ public class UserController {
     private final BookingServices bookingServices;
     private final FavoriteServices favoriteServices;
 
-    @GetMapping(value = {"/homepage"})
+    @GetMapping("/homepage")
     public String getHomepage(Model model ,Principal principal, Authentication authentication) {
 
         if (authentication!=null){
@@ -195,11 +195,6 @@ public class UserController {
         return "redirect:/user/homepage";
     }
 
-//    @GetMapping("/sendEmail")
-//    public String sendRegistrationEmail() {
-//        this.userService.sendEmail();
-//        return "emailsuccess";
-//    }
 
 //    @GetMapping("/pets/{category}")
 //    public List<Pet> getPetsByCategory(@PathVariable String category){
