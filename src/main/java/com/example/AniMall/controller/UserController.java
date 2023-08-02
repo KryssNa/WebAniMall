@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -87,19 +88,6 @@ public class UserController {
         return petServices.findAll().toString();
     }
 
-
-    @GetMapping("/viewAllMyBookings/{id}")
-    public String getBookinginList(@PathVariable("id") Integer id, Model model, Principal principal) {
-        List<Booking> booking =bookingServices.findBookingByUserId(id);
-        model.addAttribute("bookingList", booking);
-        model.addAttribute("userdata",userService.findByEmail(principal.getName()));
-
-        User user = userService.findBYId(id);
-        model.addAttribute("signup", new UserPojo(user));
-        model.addAttribute("signups", user);
-        return "userProfile";
-    }
-
     @GetMapping("/viewUserDetails/{id}")
     public String getUserDetails(@PathVariable("id") Integer id, Model model, Principal principal) {
         User user = userService.findBYId(id);
@@ -142,10 +130,45 @@ public class UserController {
         return "bookings";
     }
 
+    @GetMapping("/viewAllMyBookings/{id}")
+    public String getBookinginList(@PathVariable("id") Integer id, Model model, Principal principal) {
+        List<Booking> booking =bookingServices.findBookingByUserId(id);
+        model.addAttribute("bookingList", booking);
+        model.addAttribute("userdata",userService.findByEmail(principal.getName()));
+
+        User user = userService.findBYId(id);
+        model.addAttribute("signup", new UserPojo(user));
+        model.addAttribute("signups", user);
+        return "userProfile";
+    }
+
     @GetMapping("/deleteFav/{id}")
     public String deleteFavorite(@PathVariable("id") Integer id) {
         favoriteServices.deleteById(id);
         return "redirect:/user/homepage";
+    }
+
+    @GetMapping("reset")
+    public String reset(){
+        return "resetPass";
+    }
+
+    @GetMapping("/sendResetEmail/{email}")
+    public String sendResetEmail(@PathVariable("email") String email,Model model) throws IOException {
+        System.out.println("Email: "+email);
+        this.userService.sendResetEmail(email);
+        model.addAttribute("email",email);
+        return "resetPass";
+    }
+
+    @PostMapping("/resetPass")
+    public String resetPassword(@RequestParam("email") String email,@RequestParam("password") String password,@RequestParam("otp") String otp,@RequestParam("cPassword") String cPass) throws IOException  {
+        if(!password.equals(cPass)){
+            return "redirect:/user/sendResetEmail/"+email+"?error=Password and Confirm Password must be same";
+        }
+
+        userService.resetPass(email,password,otp);
+        return "redirect:/user/login";
     }
 
 

@@ -1,18 +1,36 @@
 package com.example.AniMall.Services.impl;
 
+
+import com.example.AniMall.Entity.Otp;
 import com.example.AniMall.Entity.User;
 import com.example.AniMall.Pojo.UserPojo;
 import com.example.AniMall.Repo.BookingRepo;
 import com.example.AniMall.Repo.FavoriteRepo;
+import com.example.AniMall.Repo.OtpRepo;
 import com.example.AniMall.Services.UserServices;
 import com.example.AniMall.config.PasswordEncoderUtil;
 import com.example.AniMall.exception.AppException;
 import com.example.AniMall.Repo.UserRepo;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 
 @Service
@@ -21,6 +39,15 @@ public class UserServiceImpl implements UserServices {
     private final UserRepo userRepo;
     private final BookingRepo bookingRepo;
     private final FavoriteRepo favoriteRepo;
+    private final OtpRepo otpRepo;
+
+    private final ThreadPoolTaskExecutor taskExecutor;
+
+    @Autowired
+    @Qualifier("emailConfigBean")
+    private Configuration emailConfig;
+
+    private final JavaMailSender getJavaMailSender;
     @Override
     public UserPojo save(UserPojo userPojo) {
 
@@ -97,5 +124,59 @@ public class UserServiceImpl implements UserServices {
         userRepo.save(user);
     }
 
+    public void sendResetEmail(String email) {
+        try {
+            User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+            Map<String, String> model = new HashMap<>();
+            model.put("name", user.getFullname());
+            String otpCode= generateRandomNumber();
+            model.put("otp", otpCode);
+            Otp otp = otpRepo.findByEmail(email).orElse(new Otp());
+            otp.setEmail(email);
+            otp.setOtp(otpCode);
+            otpRepo.save(otp);
+
+            MimeMessage message = getJavaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+
+            Template template = emailConfig.getTemplate("Email/resetPassTemp.ftl");
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setText(html, true);
+            mimeMessageHelper.setSubject("Registration");
+            mimeMessageHelper.setFrom("krishna.kryss@gmail.com");;
+
+
+            taskExecutor.execute(new Thread() {
+                public void run() {
+                    getJavaMailSender.send(message);
+                }
+            });
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+    public static String generateRandomNumber() {
+        Random random = new Random();
+
+        int otp=100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+        // Generates a random number between 100000 and 999999 (inclusive)
+    }
+
+    @Override
+    public void resetPass(String email, String password, String Otp) throws IOException {
+        Otp otp1 = otpRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
+        if (otp1.getOtp().equals(Otp) && otp1.getDate().isAfter(LocalDateTime.now())) {
+            User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+            user.setPassword(PasswordEncoderUtil.getInstance().encode(password));
+            userRepo.save(user);
+        } else {
+            throw new RuntimeException("Invalid OTP");
+        }
+    }
 }
 

@@ -77,7 +77,12 @@
                                         </div>
                                     </fieldset>
 
-                                    <a class="small text-muted" th:href="@{~/user/signup}">Forgot password?</a>
+
+                                    <a th:href="@{~/user/reset}" class="btn btn-link small text-muted">
+                                        <button type="button" class="btn btn-link small text-muted">Forgot password?</button>
+                                    </a>
+
+
                                     <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a th:href="@{~/user/signup}" class="login" style="color: #0e6921;">Register here</a></p>
                                 </form>
 

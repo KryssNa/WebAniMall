@@ -71,7 +71,7 @@
             </div>
             <div class="row justify-content-end text-center">
                 <div class="col-4 d-flex justify-content-end" style="display: flex;justify-content: end">
-                    <form class="d-flex" th:action="@{~/admin/searchPet}" method="get">
+                    <form class="d-flex" th:action="@{~/admin/searchPet}" method="get" >
                         <input class="form-control form-control-lg me-2" type="search" placeholder="Enter a text" aria-label="Search" name="search" style="height: 36px; width: 160px; border-radius: 16px; text-align: center; border: 0.1px solid; margin-bottom: 8px; --bs-btn-active-border-color: green">
                         <button class="btn btn-outline-success" type="submit" style="background-color: rgba(104,138,140,0.46); color: white;" onmouseover="this.style.backgroundColor='green'" onmouseout="this.style.backgroundColor='grey'">Search</button>
                     </form>

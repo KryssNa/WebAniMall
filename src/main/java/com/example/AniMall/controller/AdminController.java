@@ -134,6 +134,9 @@ public class AdminController {
     @GetMapping("/searchPet")
     public String searchPet(@RequestParam("search") String searchText, Model model) {
         List<Pet> searchResults = petServices.findPetByPartialName(searchText);
+        if (searchResults.isEmpty()) {
+            model.addAttribute("searchError", "No pets found");
+        }
         model.addAttribute("limitedPets", searchResults);
 
         return "Admin/allPetList";

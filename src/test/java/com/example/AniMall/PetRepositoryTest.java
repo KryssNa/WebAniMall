@@ -24,7 +24,7 @@ public class PetRepositoryTest {
     @Rollback(value=false)
     public void savePetTest(){
         Pet pet= Pet.builder()
-                .petname("Golu")
+                .petname("Sheru")
                 .breed("idk")
                 .category("dog")
                 .price(1000)
@@ -44,12 +44,12 @@ public class PetRepositoryTest {
         Pet petCreated=petRepo.findById(1).get();
         Assertions.assertThat(petCreated.getId()).isEqualTo(1);
     }
-//    @Test
-//    @Order(3)
-//    public void getListOfPetTest(){
-//        List<Pet> Pets=petRepo.findAll();
-//        Assertions.assertThat(Pets.size()).isGreaterThan(0);
-//    }
+    @Test
+    @Order(3)
+    public void getListOfPetTest(){
+        List<Pet> Pets=petRepo.findAll();
+        Assertions.assertThat(Pets.size()).isGreaterThan(0);
+    }
     @Test
     @Order(4)
     @Rollback(value=false)

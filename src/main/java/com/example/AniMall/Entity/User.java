@@ -48,7 +48,6 @@ public class User implements UserDetails {
     @Column(name = "about")
     private String about;
 
-
     @Column(name = "gender")
     @NotEmpty
     @NotNull
