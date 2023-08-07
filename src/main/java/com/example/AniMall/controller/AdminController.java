@@ -187,10 +187,16 @@ public class AdminController {
 
     // email for booking confirmation
     void sendEmail(String email,String text) {
+        try {
+
+
         String to = email;
         String subject = "Booking Confirmation";
 
         emailService.sendEmail(to, subject, text);
     }
+    catch(Exception e){
+        System.out.println(e);
+    }}
 }
 

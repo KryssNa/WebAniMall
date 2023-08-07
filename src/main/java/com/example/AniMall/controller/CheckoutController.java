@@ -9,6 +9,7 @@ import com.example.AniMall.Services.CartServices;
 import com.example.AniMall.Services.EmailService;
 import com.example.AniMall.Services.UserServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,19 +64,28 @@ public class CheckoutController {
 
         cartService.checkout(id, pojo, shippingDetailsDto, list);
 
+
         sendEmail(principal);
 
         return "redirect:/user/homepage";
     }
 
     // sending confirmation email
+    @Async
     void sendEmail(Principal principal) {
+        try {
+
+
         String to = principal.getName();
         System.out.println("email: "+to);
         String subject = "Order Confirmation";
         String text = "Your order has been Received. \n \n We will contact you soon. \nThank you for shopping with us. \n\n Regards, \n AniMall";
-
-        emailService.sendEmail(to, subject, text);
+        if (emailService == null) System.out.println("emailService is null");
+        else {
+        emailService.sendEmail(to, subject, text);}}
+        catch (Exception e) {
+            System.out.println("error in sending email: "+e);
+        }
     }
 }
 

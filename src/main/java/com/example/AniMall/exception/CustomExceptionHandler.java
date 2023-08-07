@@ -21,10 +21,19 @@ public class CustomExceptionHandler {
             modelAndView.setViewName("error/400");
         } else if (ex.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR) {
             modelAndView.setViewName("error/500");
-        } else {
+        } else if(ex.getStatus() == HttpStatus.FORBIDDEN) {
+            modelAndView.setViewName("error/403");
+        } else if(ex.getStatus() == HttpStatus.UNAUTHORIZED) {
+            modelAndView.setViewName("error/401");
+        }
+        else if(ex.getStatus() == HttpStatus.TOO_MANY_REQUESTS) {
+            modelAndView.setViewName("error/429");
+        }
+        else {
             // For other status codes, set a generic error page
             modelAndView.setViewName("error/error");
         }
+
 
         return modelAndView;
     }

@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/exception.css}">
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/newIcon.ico}">
+<title>Error 401</title>
 </head>
+
 <body>
-$END$
+
+<div class="exception-msg">
+  <img th:src="@{/images/exception/401.jpg}" class="error-msg" alt="Responsive image">
+  <a href="/user/homepage" >Return to home</a>
+</div>
+
+
 </body>
+
 </html>

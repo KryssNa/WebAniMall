@@ -103,10 +103,8 @@
             <table class="table table-striped table-hover justify-content-center text-center" th:if="${petsResult.size()>0}">
                 <thead>
                 <tr >
-                    <th>Id</th>
                     <th>Petname</th>
                     <th>Price</th>
-                    <th>Quantity</th>
                     <th>Description</th>
                     <th>Image</th>
                     <th>View</th>
@@ -114,13 +112,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="pet : ${petsResult}" class="table-row justify-content-center text-center align-items-center">
-                    <td class="align-items-center" th:text="${pet.id}"></td>
                     <td class="align-items-center" th:text="${pet.petname}"></td>
                     <td class="align-items-center" th:text="${pet.price}"></td>
-                    <td class="align-items-center" th:text="${pet.quantity}"></td>
                     <td class="align-items-center" th:text="${pet.description}"></td>
                     <td><img class="align-items-center" th:src="'data:image/png;base64,' + ${pet.imageBase64}" width="100" height="100"/></td>
-                    <td><a class="view align-items-center" th:href="@{~/pet/petinfo/{petId}(petId=${pet.id})}">View</a></td>
+                    <td><a class=" view align-items-center" th:href="@{~/pet/petinfo/{petId}(petId=${pet.id})}">View</a></td>
                 </tr>
                 </tbody>
             </table>

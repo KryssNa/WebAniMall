@@ -100,17 +100,17 @@
             <td th:text="${bookings.quantity}"></td>
             <td th:text="${bookings.price}"></td>
             <td th:text="${bookings.getShippingDetails().getId()}" ></td>
-           <form class="p-0" th:method="post"  th:action="@{~/admin/updateStatus/}+${bookings.id}+'/'+${bookings.status}">
+            <form class="p-0" th:method="post"  th:action="@{~/admin/updateStatus/}+${bookings.id}+'/'+${bookings.status}">
             <td>
                 <button type="submit" class="btn status-button" th:style="${'background: ' + (bookings.status eq 'Pending' ? '#ffc107' : (bookings.status eq 'Confirmed' ? '#17a2b8' : '#28a745')) + ';'}">
                     <span class="status-text" th:text="${bookings.status}"></span>
                 </button>
             </td>
-           </form>
+            </form>
 
             <td>
                 <a class="btn btn-delete rounded-3 " th:href="@{~/admin/viewAllShippings}" style="padding: inherit;color: grey; text-decoration: none;" onmouseover="this.style.color='red';" onmouseout="this.style.color='grey';">
-                    <i class="fas fa-trash"></i> View
+                    <i class="fas fa-street-view"></i> View
                 </a>
             </td>
         </tr>
